@@ -1,0 +1,68 @@
+﻿{include file='common/style'}
+<title></title>
+</head>
+<body>
+<article class="page-container">
+	<form action="" method="post" class="form form-horizontal" id="form-admin-role-add">
+		<input type="text" value="{$role_id}" name="role_id" style="display: none">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$role_name}" placeholder="" id="role_name" name="role_name">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">角色描述：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$role_desc}" placeholder="" id="role_desc" name="role_desc">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+				<button type="submit" class="btn btn-success radius" id="admin-role-save" name="admin-role-save"><i class="icon-ok"></i> 修改</button>
+			</div>
+		</div>
+	</form>
+</article>
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+$(function(){
+
+	$("#form-admin-role-add").validate({
+		rules:{
+			role_name:{
+				required:true,
+			},
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+			$(form).ajaxSubmit(
+					{
+						type: 'POST',
+						url: 'adminRoleEditAct' ,
+						success: function(data){
+							layer.msg('添加成功!',{icon:1,time:1111});
+							setTimeout("parent.location.reload()",1111);
+						},
+						error: function(XmlHttpRequest, textStatus, errorThrown){
+							layer.msg('已存在数据!',{icon:1,time:1111});
+							setTimeout("parent.location.reload()",1111);
+						}
+					}
+			);
+			// var index = parent.layer.getFrameIndex(window.name);
+			// setTimeout(parent.layer.close(index),1111);
+		}
+	});
+});
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>登录</title>
+    <style>
+        input{ outline:none; }
+        input:focus{ outline:none; }
+        input{ outline:none; border:0; }
+        body{padding: 0;margin: 0;background-color: #F2F2F2;}
+        .top_div{height: 30px;line-height: 30px;float: left}
+        .top_a{text-decoration: none;color: #FFFfff;}
+        img{float: left}
+        .top{width: 100%;height: 70px;background-color: #333333}
+        .pic{ width:350px; height:30px;float: left;  margin-top: 20px;line-height: 30px;font-size: 21px}
+        .login-box{ width:450px;font-size: 18px; height:530px; margin:0 auto; padding:5px 5px 15px 10px;}
+        .login-box h2{ text-align:center;}
+        .login{ width:290px; height:30px;padding:0 5px; margin:5px 0 5px;}
+        .login1{ width:290px; height:30px;padding:0 5px;margin:5px 0 5px;}
+        .login2{ height:30px; width:180px; margin:5px 0 5px;padding:0 5px; }
+        .login-button{ width:70px; height:35px;}
+        .login-button1{ width:80px; height:35px; margin-top:20px;}
+        .stern{ width:1000px;margin:30px auto; text-align: center}
+        #msg{margin:0 5px;}
+        .com{width:700px;margin: 0 auto}
+        .login_div{background-color: #FFFfff;margin-top: 40px;}
+        .login_div p{background-color: #F7F7F7; height:40px;border-radius: 10px;margin-bottom: 30px;padding: 0 25px;line-height: 40px}
+        input{border: none;background-color:#F7F7F7; }
+        /*.radio{padding:0 5px; margin:5px 0 5px;}*/
+        .login-button1{background-color: #D1314B;color: #FFFfff;border-radius: 10px;}
+
+        .login-list{ list-style:none; float:left; padding:0px; float:left;}
+        .login-list li{ float:left;}
+        .stern{ width:600px;margin:30px auto;}
+        a{text-decoration:none;color: black}
+        .login-box a:hover{color: #B40707}
+        .forgetkey{  float: right}
+        a {blr:expression(this.onFocus=this.blur());outline: none;}
+        a:focus {outline: none;}
+        .top_a img{height: 30px;}
+        .disanfang{width: 400px;line-height:40px;height:32px;float: left;padding:0 25px; margin-bottom: 15px;}
+        .disanfang_img{margin-right: 15px;}
+    </style>
+</head>
+
+<body>
+
+<form name="form1" id="form1" method="post" >
+
+    <div class="top">
+        <div class="com">
+            <div class="pic"><a href="/" class="top_a"><img src="/static/index/img/register.png"><div class="top_div"><a href="/" class="top_a">&nbsp;<strong>|</strong>&nbsp;&nbsp;灰灰商城</a></div></div>
+        </div>
+    </div>
+    <div class="com login_div">
+        <div class="login-box">
+            <p style="text-align: center;background-color: white"><span style="font-size: 30px;">欢迎登录</span>
+            </p>
+            <p>用户名称：
+                <input  type="text" name="username" id="username" value="kehui4" class="login" autocomplete="off" placeholder="请输入用户名" size="22">
+            </p>
+            <p>用户密码：
+                <input type="password" name="password" id="password" value="kehui" class="login" autocomplete="off" placeholder="这里输入密码" size="22">
+            </p>
+            <p>验&ensp;证&ensp;码：
+                <input  type="text" name="code" class="login2" autocomplete="off" placeholder="请输入验证码" size="22" >
+                <span id="msg" style=" font-size:18px;" onclick="show()"></span>
+            </p>
+            <p>
+                <input type="checkbox" class="checked" name="checked"><span>记住密码</span>
+                <span class="forgetkey fr"><a href="#">忘记密码</a>&emsp;|&emsp;<a href="/register">注册</a></span><br/>
+            </p>
+<!--            <span>&nbsp;第三方账号登录</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>-->
+            <div class="disanfang">
+                    <div style="float: left;height: 32px;">第三方登陆&emsp;</div>
+                    <a href="{$code_url}"><img class="disanfang_img" src="../static/index/images/disanfang/weibo.png" alt=""></a>
+<!--                    <a href=""><img class="disanfang_img" src="../static/index/images/disanfang/weibo.png" alt=""></a>-->
+<!--                    <a href=""><img class="disanfang_img" src="../static/index/images/disanfang/weibo.png" alt=""></a>-->
+
+
+
+            </div>
+<!--            <br/>-->
+            <input type="button" class="login-button1" id="login"  name="btn" value="登陆" style="margin-left:80px;">
+            <input type="reset" class="login-button1" name="btn" value="重置" style="float:right; margin-right:80px;"><br/>
+        </div>
+
+    </div>
+
+</form>
+<div class="stern">
+    <p>赞助厂商：灰灰有限公司版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址：中国湖北省&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客服热线：15797274125</p>
+</div>
+
+</body>
+<script type="text/javascript" src="/static/index/js/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script language="javascript">
+    $(document).ready(
+        $('#login').click(function () {
+             var formdata=new FormData($('#form1')[0]);
+             $.ajax({
+                 url:'/index/user/verify',
+                 type:"post",
+                 dataType:'json',
+                 data:formdata,
+                 processData: false,
+                 contentType: false,
+                 success:function(data){
+                     // alert(data);
+                     if(data==0){
+                         alert('用户名不存在');
+                     }else if(data==1){
+                        alert('密码错误');
+                     }else if(data==2) {
+                         window.location.href='/';
+                     }else {
+                         alert('非法请求');
+                     }
+                 },
+                 error:function(){
+                     alert('服务暂时出错，稍后重试');
+                 }
+
+             });
+
+         }
+        )
+    );
+
+
+    function validateCode(n){
+        var s="abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ0123456789";
+        var ret="";
+        for(var i=0;i<n;i++)
+        {
+            var index=Math.floor(Math.random()*62);
+            ret+=s.charAt(index);
+        }
+        return ret;
+    }
+    function show(){
+        document.getElementById("msg").innerHTML=validateCode(4);
+    }
+    window.onlosd=show();
+
+    function check(){
+        fr = document.form1;
+        if(fr.user.value==""){
+            alert("用户名不能为空");
+            fr.user.focus();
+            return false;
+        }
+        if(fr.password.value=""){
+            alert("qingghg");
+            fr.password.focus();
+            return false;
+        }
+    }
+</script>
+</html>

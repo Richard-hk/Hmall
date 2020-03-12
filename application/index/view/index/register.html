@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>注册</title>
+<style>
+.pic{ width:250px; height:100px;margin:0 auto;}
+.login-box{ width:310px; height:380px;border:2px solid #e8dbb8; margin:0 auto; padding:5px 5px 15px 10px;}
+.login-box h2{ text-align:center;}
+.login{ width:290px; height:30px;padding:0 5px; margin:5px 0 5px;}
+.login1{ width:290px; height:30px;padding:0 5px;margin:5px 0 5px;}
+.login2{ height:30px; width:180px; margin:5px 0 5px;padding:0 5px; }
+.login-button{ width:70px; height:35px;}
+.login-button1{ width:80px; height:35px; margin-top:20px;}
+.stern{ width:600px;margin:30px auto;}
+#msg{margin:0 5px;}
+</style>
+</head>
+
+<body>
+<form >
+<div class="pic"><img src="img/2.jpg"></div>
+<div class="login-box">
+<h2>欢迎注册</h2>
+&nbsp;用户名称
+<br><input  type="text" name="user" class="login" placeholder="请输入用户名" size="22"><br>
+&nbsp;用户密码
+<br><input type="password" name="password" class="login1" placeholder="这里输入密码" size="22"><br>
+&nbsp;确认密码:
+<input  class=" login" name="login2" placeholder="请再次确认密码" size="22" type="password" ><br/>
+&nbsp;验证码
+<br><input  type="text" name="user" class="login2" placeholder="请输入验证码" size="22"><span id="msg" style=" font-size:18px;"></span><input type="button"  style="width:50px; height:33px;"value="刷新" onclick="show()"><br/>
+<input type="submit" class="login-button1" name="btn" value="免费注册" style="margin-left:60px;"><input type="reset" class="login-button1" name="btn" value="重置" style="float:right; margin-right:60px;"><br/>
+</div>
+<div class="stern">
+	<p>赞助厂商：灰灰有限公司版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址：中国湖北省&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客服热线：15797274125</p>
+</div>
+</form>
+</body>
+<script>
+function validateCode(n){
+	var s="abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ0123456789";
+	var ret="";
+	for(var i=0;i<n;i++)
+	{	
+		var index=Math.floor(Math.random()*62);
+		ret+=s.charAt(index);
+	}
+	return ret;
+	}
+	function show(){
+		document.getElementById("msg").innerHTML=validateCode(4);
+		}	
+	window.onlosd=show();
+</script>
+
+</html>

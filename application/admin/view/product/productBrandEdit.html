@@ -1,0 +1,104 @@
+
+    {include file='common/style'}
+    <title>品牌编辑</title>
+
+</head>
+<body>
+
+<div class="text-c">
+
+    <div class="page-container">
+        <form class="form form-horizontal" id="form">
+            {volist name='list' id='brand'}
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-4">品牌编号：</label>
+                <div class="formControls col-xs-8 col-sm-8">
+                    <input type="text" class="input-text " name="brand_id" id="brand_id" readonly="readonly" style="width: 600px; float: left" value="{$brand_id}" >
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-4">品牌名称：</label>
+                <div class="formControls col-xs-8 col-sm-8">
+                    <input type="text" class="input-text"style="width: 600px; float: left" value="{$brand.brand_name}" id="brand_name" name="brand_name">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-4">品牌logo：</label>
+                <div class="formControls col-xs-8 col-sm-8">
+                        <img src='{$brand.brand_logo}' style="float: left; border: 1px solid #DDDDDD; padding: 2px;" id="brand_logo_show">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-4">修改图片：</label>
+                <div class="formControls col-xs-8 col-sm-8">
+                    <span class="btn-upload form-group" style="float: left">
+                        <input class="input-text upload-url" type="text" name="" id="brand_logo1" placeholder="png格式图片"
+                                          readonly style="width:140px">
+			        <a href="javascript:void();" class="btn btn-default upload-btn "> 上传logo</a>
+			        <input type="file" multiple name="brand_logo" class="input-file" id ="brand_logo">
+			        </span>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-4">品牌描述：</label>
+                <div class="formControls col-xs-8 col-sm-8">
+                    <textarea class="input-text"style="width: 600px; height: 150px; float: left"  id="brand_desc" name="brand_desc">{$brand.brand_desc}</textarea>
+                </div>
+
+            </div>
+    {/volist}
+       <div class="row cl">
+                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                    <button id="brand_edit" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存并提交</button>
+                    <button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+
+<script>//图片预览
+    $('#brand_logo').change(function(){
+        var f = document.getElementById('brand_logo').files[0];
+        src = window.URL.createObjectURL(f);
+        document.getElementById('brand_logo_show').src = src
+    });
+    //品牌编辑
+    $("#brand_edit").click(function () {
+        var brand_name = $("#brand_name").val();
+        if (brand_name == "") {
+            layer.msg('品牌名称不能空',{icon:1,time:1111});
+        } else {
+            var location = $("input[name='brand_logo']").val();
+            var point = location.lastIndexOf(".");
+            var type = location.substr(point);
+            if (type == '.png'||type=="") {
+                var formData = new FormData($('#form')[0]);
+                $.ajax(
+                        {
+                            url: 'productBrandAlert',
+                            data: formData,
+                            type: 'POST',
+                            dataType: 'json',
+                            processData: false,
+                            contentType: false,
+                            success: function (result) {
+                                if (result == 1||result==0) {
+                                    layer.msg('品牌修改成功',{icon:1,time:1111});
+                                    window.location.reload();
+                                } else {
+                                    layer.msg('数据库数据修改失败',{icon:1,time:1111});
+                                }
+                            },
+                            error: function (result) {
+                                layer.msg('服务出现问题，请稍后再试',{icon:1,time:1111});
+                            }
+                        });
+                } else {
+                layer.msg('请上传png格式图片',{icon:1,time:1111});
+                }
+            }
+    });
+</script>
+</html>

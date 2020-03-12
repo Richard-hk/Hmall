@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>头部</title>
+</head>
+<style>
+    .topbar1 {
+        height: 36px;
+        background-color:#2E2828;
+        line-height: 36px;
+        font-size: 14px;
+    }
+
+    .topbar1 a:hover {
+        color: whitesmoke;
+    }
+
+    .shopcar{padding: 0 15px;text-align: center;position: relative}
+
+    .shopcar1:hover a{
+        color: #B40707;
+    }
+    /*二级内容*/
+    .shopcar:hover{background-color: white;}
+    .second-box{ position:absolute;display: none;  z-index:6; right: 0px;  width:300px;
+        height:200px;background-color:#fff;border-bottom-left-radius: 18px;border-bottom-right-radius: 18px;}
+    .second-box a{ font-size:15.5px; padding:0px;}
+    .second-box li{ float:none;}
+    .shopcar:hover .second-box{ display:block;}
+    .one{ width:164px;}
+    .shopcar_img{width: 100px;height: 100px;margin: 50px auto}
+
+    /*回到顶部*/
+
+
+    悬浮层
+    .to-top,.shopcar_bottom,.login_bottom,.register_bottom{width:40px; height:40px; z-index:11; position:fixed; right:1px;}
+    .top_bottom{width:40px; height:40px; z-index:11; position:fixed; right:1px;}
+    .top_bottom{bottom:30px;}
+    .shopcar_bottom{bottom:70px;}
+    .register_bottom{ bottom:110px;}
+    .login_bottom{bottom:150px; }
+    .second1 li{ margin:auto; line-height:30px; text-align:center; }
+    .shopcar-second ,.login-second ,.register-second ,.back-top-second{ width:80px; height:30px; background-color:#666; position:fixed; right:40px; color:#FFF; display:none; border-radius:4px; }
+    .back-top-second{ bottom:35px; background:#3d5d6b;}
+    .shopcar-second{ bottom:75px; background:#039d4d;}
+    .register-second{ bottom:115px; background:#47bffc; }
+    .login-second { bottom:155px; background:#fbc10c;}
+    .second1 li:hover .shopcar-second{ display:block;}
+    .second1 li:hover .login-second{ display:block;}
+    .second1 li:hover .register-second{ display:block;}
+    .second1 li:hover .back-top-second{ display:block;}
+    .cricle{border-radius:20px;}
+    .second1{display: none}
+
+
+
+    .li_user{width: 140px; height: 36px;}
+    .ul_user{float: left;text-align: center; }
+    .ul_user:hover .second-user{display: block}
+    .ul_user:hover{background-color: #FFFfff}
+    .second-user{background-color: #ffffff;z-index: 10;position: absolute; display:none;height: 70px;float: left; width: 140px;}
+    .second-user a{color: black}
+    .second-user a:hover{color:#CF0A2C }
+</style>
+<!--<link type="text/css" rel="stylesheet" href="/static/index/css/com.css">-->
+<body>
+<div class="topbar1">
+    <div  class="comwidth">
+        <div class="leftarea">
+            <a href="/" >&emsp;首页&emsp;</a>
+            <a href="#" id="favorites">&emsp;收藏网站</a>
+        </div>
+        <div class="rightarea">
+
+            {if condition="isset($_SESSION['think']['customer_name'])"}
+            <ul class="ul_user">
+                <li class="li_user">&emsp;<span style="color: #CF0A2C">{$Think.session.customer_name}</span>&emsp;</li>
+                <div class="second-user">
+                    <a href="userinfo"><li >个人中心</li></a>
+                    <a href="quit"><li>退出</li></a>
+                </div>
+
+            </ul>
+            {else/}
+            <a href="login">登录&emsp;</a>
+            <a href="register">&emsp;注册&emsp;</a>
+
+            {/if}
+            <a href="/introduction?good_spu_id=1">&emsp;我的订单&emsp;</a>
+            <a href="/shopcar">&emsp;购物车&emsp;</a>
+<!--            <div class="rightarea shopcar"><a href="/shopcar">购物车&emsp;</a>-->
+<!--                <div class="second-box">-->
+<!--                    <div class="shopcar_img">-->
+<!--                        <img src="/static/index/img/shopcar.png" alt="">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+    </div>
+</div>
+<ul class="second1">
+    <li class="login_bottom">
+        <a href="shopcar.html"><img src="/static/index/img/8.jpg" alt="登录" class="cricle"></a>
+        <div class="login-second">购物车</div>
+    </li>
+    <li class="register_bottom">
+    <a href="shopcar.html"><img src="/static/index/img/7.jpg" alt="注册" class="cricle"></a>
+    <div class="register-second">购物车</div>
+    </li>
+    <li class="shopcar_bottom">
+    <a href="shopcar.html"><img src="/static/index/img/6.jpg" alt="购物车" class="cricle"></a>
+    <div class="shopcar-second">购物车</div>
+    </li>
+    <li class="top_bottom">
+        <a href="shopcar.html"><img src="/static/index/img/5.jpg" alt="购物车" class="cricle"></a>
+        <div class="back-top-second">购物车</div>
+    </li>
+
+</ul>
+</body>
+<script type="text/javascript" src="/static/index/js/jquery.min.js"></script>
+<script>
+    $(function () {
+//绑定滚动条事件  
+        $(window).bind("scroll", function () {
+            var sTop = $(window).scrollTop();
+            var sTop = parseInt(sTop);
+            if (sTop >= 500) {
+                if (!$(".second1").is(":visible")) {
+                    try {
+                        $(".second1").slideup("slow");
+                    } catch (e) {
+                        $(".second1").show("slow");
+                    }
+                }
+            }else {
+                if ($(".second1").is(":visible")) {
+                    try {
+                        $(".second1").slidedown("slow");
+                    } catch (e) {
+                        $(".second1").hide("slow");
+                    }
+                }
+            }
+        });
+    }) ;
+
+    $(".top_bottom").click(function () {
+        $("body,html").animate({ scrollTop: 0 }, "slow");
+    });
+
+
+
+</script>
+</html>

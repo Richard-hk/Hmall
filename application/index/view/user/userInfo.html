@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>商品介绍页</title>
+    <link type="text/css" rel="stylesheet" href="/static/index/css/com.css">
+</head>
+<style>
+    body{
+        background-color: #F0F0F0;
+    }
+    .all{
+
+        height: 500px;
+    }
+    .left{
+        margin-top: 30px;
+        min-width: 300px;height: 500px;
+        background-color: #FFFfff;
+        border-radius: 15px;
+    }
+
+    .left1{margin-top: 15px;}
+    .left1 li{
+        width: 300px;
+        height: 40px;
+        text-align: center;
+        font-size: 20px;
+        line-height: 40px;
+    }
+    .center{
+        width: 30px;
+        height: 500px;
+    }
+    .right{
+        border-radius: 15px;
+        margin-top: 30px;
+        width: 880px;;
+        height: 500px;
+        background-color:#ffffff;;
+
+    }
+
+    .li_4{
+        background-color: #DE1536;
+        color: #FFFfff;
+    }
+    .right3{
+        padding: 40px 50px;
+    }
+    .right3 select{
+        background-color: #F0F0F0;
+        width: 80px;
+        height: 30px;
+    }
+    .address{
+        width: 250px;
+        height: 34px;
+        background-color: #F0F0F0;
+    }
+    .right3 li{
+
+        height: 40px;
+        width: 400px;
+    }
+    .submit{
+        width: 80px;
+        height: 40px;
+        text-align: center;
+        background-color: #DE1536;
+        color: #FFFfff;
+    }
+</style>
+<body>
+{include file='common/top'/}
+<form  id="form">
+<div class="comwidth all">
+
+    <div class="left fl">
+        <ul class="left1">
+            <li class="li_1 li_4">个人信息</li>
+            <li class="li_2">我的地址</li>
+            <li class="li_3">添加地址</li>
+        </ul>
+
+    </div>
+    <div class="center fl">
+
+    </div>
+    <div class="right fl">
+
+        <div class="box right1">
+
+
+            等待开发
+        </div>
+         <div class="box right2" style="display: none" >
+
+
+             等待开发
+
+         </div>
+
+        <div class="box right3" style="display: none">
+            <ul>
+                <li>添加地址：<br></li>
+                <li>姓&emsp;&emsp;名：<input type="text" placeholder="姓名" class="address" name="address_name"></li>
+                <li>电话号码：<input type="text" placeholder="电话号码" class="address" name="address_phone"></li>
+
+                <li>省市地区：<select name="province" class="province"></select>
+                    <select name="city" class="city"></select>
+                    <select name="area" class="area"></select><br></li>
+                <li>详细地址：<input type="text" placeholder="详细地址" class="address" name="address_detail"></li>
+                <li>是否默认：<input type="checkbox" value="1" class="" name="is_default"></li>
+                <li><input type="button"  class="submit" name="submit" value="添加"></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</form>
+{include file='common/foot'/}
+<script type="text/javascript" src="/static/index/js/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/static/admin/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/static/admin/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+<script>
+    $(document).ready(function () {
+        $('.submit').click(function () {
+            var formData = new FormData($('#form')[0]);
+            $.ajax(
+                {
+                    url:'index/User/saveAddress',
+                    data:formData,
+                    type:'post',
+                    dataType:'json',
+                    processData: false,
+                    contentType: false,
+                    success:function (result) {
+                        alert(result)
+                        if(result==1){
+                            layer.msg('地址添加成功', {icon: 1, time: 1111});
+                        }else{
+                            layer.msg('地址添加失败', {icon: 1, time: 1111});
+
+                        }
+                    },
+
+                }
+            );
+
+
+        });
+        $('.li_1').click(function () {
+            $(this).addClass('li_4').siblings().removeClass('li_4');
+            $('.right1').css('display','block');
+            $('.right2').css('display','none');
+            $('.right3').css('display','none');
+        });
+        $('.li_2').click(function () {
+            $(this).addClass('li_4').siblings().removeClass('li_4');
+            $('.right2').css('display','block');
+            $('.right1').css('display','none');
+            $('.right3').css('display','none');
+
+        });
+        $('.li_3').click(function () {
+            $(this).addClass('li_4').siblings().removeClass('li_4');
+            $('.right3').css('display','block');
+            $('.right1').css('display','none');
+            $('.right2').css('display','none');
+
+        });
+    });
+
+    function province() //省
+    {
+        $.post("{:url('index/User/province')}", {param1: 'value1'}, function(data, textStatus, xhr) {
+            var html;
+            for (var i = 0; i<data.length; i++) {
+                html += "<option value='"+data[i]['id']+"'>"+data[i]['district_name']+"</option>";
+            }
+            $('.province').html(html);
+        });
+    }
+    province();
+
+    function city() //市
+    {
+        var provinceid = $('.province').val(); //省id
+        $.post("{:url('index/User/city')}", {provinceid: provinceid}, function(data, textStatus, xhr) {
+            var html;
+            for (var i = 0; i<data.length; i++) {
+                html += "<option value='"+data[i]['id']+"'>"+data[i]['district_name']+"</option>";
+            }
+            $('.city').html(html);
+            area();
+        });
+    }
+    city();
+
+    function area() //县
+    {
+        var cityid = $('.city').val(); //市id
+//alert(cityid);
+        $.post("{:url('index/User/area')}", {cityid: cityid}, function(data, textStatus, xhr) {
+            var html;
+            for (var i = 0; i<data.length; i++) {
+                html += "<option value='"+data[i]['id']+"'>"+data[i]['district_name']+"</option>";
+            }
+            $('.area').html(html);
+        });
+    }
+    area();
+
+    $('.province').change(function(event) { //选择省
+        city();
+    });
+
+    $('.city').change(function(event) { //选择市
+        area();
+    });
+    /* 省市区三级联动 end */
+
+</script>
+</html>

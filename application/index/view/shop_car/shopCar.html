@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>购物车</title>
+    <link type="text/css" rel="stylesheet" href="/static/index/css/com.css">
+    <link type="text/css" rel="stylesheet" href="/static/index/css/shopcar.css">
+</head>
+
+<body>
+{include file='common/top'}
+
+<div class="shoppingCart comwidth">
+    {if condition="$list eq 'none'"}
+    <div class="comwidth" style="height: 500px;text-align: center;line-height: 500px">
+        没有数据
+    </div>
+    {else /}
+    <div class="shop-item">
+        <div class="top">
+            <span style="font-size: 24px;">全部商品</span>
+        </div>
+        <div class="center">
+            <span style="margin-left:15px;"><input type="checkbox" id="chooseAll" name="test" value="choose">&nbsp;<span class="select_all">全选</span></span>
+            <span style="margin-left:100px;">商品信息</span>
+            <span style="margin-left:400px;">单价</span>
+            <span style="margin-left:160px;">数量</span>
+            <span style="margin-left:160px;">金额</span>
+        </div>
+        <div class="middle">
+            {volist name='list' id='sku_car'}
+            <div class="item fl">
+                <div class="choose1 fl"><input type="checkbox" name="choose" value="{$sku_car.good_sku_id}">&nbsp;选择</div>
+                <div class="left1 fl">
+                    <img style="height: 140px;" src="{$sku_car.good_sku_pic}">
+                </div>
+                <div class="center1 fl">{$sku_car.brand_name}{$sku_car.good_name} {$sku_car.good_sku_rom}G+{$sku_car.good_sku_ram}G</div>
+                <div class="right1 fr">
+                    <div class="left2 fl">
+                        <span class="good_price">{$sku_car.good_price}</span>
+                    </div>
+                    <div class="center2 fl">
+                        <div class="box">
+                            <div class="des_number">
+                                <div class="reduction">-</div>
+                                <div class="des_input">
+                                    <input type="text" class="num" value="{$sku_car.sku_num}">
+                                </div>
+                                <div class="plus">+</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right2 fl">
+                        <span class="single_price">{$sku_car.sku_num*$sku_car.good_price|round=2}.00</span>
+                    </div>
+                </div>
+            </div>
+            {/volist}
+        </div>
+        <div class="bottom">
+            <span style="margin-left:15px;">删除</span>
+            <span style="margin-left:40px;">已选商品 <span class="select_num" style="color: #CF0A2C">0</span> 件</span>
+            <span style="margin-left:740px;">金额:</span>
+            <div class="right fr">
+                <div class="money fl" >0.00</div>
+                <span >
+            <div class="count fr"><input type="button"  value="结算" class="submit" /></div></span>
+            </div>
+        </div>
+    </div>
+    {/if}
+
+</div>
+
+{include file='common/foot'}
+
+</body>
+<script type="text/javascript" src="/static/index/js/jquery.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        var count=0;
+        var num=0;
+        var money=0.00;
+        var single_price=0.00;
+        $("#chooseAll").click(
+            function () {
+                if(count==0){
+                    $("[name='choose']").each(function () {
+
+                        if (!$(this).is(':checked')) {
+                            $(this).prop('checked',true);
+                        }
+                        $('.select_all').html('反选');
+                        count=1;
+                        num++;
+                        var single_price=$(this).parent('.choose1').siblings('.right1').children('.right2').find('.single_price').html();
+                        money+=parseFloat(single_price);
+
+                        // var good_price=$(this).parent('.choose1').siblings('.right1').children('.left2').find('.good_price').html();
+                        // var good_num=$(this).parent('.choose1').siblings('.right1').children('.center2').children('.box').children('.des_number').children('.des_input').find('.num').val();
+                        //  single_price=good_price*good_num;
+                        //
+                        // money+=single_price;
+                    });
+                }else {
+                    $("[name='choose']").each(function () {
+                        if ($(this).is(':checked')) {
+                            $(this).prop('checked',false);
+                        }
+                        $('.select_all').html('全选');
+                    });
+                    count=0;
+                    money=0.00;
+                }
+                $('.select_num').html(num);
+                $('.money').html(money.toFixed(2));
+                num=0;
+            }
+        );
+
+        $("[name='choose']").click(function () {
+            $("[name='choose']").each(function () {
+                if ($(this).is(':checked')) {
+                    num++;
+                    var single_price=$(this).parent('.choose1').siblings('.right1').children('.right2').find('.single_price').html();
+                    // var good_price=$(this).parent('.choose1').siblings('.right1').children('.left2').find('.good_price').html();
+                    // var good_num=$(this).parent('.choose1').siblings('.right1').children('.center2').children('.box').children('.des_number').children('.des_input').find('.num').val();
+                    // single_price=good_price*good_num;
+                    // money+=single_price;
+                    money+=parseFloat(single_price);
+
+                }
+            });
+            $('.select_num').html(num);
+            $('.money').html(money.toFixed(2));
+            num=0;
+            money=0;
+        });
+
+        $('.plus').click(function(){
+            var t=$(this).siblings('.des_input').find('.num');
+            if(t.val()<10){/* 数量最大不能超过商品库存量 */
+                t.val(parseInt(t.val())+1);
+            }else{
+                t.val(1);
+            }
+            // var good_price =$.trim($('.good_price').html());
+            var good_price =$.trim($(this).parents('.center2').siblings('.left2').find('.good_price').html());
+            var num=t.val();
+            single_price=(good_price*num).toFixed(2);
+            $(this).parents('.center2').siblings('.right2').find('.single_price').html(single_price);
+
+            $("[name='choose']").each(function () {
+                if ($(this).is(':checked')) {
+                    var single_price=$(this).parent('.choose1').siblings('.right1').children('.right2').find('.single_price').html();
+                    // console.log('single_price',single_price);
+                    money+=parseFloat(single_price);
+                    // console.log('money',money);
+                }
+            });
+            if($(this).parents('.right1').siblings('.choose1').find("[name='choose']").is(":checked")){
+                $('.money').html(money.toFixed(2));
+            }
+            money=0;
+            single_price=0;
+        });
+
+        $('.reduction').click(function(){
+            var t=$(this).siblings('.des_input').find('.num');
+            if(t.val()<=1){	/*数量最少为1  */
+                t.val(1);
+            }else{
+                t.val(parseInt(t.val())-1);
+            }
+            var good_price =$.trim($(this).parents('.center2').siblings('.left2').find('.good_price').html());
+            var num=t.val();
+            single_price=(good_price*num).toFixed(2);
+            $(this).parents('.center2').siblings('.right2').find('.single_price').html(single_price);
+            $("[name='choose']").each(function () {
+                if ($(this).is(':checked')) {
+                    var single_price=$(this).parent('.choose1').siblings('.right1').children('.right2').find('.single_price').html();
+                    money+=parseFloat(single_price);
+                }
+            });
+            if($(this).parents('.right1').siblings('.choose1').find("[name='choose']").is(":checked")){
+                $('.money').html(money.toFixed(2));
+            }
+            money=0;
+        });
+        sessionStorage.removeItem('array_info')
+        $('.submit').click(function () {
+            var array_info=[];
+            var count=0;
+            $("[name='choose']").each(function () {
+                if ($(this).is(':checked')) {
+                    var buy_info={};
+                    buy_info['good_sku_id']=$(this).val();
+                    buy_info['sku_num']= $(this).parent('.choose1').siblings('.right1').children('.center2').children('.box').children('.des_number').children('.des_input').find('.num').val();
+                    array_info[count]=buy_info;
+                    count++;
+                }
+            });
+            if(count==0){
+                alert('请选择需要购买的商品')
+            }else {
+                sessionStorage.setItem('array_info',JSON.stringify(array_info));
+                window.location.href='paymethod';
+            }
+        });
+    });
+</script>
+</html>

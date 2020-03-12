@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="renderer" content="webkit">
+    <title>登录</title>
+    <link rel="stylesheet" href="/static/admin/css/pintuer.css">
+    <link rel="stylesheet" href="/static/admin/css/admin.css">
+    <script src="/static/admin/js/jquery.js"></script>
+    <script src="/static/admin/js/pintuer.js"></script>
+</head>
+<body>
+<div class="bg"></div>
+<div class="container">
+    <div class="line bouncein">
+        <div class="xs6 xm4 xs3-move xm4-move">
+            <div style="height:150px;"></div>
+            <div class="media media-y margin-big-bottom">
+            </div>
+            <form action="" method="" id="form1">
+                <div class="panel loginbox">
+                    <div class="text-center margin-big padding-big-top"><h1>商城后台管理中心</h1></div>
+                    <div class="panel-body" style="padding:30px; padding-bottom:10px; padding-top:10px;">
+                        <div class="form-group">
+                            <div class="field field-icon-right">
+                                <input type="text" class="input input-big" name="name" id="name" placeholder="登录账号"
+                                       value="admin" data-validate="required:请填写账号"/>
+                                <span class="icon icon-user margin-small"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="field field-icon-right">
+                                <input type="password" class="input input-big" name="password" id="password"
+                                       placeholder="登录密码" value="admin" data-validate="required:请填写密码"/>
+                                <span class="icon icon-key margin-small"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="field">
+                                <input type="text" class="input input-big" id="code" name="code" placeholder="填写右侧的验证码"
+                                       data-validate="required:请填写右侧的验证码" value="a"/>
+                                <img src="{:captcha_src()}" alt="captcha" width="100" height="32" class="passcode"
+                                     style="height:43px;cursor:pointer;" onclick="this.src=this.src+'?'">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding:25px;"><input id="login" type="button" class="button button-block bg-main text-big input-big" value="登录">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script>
+    $(document).ready(function () {
+        if(!window.name||window.name=='web'){
+            window.name = 'back';
+            $.ajax({
+                url: '/user/get_real_ip',
+                type:'POST',
+                dataType: 'json',
+                success:function(result){
+                },
+            });
+        }
+
+        $("#login").click(function () {
+            // var admin_name=$('input[name="name"]').val();
+            var admin_name = $("#name").val();
+            var admin_psw = $("#password").val();
+            var admin_code = $("#code").val();
+            $.ajax(
+                {
+                    url: 'user/check',
+                    data: {"name": admin_name, "password": admin_psw, "code": admin_code},
+                    type: 'POST',
+                    dataType: 'json',
+                    //contentType: 'application/json',
+                    success: function (result) {
+                        if (result == 'correct') {
+                            window.location.href = '/admin.php';
+                        } else if (result == "code_err") {
+                            alert('验证码错误');
+                        } else if (result == 'name_err') {
+                            alert('用户名不存在');
+                        } else {
+                            alert('密码不正确');
+                        }
+                    },
+                    error: function (result) {
+                        alert('服务器暂时出现问题，请稍后重试');
+                    }
+                });
+
+        });
+    });
+</script>
+</html>

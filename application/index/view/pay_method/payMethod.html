@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>确认订单</title>
+<link type="text/css" rel="stylesheet" href="/static/index/css/com.css">
+<link type="text/css" rel="stylesheet" href="/static/index/css/paymethod.css">
+</head>
+
+<body>
+{include file="/common/top"}
+<form name=alipayment action='index/Alipay/alipay' method=post target="_blank">
+
+<div class="address comwidth">
+        <p class="address-p">收货地址</p>
+        <ul class="shopping_list">
+            <li><input type="radio" name="address_id" value="{$address_id}" checked > 姓名：{$address_name} 电话号码：{$address_phone}
+                详细地址：{$address_province} {$address_city} {$address_region} {$address_detail}</li>
+        </ul>
+
+</div>
+<div class="pay comwidth">
+    <p>&nbsp;支付方式</p>
+    <ul class="shopping_list">
+        <li><input type="radio" class="radio" checked id="r2"><label for="r2">&nbsp;支付宝支付</label><span class="notice1">支付订单，有机会赢取1999红包</span></li>
+    </ul>
+</div>
+<div class="shoppingCart comwidth">
+ <div class="shop-item">
+ 	<div class="top">
+    <h3>送货清单</h3><span class="return fr" style="margin:-40px 15px 0 0;"><a href="shopcar">返回购物车修改</a></span>
+    </div>
+    <div class="center">
+    <span style="margin-left:30px;">商品信息</span>
+    <span style="margin-left:560px;">单价</span>
+    <span style="margin-left:180px;">数量</span>
+    <span style="margin-left:140px;">金额</span>
+    </div>
+    <div class="middle">
+
+    </div>
+    <div class="bottom">
+    	<p>结算账单</p>
+        <span style="margin-left:890px;">金额</span>
+        <div class="right fr">
+        <div class="money fl" style="margin-right:5px; width:140px; color:#F00; font-size:22px; ">
+<!--            <span class="money"></span>-->
+                <input id="WIDtotal_amount" class="money" style="color: red;height: 40px;font-size: 26px;line-height: 40px;" name="WIDtotal_amount" />
+
+        </div>
+        <span style="margin-left:10px;">
+        <div class="count fr">
+            <input type="submit" class="topay"   value="支付" style="background-color:#CF0A2C; color: #FFFfff; height:40px; font-size:18px; width:100px; margin-right:5px;"></a></div></span>
+        </div>
+    </div>
+ </div>
+    <input id="WIDout_trade_no" name="WIDout_trade_no" value="{$out_trade_no}" />
+<!--    <input id="WIDsubject" name="WIDsubject" />-->
+<!--    <input id="WIDtotal_amount" name="WIDtotal_amount" />-->
+    <input id="WIDbody" name="WIDbody" />
+</div>
+</form>
+{include file='common/foot'}
+<script type="text/javascript" src="/static/index/js/jquery.min.js"></script>
+
+</body>
+<script>
+    
+    $(document).ready(function () {
+
+        var array_info=JSON.parse(sessionStorage.getItem('array_info'));
+        var sku_num;
+        for(var index in array_info) {
+            var good_sku_id = array_info[index].good_sku_id;
+            sku_num = array_info[index].sku_num;
+            select(good_sku_id, sku_num);
+        }
+    });
+    function select(good_sku_id,sku_num) {
+        $.ajax(
+            {
+                url:'index/Pay_Method/payDetail',
+                data:{'good_sku_id':good_sku_id},
+                dataType:'json',
+                type:'post',
+                success:function (result) {
+                    var good_sku_id=result[0].good_sku_id;
+                    var good_sku_pic=result[0].good_sku_pic;
+                    var brand_name=result[0].brand_name;
+                    var good_name=result[0].good_name;
+                    var good_sku_rom=result[0].good_sku_rom;
+                    var good_sku_ram=result[0].good_sku_ram;
+                    var good_price=result[0].good_price;
+                    var total=(sku_num*good_price).toFixed(2);
+                    var item='        <div class="item fl">\n' +
+                            '<input name="good_sku_id[]" style="display: none" value="'+good_sku_id+'">'+
+                        '            <div class="left1 fl">\n' +
+                        '            <img  style="height: 140px" src="'+good_sku_pic+'">\n' +
+                        '        </div>\n' +
+                        '            <div class="center1 fl">'+brand_name+good_name+'  '+good_sku_rom+'G+'+good_sku_ram+'G</div>\n' +
+                        '            <div class="right1 fr">\n' +
+                        '            \t<div class="left2 fl">\n' +
+                        '                '+good_price+'\n' +
+                        '                </div>\n' +
+                        '                <div class="center2 fl">\n' +
+                        '               <input name="sku_num[]"  style="text-align: center" value="'+sku_num+'">\n' +
+                        '                </div>\n' +
+                        '                <div class="right2 fl">\n' +
+                        '                   <input class="price" style="text-align: center" name="" value="'+total+'" <input> \n' +
+                        '                </div>\n' +
+                        '            </div>\n' +
+                        '        </div>\n' ;
+                    var center =$('.middle').append(item);
+                    var money=0.00;
+                    $('.price').each(function () {
+                        var price =parseFloat($(this).val());
+                        money+=price;
+                    });
+                    $('.money').val(money.toFixed(2));
+                }
+
+            }
+        )
+    }
+</script>
+</html>
