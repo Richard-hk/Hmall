@@ -56,7 +56,7 @@ class User extends  Controller
             'look_date'=>date('Y-m-d H:i:s',time()),
             'look_type'=>'后台'
         ];
-//        Db::name('ip')->insert($ipdetail);
+        Db::name('ip')->insert($ipdetail);
         $this->redirect('./enter');
     }
 }
