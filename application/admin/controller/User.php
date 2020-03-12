@@ -57,6 +57,5 @@ class User extends  Controller
             'look_type'=>'后台'
         ];
         Db::name('ip')->insert($ipdetail);
-        $this->redirect('./enter');
     }
 }

@@ -50,6 +50,7 @@ class User extends Controller
                     Cookie::set('customer_psw',$psw['customer_psw'],60*60*24*7);
                 }
                 Session::set('customer_name',$psw['customer_name']);
+                User::get_real_ip();
                 return 2;
             }else{
                 return 1;

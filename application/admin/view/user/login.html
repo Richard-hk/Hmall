@@ -58,10 +58,10 @@
 
 <script>
     $(document).ready(function () {
-        if(!window.name||window.name=='web'){
+        if(!window.name||window.name=='web'||window.name=='back1'){
             window.name = 'back';
             $.ajax({
-                url: '/user/get_real_ip',
+                url: 'user/get_real_ip',
                 type:'POST',
                 dataType: 'json',
                 success:function(result){

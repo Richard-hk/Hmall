@@ -47,7 +47,6 @@ class Index extends Controller
                 $realip=getenv('REMOTE_ADDR');
             }
         }
-        echo date('Y-m-d H:i:s ',time());
         $ipdetail=[
             'ip'=>$realip,
             'look_date'=>date('Y-m-d H:m:i',time()),
