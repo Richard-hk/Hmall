@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1">
     <title>头部</title>
 </head>
 <style>
-    .topbar1 {
+    body{
+        min-width: 1200px;
+
+    }    .topbar1 {
         height: 36px;
         background-color:#2E2828;
         line-height: 36px;
@@ -54,8 +57,6 @@
     .cricle{border-radius:20px;}
     .second1{display: none}
 
-
-
     .li_user{width: 140px; height: 36px;}
     .ul_user{float: left;text-align: center; }
     .ul_user:hover .second-user{display: block}
@@ -88,7 +89,7 @@
             <a href="register">&emsp;注册&emsp;</a>
 
             {/if}
-            <a href="/introduction?good_spu_id=1">&emsp;我的订单&emsp;</a>
+            <a href="/myorder">&emsp;我的订单&emsp;</a>
             <a href="/shopcar">&emsp;购物车&emsp;</a>
 <!--            <div class="rightarea shopcar"><a href="/shopcar">购物车&emsp;</a>-->
 <!--                <div class="second-box">-->

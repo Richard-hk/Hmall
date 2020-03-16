@@ -58,7 +58,7 @@
 
 <script>
     $(document).ready(function () {
-        if(!window.name||window.name=='web'||window.name=='back1'){
+        if(!window.name||window.name=='web'){
             window.name = 'back';
             $.ajax({
                 url: 'user/get_real_ip',

@@ -5,12 +5,12 @@ namespace app\index\controller;
 
 
 
+use app\index\model\alipay\OrderInfo;
 use buildermodel\AlipayTradePagePayContentBuilder;
 use service\AlipayTradeService;
 use think\Controller;
 use think\Db;
-use think\facade\Config;
-use think\facade\Request;
+use app\index\model\alipay\SkuCar as skuCarModel;
 use think\facade\Session;
 
 class Alipay extends Controller
@@ -83,6 +83,8 @@ class Alipay extends Controller
                     $this->success('创建订单失败2','/');
                 }
             }
+            //删除购物车信息
+            Alipay::deleteCar($out_trade_no);
             //        $subject =   ($_POST['WIDsubject']);
 
             $subject = 'test';
@@ -142,6 +144,7 @@ class Alipay extends Controller
             $list=$order_info->where('order_id',$out_trade_no)->data(['order_status'=>'1',
                 'alipay_id'=>$trade_no])->update();
 
+
             //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -155,11 +158,32 @@ class Alipay extends Controller
     }
     public function myOrder(){
         $customer_name=Session::get('customer_name');
-        $list=Db::name('order_info')->where('customer_name',$customer_name)->select();
-        var_dump($list);
-//        $trade_no=$list['order_id'];
-//        $out_trade_no=$list['alipay_id'];
-//        return $this->fetch('myOrder');
+
+        $order_list=new OrderInfo();
+        $list=$order_list->getOrder($customer_name);
+        $this->assign('order_list',$list);
+        return $this->fetch('myOrder');
+    }
+    public function deleteCar($order_id){
+        $customer_name=Session::get('customer_name');
+        $order=Db::name('SkuOrder');
+        $skuOrder=$order->where('order_id',$order_id)->select();
+        $skuCar=Db::name('SkuCar');
+        foreach ($skuOrder as $skuOrders){
+            $where=[
+                ['good_sku_id','=',$skuOrders['good_sku_id']],
+                ['customer_name','=',$customer_name]
+            ];
+            $skuNum=$skuCar->removeOption('where')->removeOption('field')->where($where)->field('sku_num')->find();
+            $num=$skuNum['sku_num'];
+            if($num==$skuOrders['sku_order_num']){
+                $skuCar->removeOption('where')->removeOption('field')->where($where)->delete();
+            }else{
+                $num=$num-$skuOrders['sku_order_num'];
+                $data=['sku_num'=>$num];
+                $skuCar->removeOption('where')->removeOption('field')->where($where)->data($data)->update();
+            }
+        }
     }
 
 }

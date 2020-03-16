@@ -50,7 +50,7 @@ class User extends Controller
                     Cookie::set('customer_psw',$psw['customer_psw'],60*60*24*7);
                 }
                 Session::set('customer_name',$psw['customer_name']);
-                User::get_real_ip();
+                User::get_real_ip($username['customer_name']);
                 return 2;
             }else{
                 return 1;
@@ -204,4 +204,32 @@ class User extends Controller
         $list = Db::name('district')->where($where)->select();
         return $list;
     }
+    public function get_real_ip($value=''){
+        static $realip;
+        if(isset($_SERVER)){
+            if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])){
+                $realip=$_SERVER['HTTP_X_FORWARDED_FOR'];
+            }else if(isset($_SERVER['HTTP_CLIENT_IP'])){
+                $realip=$_SERVER['HTTP_CLIENT_IP'];
+            }else{
+                $realip=$_SERVER['REMOTE_ADDR'];
+            }
+        }else{
+            if(getenv('HTTP_X_FORWARDED_FOR')){
+                $realip=getenv('HTTP_X_FORWARDED_FOR');
+            }else if(getenv('HTTP_CLIENT_IP')){
+                $realip=getenv('HTTP_CLIENT_IP');
+            }else{
+                $realip=getenv('REMOTE_ADDR');
+            }
+        }
+        $ipdetail=[
+            'ip'=>$realip,
+            'look_date'=>date('Y-m-d H:i:s',time()),
+            'look_type'=>'前台',
+            'username'=>$value
+        ];
+        return Db::name('ip')->insert($ipdetail);
+    }
+
 }

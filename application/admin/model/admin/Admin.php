@@ -10,7 +10,6 @@ use think\Model;
 
 class Admin extends  Model
 {
-
     public function getAdminStatusAttr($value){
         $get=['0'=>'停用','1'=>'启用','2'=>'已删除'];
         return $get[$value];
@@ -19,7 +18,6 @@ class Admin extends  Model
 //        $role=RoleModel::where('role_id','=',$value)->select();
         $role=Db::name('role')->field('role_name')->where('role_id',$value)->select();
         return $role;
-
     }
 
 }

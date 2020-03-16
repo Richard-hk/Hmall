@@ -163,16 +163,6 @@
 <script type="text/javascript">
 
 	$(function(){
-		if(!window.name||window.name=='web'||window.name=='back'){
-			window.name = 'back1';
-			$.ajax({
-				url: 'admin.php/index/get_real_ip',
-				type:'POST',
-				dataType: 'json',
-				success:function(result){
-				},
-			});
-		}
 
 		/*$("#min_title_list li").contextMenu('Huiadminmenu', {
             bindings: {

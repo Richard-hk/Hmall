@@ -20,27 +20,31 @@
         <div class="top">
             <span style="font-size: 24px;">全部商品</span>
         </div>
-        <div class="center">
-            <span style="margin-left:15px;"><input type="checkbox" id="chooseAll" name="test" value="choose">&nbsp;<span class="select_all">全选</span></span>
-            <span style="margin-left:100px;">商品信息</span>
-            <span style="margin-left:400px;">单价</span>
-            <span style="margin-left:160px;">数量</span>
-            <span style="margin-left:160px;">金额</span>
+        <div class="center" style="padding: 0 14px;">
+            <span style="width:80px;text-align: left"><input type="checkbox" id="chooseAll" name="test" value="choose"><span class="select_all" style="float: none;">全选</span></span>
+            <span style="width:482px;">商品信息</span>
+            <span style="width:200px; ">单价</span>
+            <span style="width:200px;">数量</span>
+            <span style="width:200px;">金额</span>
         </div>
+        {volist name='list' id='sku_car'}
+
         <div class="middle">
-            {volist name='list' id='sku_car'}
-            <div class="item fl">
-                <div class="choose1 fl"><input type="checkbox" name="choose" value="{$sku_car.good_sku_id}">&nbsp;选择</div>
-                <div class="left1 fl">
-                    <img style="height: 140px;" src="{$sku_car.good_sku_pic}">
+                <div class="choose1 fl">
+                    <input type="checkbox" name="choose" value="{$sku_car.good_sku_id}">&nbsp;选择
                 </div>
-                <div class="center1 fl">{$sku_car.brand_name}{$sku_car.good_name} {$sku_car.good_sku_rom}G+{$sku_car.good_sku_ram}G</div>
-                <div class="right1 fr">
-                    <div class="left2 fl">
+                <div class="left1 fl" >
+                    <img style="height: 100px;" src="{$sku_car.good_sku_pic}">
+                </div>
+                <div class="center1 fl" >
+                    {$sku_car.brand_name} {$sku_car.good_name} {$sku_car.good_sku_color} {$sku_car.good_sku_rom}G+{$sku_car.good_sku_ram}G
+                </div>
+                <div class="right1 fr" >
+                    <div class="left2 fl" >
                         <span class="good_price">{$sku_car.good_price}</span>
                     </div>
-                    <div class="center2 fl">
-                        <div class="box">
+                    <div class="center2 fl" >
+                        <div class="box" >
                             <div class="des_number">
                                 <div class="reduction">-</div>
                                 <div class="des_input">
@@ -50,13 +54,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="right2 fl">
+                    <div class="right2 fl" >
                         <span class="single_price">{$sku_car.sku_num*$sku_car.good_price|round=2}.00</span>
                     </div>
                 </div>
-            </div>
-            {/volist}
         </div>
+        {/volist}
+
         <div class="bottom">
             <span style="margin-left:15px;">删除</span>
             <span style="margin-left:40px;">已选商品 <span class="select_num" style="color: #CF0A2C">0</span> 件</span>

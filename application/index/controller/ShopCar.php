@@ -7,7 +7,7 @@ namespace app\index\controller;
 use think\Controller;
 use think\Db;
 use think\facade\Session;
-use app\index\model\shopcar\sku_car as shopCarModel;
+use app\index\model\shopcar\SkuCar as shopCarModel;
 
 class ShopCar extends Controller
 {
@@ -18,10 +18,8 @@ class ShopCar extends Controller
             $list=$car->getShopCar($customer_namme);
             if($list==0){
                 $this->assign('list','none');
-
             }else{
                 $this->assign('list',$list);
-
             }
 
 

@@ -57,7 +57,7 @@
             <p style="text-align: center;background-color: white"><span style="font-size: 30px;">欢迎登录</span>
             </p>
             <p>用户名称：
-                <input  type="text" name="username" id="username" value="kehui4" class="login" autocomplete="off" placeholder="请输入用户名" size="22">
+                <input  type="text" name="username" id="username" value="kehui" class="login" autocomplete="off" placeholder="请输入用户名" size="22">
             </p>
             <p>用户密码：
                 <input type="password" name="password" id="password" value="kehui" class="login" autocomplete="off" placeholder="这里输入密码" size="22">
@@ -109,7 +109,6 @@
                  processData: false,
                  contentType: false,
                  success:function(data){
-                     // alert(data);
                      if(data==0){
                          alert('用户名不存在');
                      }else if(data==1){

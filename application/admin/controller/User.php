@@ -11,7 +11,7 @@ class User extends  Controller
 {
     public function login()
     {
-     return $this->fetch('login');
+      return $this->fetch('login');
     }
 
     public function check(){
@@ -26,13 +26,14 @@ class User extends  Controller
                 return json('psw_err');
             }else{
                 Cookie::set('admin_name',$admin_name,36000);
+                User::get_real_ip($admin_name);
                 return json('correct');
             }
         }else{
             return json('code_err');
         }
     }
-    public function get_real_ip(){
+    public function get_real_ip($value=null){
         static $realip;
         if(isset($_SERVER)){
             if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])){
@@ -54,7 +55,8 @@ class User extends  Controller
         $ipdetail=[
             'ip'=>$realip,
             'look_date'=>date('Y-m-d H:i:s',time()),
-            'look_type'=>'后台'
+            'look_type'=>'后台',
+            'adminname'=>$value
         ];
         Db::name('ip')->insert($ipdetail);
     }

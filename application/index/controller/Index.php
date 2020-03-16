@@ -47,12 +47,12 @@ class Index extends Controller
                 $realip=getenv('REMOTE_ADDR');
             }
         }
+
         $ipdetail=[
             'ip'=>$realip,
-            'look_date'=>date('Y-m-d H:m:i',time()),
+            'look_date'=>date('Y-m-d H:i:s',time()),
             'look_type'=>'前台'
         ];
-        Db::name('ip')->insert($ipdetail);
-        $this->redirect('/');
+        return Db::name('ip')->insert($ipdetail);
     }
 }

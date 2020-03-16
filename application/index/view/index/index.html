@@ -76,16 +76,16 @@
                     <div class="second-menu-item" style="position:absolute; z-index:2;">
                         <dl>
                             <div class="second-inline">
-                                <dt><a href="#">Apple MacBook Pro </a></dt>
-                                <dt><a href="#">Apple MacBook Air </a></dt>
-                                <dt><a href="#">Huawei Matebook E</a></dt>
-                                <dt><a href="#">Huawei Matebook D</a></dt>
-                                <dt><a href="#">Huawei Matebook X</a></dt>
-                                <dt><a href="#">Xiaomi Air 12.5</a></dt>
+                                <dt><a href="#">Apple MacBook  </a></dt>
+                                <dt><a href="#">Apple MacBook  </a></dt>
+                                <dt><a href="#">Huawei Matebook </a></dt>
+                                <dt><a href="#">Huawei Matebook </a></dt>
+                                <dt><a href="#">Huawei Matebook </a></dt>
+                                <dt><a href="#">Xiaomi Air </a></dt>
                             </div>
                             <div class="second-inline">
-                                <dt><a href="#">Xiaomi Air 13.3</a></dt>
-                                <dt><a href="#">Samsung xingyao</a></dt>
+                                <dt><a href="#">Xiaomi Air </a></dt>
+                                <dt><a href="#">Samsung </a></dt>
                             </div>
                         </dl>
                     </div>
@@ -239,13 +239,14 @@
 <script type="text/javascript" src="/static/index/js/index.js"></script>
 <script>
     $(document).ready(function () {
-            if(!window.name||window.name=='back'||window.name=='back1'){
+            if(!window.name||window.name=='back'){
                 window.name = 'web';
                 $.ajax({
                     url: '/index/index/get_real_ip',
                     type:'POST',
                     dataType: 'json',
                     success:function(result){
+                        return result;
                     },
                 });
             }
