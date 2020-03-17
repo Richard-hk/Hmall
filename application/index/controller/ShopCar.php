@@ -25,4 +25,8 @@ class ShopCar extends Controller
 
         return $this->fetch('shopCar');
     }
+    public function deleteCar(){
+        $good_sku_ids= $_POST['good_sku_ids'];
+        return Db::name('sku_car')->where('customer_name',Session::get('customer_name'))->where('good_sku_id','in',$good_sku_ids)->delete();
+    }
 }

@@ -25,7 +25,8 @@ class User extends  Controller
             }elseif ($result['admin_psw']!=$admin_psw){
                 return json('psw_err');
             }else{
-                Cookie::set('admin_name',$admin_name,36000);
+//                Cookie::set('admin_name',$admin_name,36000);
+                session('admin_name',$admin_name);
                 User::get_real_ip($admin_name);
                 return json('correct');
             }

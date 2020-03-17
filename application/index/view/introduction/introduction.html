@@ -9,8 +9,7 @@
 
 <body>
 {include file='common/top'/}
-<div class="comwidth"><div class="link"><a href="index.html">灰灰网首页</a><span>&gt;&gt;</span>"华为nova5z"</div></div>
-
+<div class="comwidth"><div class="link"><a href="/">灰灰网首页</a><span>&gt;&gt;</span>"华为nova5z"</div></div>
 <div class="shop-buy comwidth">
     <div class="shop-pic fl">
         <img class="pic" src="{$good_pic}">
@@ -63,13 +62,12 @@
         <div class="choose">
             <span class="sku_id"  style="display: none"></span>
             <div class="add fl"><a href="#" onclick="addToShopCar()">加入购物车</a></div>
-            <div class="buy fl"><a href="#">立即购买</a></div>
+            <div class="buy fl"><a>立即购买</a></div>
         </div>
 
 
     </div>
 </div>
-
 <div class="shop-show comwidth">
     <div class="show1">
         <ul>
@@ -117,6 +115,7 @@
 <script>
 
     function addToShopCar(){
+
         var good_sku_id=$.trim($('.sku_id').html());
         if(good_sku_id){
             var num=t = $('.num').val();
@@ -138,6 +137,21 @@
         }
     }
     $(function(){
+        $('.buy').click(function () {
+            var good_sku_id=$('.sku_id').html();
+            if(good_sku_id!=''){
+                var sku_num=$('.num').val();
+                var array_info=[];
+                var buy_info={};
+                buy_info['good_sku_id']=good_sku_id;
+                buy_info['sku_num']= sku_num;
+                array_info[0]=buy_info;
+                sessionStorage.setItem('array_info',JSON.stringify(array_info));
+                window.location.href='payMethod';
+            }else {
+                alert('请选择颜色和版本');
+            }
+        });
         $('.test').click(function () {
             alert(1);
         });
@@ -280,6 +294,7 @@
         var t = $('.num');/*  数量显示框*/
         $('.plus').click(function(){
             var max=$('.xg').find('em').html();
+            max=parseInt(max);
             if($.trim(max)!=""){
                 if(t.val()<max){/* 数量最大不能超过商品库存量 */
                     t.val(parseInt(t.val())+1);
@@ -287,6 +302,18 @@
                     t.val(1);
                 }
             }
+        });
+        $('.num').blur(function () {
+            var max=$('.xg').find('em').html();
+            max=parseInt(max);
+            if($.trim(max)!=""){
+                if(t.val()>max){/* 数量最大不能超过商品库存量 */
+                    t.val(1);
+                }
+            }
+        });
+        $('.num').dblclick(function () {
+            t.val(1);
         });
         $('.reduction').click(function(){
             if(t.val()<=1){	/*数量最少为1  */

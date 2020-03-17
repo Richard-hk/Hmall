@@ -13,7 +13,7 @@
 <div class="shoppingCart comwidth">
     {if condition="$list eq 'none'"}
     <div class="comwidth" style="height: 500px;text-align: center;line-height: 500px">
-        没有数据
+        没有购物车数据
     </div>
     {else /}
     <div class="shop-item">
@@ -62,7 +62,7 @@
         {/volist}
 
         <div class="bottom">
-            <span style="margin-left:15px;">删除</span>
+            <span style="margin-left:15px;" class="deleteCar">删除</span>
             <span style="margin-left:40px;">已选商品 <span class="select_num" style="color: #CF0A2C">0</span> 件</span>
             <span style="margin-left:740px;">金额:</span>
             <div class="right fr">
@@ -80,10 +80,57 @@
 
 </body>
 <script type="text/javascript" src="/static/index/js/jquery.min.js"></script>
-
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/static/admin/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/static/admin/h-ui.admin/js/H-ui.admin.js"></script>
 <script>
 
     $(document).ready(function () {
+        $('.deleteCar').click(function () {
+            var good_sku_ids=[];
+            var index =0;
+            $("[name='choose']").each(function () {
+                if ($(this).is(':checked')) {
+                    var good_sku_id=$(this).val();
+                    good_sku_ids[index]=good_sku_id;
+                    index++;
+                }
+            });
+            if(index==0){
+                layer.msg('请选择删除的商品', {icon: 1, time: 1111});
+
+            }else {
+                layer.confirm('确认要删除吗',function(index){
+
+                $("[name='choose']").each(function () {
+                    if ($(this).is(':checked')) {
+                        var good_sku_id=$(this).val();
+                        good_sku_ids[index]=good_sku_id;
+                        index++;
+                    }
+                });
+                $.ajax(
+                    {
+                        url:'index/Shop_Car/deleteCar',
+                        type:'post',
+                        dataType:'json',
+                        data:{'good_sku_ids':good_sku_ids},
+                        success:function (result) {
+                            if(result>0){
+                                layer.msg('删除成功', {icon: 1, time: 1111});
+                                window.location.reload()
+                            }
+                        }
+
+                    }
+                )
+            });
+            }
+        });
+
+
+
         var count=0;
         var num=0;
         var money=0.00;

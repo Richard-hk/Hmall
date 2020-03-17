@@ -6,6 +6,7 @@ namespace app\index\controller;
 use app\index\model\paymethod\good_sku as good_skuModel;
 use think\Controller;
 use think\Db;
+use think\facade\Request;
 use think\facade\Session;
 
 class PayMethod extends Controller
@@ -32,6 +33,8 @@ class PayMethod extends Controller
             'out_trade_no'=>$out_trade_no,
         ]);
         return $this->fetch('payMethod');
+
+
     }
     public function PayDetail(){
         $good_sku_id=$_POST['good_sku_id'];

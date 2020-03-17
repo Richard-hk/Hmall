@@ -161,7 +161,11 @@ class Alipay extends Controller
 
         $order_list=new OrderInfo();
         $list=$order_list->getOrder($customer_name);
-        $this->assign('order_list',$list);
+        if($list==""){
+            $this->assign('order_list',$list);
+        }else{
+            $this->assign('order_list',-1);
+        }
         return $this->fetch('myOrder');
     }
     public function deleteCar($order_id){

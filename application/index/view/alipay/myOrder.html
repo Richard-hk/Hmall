@@ -10,6 +10,13 @@
 <body>
 {include file='common/top'}
 
+{if condition="$order_list eq '-1'"}
+<div style="height: 500px;text-align: center;line-height: 500px">
+么有订单信息
+</div>
+{else/}
+
+
 <div class="comwidth">
     {volist name='order_list' id='order'}
 
@@ -58,6 +65,8 @@
     {/volist}
 
 </div>
+{/if}
+
 {include file='common/foot'}
 </body>
 </html>
