@@ -15,14 +15,14 @@
     }
     .left{
         margin-top: 30px;
-        min-width: 300px;height: 500px;
+        min-width: 200px;height: 500px;
         background-color: #FFFfff;
         border-radius: 15px;
     }
 
     .left1{margin-top: 15px;}
     .left1 li{
-        width: 300px;
+        width: 220px;
         height: 40px;
         text-align: center;
         font-size: 20px;
@@ -35,18 +35,17 @@
     .right{
         border-radius: 15px;
         margin-top: 30px;
-        width: 880px;;
+        width: 960px;;
         height: 500px;
         background-color:#ffffff;;
 
     }
 
     .li_4{
-        background-color: #DE1536;
-        color: #FFFfff;
+        background-color: #D1E8FC;
     }
-    .right3{
-        padding: 40px 50px;
+    .right1 ,.right2,.right3{
+        padding: 30px;
     }
     .right3 select{
         background-color: #F0F0F0;
@@ -58,10 +57,9 @@
         height: 34px;
         background-color: #F0F0F0;
     }
-    .right3 li{
-
+    .right1 li,.right3 li{
         height: 40px;
-        width: 400px;
+        min-width: 400px;
     }
     .submit{
         width: 80px;
@@ -69,6 +67,24 @@
         text-align: center;
         background-color: #DE1536;
         color: #FFFfff;
+    }
+    .table{background-color:#fff}.table-border{border-top:1px solid #ddd}
+    .table-border th,.table-border td{border-bottom:1px solid #ddd}
+    .table-bg thead th{background-color:#f5fafe}.table-bordered{border:1px solid #ddd;border-collapse:separate;*border-collapse:collapse;border-left:0}.table-bordered th,.table-bordered td{border-left:1px solid #ddd}.table-border.table-bordered{border-bottom:0}
+    .table-bordered{border:1px solid #ddd;border-collapse:separate;*border-collapse:collapse;border-left:0}
+    .table-bordered th,.table-bordered td{border-left:1px solid #ddd}
+    .table-border.table-bordered{border-bottom:0}
+    .table{width:100%;max-width:100%;border-collapse:collapse;border-spacing:0;}
+    .table th{border-bottom:2px solid #ddd;vertical-align:bottom;padding:8px;text-align:left;}
+    .table td{border-top:1px solid #ddd;padding:8px;vertical-align:top;}
+    .table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th{background-color:#f9f9f9;}/*条纹-IE9以下无效果*/
+    .table-bordered th,.table-bordered td{border:solid 1px #ddd;}
+    .table-bordered th{border-bottom:2px solid #ddd;}
+    .table-hover > tbody > tr:hover > td,.table-hover > tbody > tr:hover > th{background-color:#f9f9f9;}/*不支持IE6*/
+    .table-condensed th,.table-condensed td{padding:5px;}
+    @media (max-width:760px){
+        .table-responsive{width:100%;overflow-x:scroll;overflow-y:hidden;-webkit-overflow-scrolling:touch;-ms-overflow-style:-ms-autohiding-scrollbar;}
+        .table-responsive .table tr th, .table-responsive .table tr td{white-space:nowrap;}
     }
 </style>
 <body>
@@ -89,15 +105,55 @@
     </div>
     <div class="right fl">
 
-        <div class="box right1">
+        <div class="box right1" >
+            <ul>
+                <li>账号名称：{$customer_name}</li>
+                <li>性&emsp;&emsp;别：{$customer_sex}</li>
+                <li>邮&emsp;&emsp;箱：{$customer_email}</li>
+                <li>电话号码：{$customer_phone}</li>
+                <li>注册日期：{$customer_gmt_created}</li>
+            </ul>
 
 
-            等待开发
         </div>
          <div class="box right2" style="display: none" >
 
 
-             等待开发
+             <table class="table table-border table-bordered table-bg">
+                 <thead>
+                 <tr>
+                     <th scope="col" colspan="7" >我的地址：</th>
+                 </tr>
+                 <tr class="text-c">
+                     <th width="40">姓名</th>
+                     <th width="40">电话号码</th>
+                     <th>详细地址</th>
+                     <th width="80">默认</th>
+                     <th width="40">操作</th>
+                 </tr>
+                 </thead>
+                 <tbody>
+                 {volist name='address' id='address'}
+                 <tr class="text-c">
+
+                     <td style="display: none" class="address_id">{$address.address_id}</td>
+                     <td>{$address.address_name}</td>
+                     <td>{$address.address_phone}</td>
+                     <td>{$address.address_province}{$address.address_city}
+                         {$address.address_region}
+                         {$address.address_detail}</td>
+                    <td class="default">{if condition='$address.is_default eq 1'}
+                        <span style="color: #ee5f5b" class="de">默认地址</span>
+                        {else/}
+                        设为默认
+                        {/if}
+                    </td>
+                    <td class="delete">删除</td>
+                 </tr>
+                 {/volist}
+
+                 </tbody>
+             </table>
 
          </div>
 
@@ -127,6 +183,44 @@
 </body>
 <script>
     $(document).ready(function () {
+        $('.default').click(function () {
+            var address_id=$(this).siblings('.address_id').html();
+           if($.trim($(this).html())=='设为默认'){
+               $('.de').replaceWith('设为默认');
+               $(this).html('<span style="color: #ee5f5b" class="de">默认地址</span>\n');
+               $.ajax({
+                   url:'index/User/updateAddress',
+                   data:{'address_id':address_id},
+                   type: 'post',
+                   dataType:'json',
+                   success:function (result) {
+                   }
+               })
+           } else {
+
+           }
+        });
+
+        $('.delete').click(function () {
+            var address_id=$(this).siblings('.address_id').html();
+            var obj=$(this);
+            $.ajax({
+               url:'index/User/deleteAddress',
+               data:{'address_id':address_id},
+               type: 'post',
+               dataType:'json',
+               success:function (result) {
+                   if(result){
+                       obj.parent('tr').remove();
+                   }
+               }
+
+           })
+
+
+        });
+
+
         $('.submit').click(function () {
             var formData = new FormData($('#form')[0]);
             $.ajax(
@@ -138,9 +232,9 @@
                     processData: false,
                     contentType: false,
                     success:function (result) {
-                        alert(result)
                         if(result==1){
                             layer.msg('地址添加成功', {icon: 1, time: 1111});
+                            setTimeout('window.location.reload()',1111);
                         }else{
                             layer.msg('地址添加失败', {icon: 1, time: 1111});
 

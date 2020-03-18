@@ -161,7 +161,7 @@ class Alipay extends Controller
 
         $order_list=new OrderInfo();
         $list=$order_list->getOrder($customer_name);
-        if($list==""){
+        if(count($list)){
             $this->assign('order_list',$list);
         }else{
             $this->assign('order_list',-1);

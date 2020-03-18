@@ -163,6 +163,7 @@ $(function(){
 						url: 'adminRoleAddAct' ,
 						success: function(data){
 							layer.msg('添加成功!',{icon:1,time:1111});
+							window.parent.location.reload();
 						},
 						error: function(XmlHttpRequest, textStatus, errorThrown){
 							alert(errorThrown);

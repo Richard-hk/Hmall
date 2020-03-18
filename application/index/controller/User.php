@@ -9,7 +9,10 @@ use sina\SaeTOAuthV2;
 use think\Controller;
 use think\facade\Cookie;
 use think\Db;
-use think\facade\Session;use think\Loader;
+use think\facade\Session;
+use app\index\model\user\Customer as userModel;
+use app\index\model\user\Address as addressModel;
+use function Sodium\add;
 
 class User extends Controller
 {
@@ -146,7 +149,20 @@ class User extends Controller
     }
 
     public function userInfo(){
-        \session('customer_cutomer');
+        $customer_name=Session::get('customer_name');
+        $list=userModel::where('customer_name',$customer_name)->select();
+        $address=Db::name('address')->where([['customer_name','=',$customer_name],['is_default','<','2']])->select();
+
+        $this->assign([
+            'customer_name'=>$customer_name,
+            'customer_sex'=>$list[0]['customer_sex'],
+            'customer_phone'=>$list[0]['customer_phone'],
+            'customer_email'=>$list[0]['customer_email'],
+            'customer_gmt_created'=>$list[0]['customer_gmt_created'],
+            'address'=>$address
+        ]);
+
+
         return $this->fetch('userInfo');
 
     }
@@ -171,10 +187,30 @@ class User extends Controller
             'address_detail'=>$_POST['address_detail'],
             'is_default'=>$is_default
         ];
-        return json_encode($address);
+//        return json_encode($address);
         $add=Db::name('address');
-        $list=$address->insert($add);
+        $list=$add->insert($address);
         return $list;
+    }
+
+    public function updateAddress(){
+        $address_id=$_POST['address_id'];
+        $address=Db::name('address');
+        $customer_name=Session::get('customer_name');
+        $address->where([['customer_name','=',$customer_name],['is_default','=','1']])->data('is_default',0)->update();
+        return $address->removeOption('where')->where([['address_id','=',$address_id],['customer_name','=',$customer_name]])->data('is_default',1)->update();
+    }
+
+    public function deleteAddress(){
+        $address_id=$_POST['address_id'];
+        $customer_name=Session::get('customer_name');
+        $address= Db::name('address');
+        $list=Db::name('order_info')->where([['customer_name','=',$customer_name],['address_id','=',$address_id]])->find();
+        if($list){
+            return  $address->where([['address_id','=',$address_id],['customer_name','=',$customer_name]])->data('is_default',2)->update();
+        }else{
+            return $address->where([['address_id','=',$address_id],['customer_name','=',$customer_name]])->delete();
+        }
     }
 
     public function province()
