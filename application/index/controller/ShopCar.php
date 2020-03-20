@@ -13,7 +13,8 @@ class ShopCar extends Controller
 {
 
     public function shopCar(){
-        $customer_namme=Session::get('customer_name');
+        if(\session('customer_name')){
+            $customer_namme=Session::get('customer_name');
             $car=new shopCarModel();
             $list=$car->getShopCar($customer_namme);
             if($list==0){
@@ -21,9 +22,10 @@ class ShopCar extends Controller
             }else{
                 $this->assign('list',$list);
             }
-
-
-        return $this->fetch('shopCar');
+            return $this->fetch('shopCar');
+        }else{
+            $this->success('请登陆后查看','/login');
+        }
     }
     public function deleteCar(){
         $good_sku_ids= $_POST['good_sku_ids'];

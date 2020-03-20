@@ -9,15 +9,22 @@
 
 <body>
 {include file='common/top'/}
-<div class="comwidth"><div class="link"><a href="/">灰灰网首页</a><span>&gt;&gt;</span>"华为nova5z"</div></div>
+<div class="comwidth"><div class="link"><a href="/">首页</a>
+    {volist name='goodCategory' id='category'}
+    <span>&gt;</span>{$category.category.p_category.brand.brand_name}
+    <span>&gt;</span>{$category.category.p_category.category_name}
+    <span>&gt;</span>{$category.category.category_name}
+    <span>&gt;</span>{$category.good_name}
+</div></div>
 <div class="shop-buy comwidth">
     <div class="shop-pic fl">
         <img class="pic" src="{$good_pic}">
     </div>
     <div class="shop-item fl">
         <div class="top">
-            <h3>{$brand_name.$good_name}</h3>
-            <p class="item">{$good_desc}</p>
+            <h3>{$category.category.p_category.brand.brand_name}{$category.good_name}</h3>
+            <p class="item">{$category.good_desc}</p>
+            {/volist}
             <p  class="item1"><span>{$min_price}~{$max_price}</span></p>
         </div>
 
@@ -64,42 +71,61 @@
             <div class="add fl"><a href="#" onclick="addToShopCar()">加入购物车</a></div>
             <div class="buy fl"><a>立即购买</a></div>
         </div>
-
-
     </div>
 </div>
 <div class="shop-show comwidth">
-    <div class="show1">
+    <div class="show1" style="width: 400px;">
         <ul>
-            <li style="border-bottom:2px solid#ca151d;">产品介绍</li><li>产品参数</li><li> 产品评价</li>
+            <li class="show1-li li-1">产品介绍</li><li class="li-2"> 产品评价</li>
         </ul>
     </div>
-    <div class="show2">
-        <div class="show3">
-            <div  class="show3-in" ><input type="button" value="查看商品详细信息" onclick="show4()" class="show3-btn"></div>
+    <div class="show-detail">
+        <div class="show2">
+            <div class="show3">
+                <div  class="show3-in" ><input type="button" value="查看商品详细信息" onclick="show4()" class="show3-btn"></div>
+            </div>
+            <img src="/static/index/images/introduction/item/1.jpg">
+            <img src="/static/index/images/introduction/item/2.jpg">
         </div>
-        <img src="/static/index/images/introduction/item/1.jpg">
-        <img src="/static/index/images/introduction/item/2.jpg">
+        <div class="show4" style="display:none;">
+            <img src="/static/index/images/introduction/item/3.jpg">
+            <img src="/static/index/images/introduction/item/4.jpg">
+            <img src="/static/index/images/introduction/item/5.jpg">
+            <img src="/static/index/images/introduction/item/6.jpg">
+            <img src="/static/index/images/introduction/item/7.jpg">
+            <img src="/static/index/images/introduction/item/8.jpg">
+            <img src="/static/index/images/introduction/item/9.jpg">
+            <img src="/static/index/images/introduction/item/10.jpg">
+            <img src="/static/index/images/introduction/item/11.jpg">
+            <img src="/static/index/images/introduction/item/12.jpg">
+            <img src="/static/index/images/introduction/item/13.jpg">
+            <img src="/static/index/images/introduction/item/14.jpg">
+            <img src="/static/index/images/introduction/item/15.jpg">
+            <img src="/static/index/images/introduction/item/16.jpg">
+            <img src="/static/index/images/introduction/item/17.jpg">
+        </div>
+        <div class="show5 hide" onclick="hide4()">
+            <img src="/static/index/images/introduction/6.jpg" class="show5-img">
+        </div>
     </div>
-    <div class="show4" style="display:none;">
-        <img src="/static/index/images/introduction/item/3.jpg">
-        <img src="/static/index/images/introduction/item/4.jpg">
-        <img src="/static/index/images/introduction/item/5.jpg">
-        <img src="/static/index/images/introduction/item/6.jpg">
-        <img src="/static/index/images/introduction/item/7.jpg">
-        <img src="/static/index/images/introduction/item/8.jpg">
-        <img src="/static/index/images/introduction/item/9.jpg">
-        <img src="/static/index/images/introduction/item/10.jpg">
-        <img src="/static/index/images/introduction/item/11.jpg">
-        <img src="/static/index/images/introduction/item/12.jpg">
-        <img src="/static/index/images/introduction/item/13.jpg">
-        <img src="/static/index/images/introduction/item/14.jpg">
-        <img src="/static/index/images/introduction/item/15.jpg">
-        <img src="/static/index/images/introduction/item/16.jpg">
-        <img src="/static/index/images/introduction/item/17.jpg">
-    </div>
-    <div class="show5 hide" onclick="hide4()">
-        <img src="/static/index/images/introduction/6.jpg" class="show5-img">
+    <div class="comment fl"  style="display: none" >
+        {volist name='commentList' id='sku'}
+            {volist name="sku['sku_order']" id='comment'}
+                {if condition="$comment.comment.comment_text neq null"}
+                <div class="comment_show">
+                    <div class="user">
+                        <div class="user_pic">
+                        <img src='{$comment.order_info.customer.customer_pic}' style="width: 60px;height: 60px;border-radius: 30px;"/>
+                        </div>
+                        <span>{$comment.order_info.customer_name}</span></div>
+                    <div class="user_right">
+                        <div class="comment_text">{$comment.comment.comment_text}<span class="time">{$comment.comment.comment_time|date='Y-m-d H:i:s'}</span></div>
+                        <div class="size">颜色：{$sku.good_sku_color} &emsp;规格：{$sku.good_sku_rom}G+{$sku.good_sku_ram}G </div>
+                    </div>
+                </div>
+               {/if}
+            {/volist}
+        {/volist}
     </div>
 </div>
 
@@ -115,7 +141,6 @@
 <script>
 
     function addToShopCar(){
-
         var good_sku_id=$.trim($('.sku_id').html());
         if(good_sku_id){
             var num=t = $('.num').val();
@@ -126,10 +151,13 @@
                     type:'post',
                     dataType:'json',
                     success:function (result) {
-                        if(result==0){
-                            layer.msg('添加购物车失败',{icon:1,time:1111});
+                        if(result==-1){
+                            layer.msg('请先登陆',{icon:1,time:1111});
+                        }else if(result==0){
+                            layer.msg('添加购物车失败', {icon: 1, time: 1111});
                         }else {
                             layer.msg('添加购物车成功', {icon: 1, time: 1111});
+
                         }
                     }
                 }
@@ -137,6 +165,20 @@
         }
     }
     $(function(){
+        $('.li-2').click(function () {
+            $('.li-1').removeClass('show1-li');
+            $(this).addClass('show1-li');
+            $('.show-detail').css('display','none');
+            $('.comment').css('display','block');
+        });
+        $('.li-1').click(function () {
+            $('.li-2').removeClass('show1-li');
+            $(this).addClass('show1-li');
+            $('.show-detail').css('display','block');
+            $('.comment').css('display','none');
+        });
+
+
         $('.buy').click(function () {
             var good_sku_id=$('.sku_id').html();
             if(good_sku_id!=''){
@@ -149,7 +191,8 @@
                 sessionStorage.setItem('array_info',JSON.stringify(array_info));
                 window.location.href='payMethod';
             }else {
-                alert('请选择颜色和版本');
+                layer.msg('请选择颜色和版本',{icon:1,time:1111});
+
             }
         });
         $('.test').click(function () {

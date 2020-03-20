@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>意见反馈</title>
+	<style>
+		input{ outline:none; }
+		input:focus{ outline:none; }
+		input{ outline:none; border:0; }
+		body{padding: 0;margin: 0;background-color: #F2F2F2;}
+		.top_div{height: 30px;line-height: 30px;float: left}
+		.top_a{text-decoration: none;color: #FFFfff;}
+		img{float: left}
+		.top{width: 100%;height: 70px;background-color: #333333}
+		.pic{ width:350px; height:30px;float: left;  margin-top: 20px;line-height: 30px;font-size: 21px}
+		.login-box{ width:450px;font-size: 18px; height:530px; margin:0 auto; padding:5px }
+		.login-box h2{ text-align:center;}
+		.login-button1{ width:80px; height:35px; margin-top:20px; background-color: #0e90d2}
+		.stern{ width:1000px;margin:30px auto; text-align: center}
+		.com{width:700px;margin: 0 auto}
+		.login_div{background-color: #FFFfff;margin-top: 40px;}
+		.login_div p{background-color: #F7F7F7; height:40px;border-radius: 10px;margin-bottom: 30px;padding: 0 25px;line-height: 40px}
+		input{border: none;background-color:#F7F7F7; }
+		.login-button1{background-color: #D1314B;color: #FFFfff;border-radius: 10px;}
+
+		.login-list li{ float:left;}
+		.stern{ width:600px;margin:30px auto;}
+		a{text-decoration:none;color: black}
+		.login-box a:hover{color: #B40707}
+		a {blr:expression(this.onFocus=this.blur());outline: none;}
+		a:focus {outline: none;}
+		.top_a img{height: 30px;}
+		textarea{font-size: 18px; padding: 5px; margin: 20px auto 10px;}
+	</style>
+</head>
+
+<body>
+
+<form name="form1" >
+
+	<div class="top">
+		<div class="com">
+			<div class="pic"><a href="/" class="top_a"><img src="/static/index/img/register.png"><div class="top_div"><a href="/" class="top_a">&nbsp;<strong>|</strong>&nbsp;&nbsp;灰灰商城</a></div></div>
+		</div>
+	</div>
+	<div class="com login_div">
+		<div class="login-box"  >
+			<p style="text-align: center;background-color: white;"><span style="font-size: 30px;">意见反馈</span>
+
+			<textarea rows="15" cols="35" placeholder="写下你宝贵的意见" class="feed_text"></textarea>
+			<input type="button" class="login-button1" id="login"  name="btn" value="提交" style="">
+			<input type="reset" class="login-button1" name="btn" value="重置" style="float:right; margin-right:70px;"><br/>
+		</div>
+
+	</div>
+
+</form>
+<div class="stern">
+	<p>赞助厂商：灰灰有限公司版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址：中国湖北省&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客服热线：15797274125</p>
+</div>
+
+</body>
+<script type="text/javascript" src="/static/index/js/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/static/admin/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/static/admin/h-ui.admin/js/H-ui.admin.js"></script>
+<script>
+	$('#login').click(function () {
+		var feed_text=$('.feed_text').val();
+		if($.trim(feed_text)){
+			$.ajax(
+					{
+						url:'index/common/feedbackAct',
+						data:{'feed_text':feed_text},
+						dataType:'json',
+						type:'post',
+						success:function (result) {
+							if(result){
+								layer.msg('谢谢你的反馈', {icon: 6, time: 1111});
+								setTimeout('window.location.href=\'/\'',1111);
+							}
+						}
+
+					}
+			)
+		}else {
+			layer.msg('请输入反馈信息', {icon: 6, time: 1111});
+
+		}
+
+	})
+
+</script>
+</html>

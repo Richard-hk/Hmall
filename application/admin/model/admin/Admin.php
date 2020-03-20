@@ -15,8 +15,10 @@ class Admin extends  Model
         return $get[$value];
     }
     public function  getRoleIdAttr($value){
-//        $role=RoleModel::where('role_id','=',$value)->select();
-        $role=Db::name('role')->field('role_name')->where('role_id',$value)->select();
+        $role=Db::name('role')
+            ->field('role_name')
+            ->where('role_id',$value)
+            ->select();
         return $role;
     }
 

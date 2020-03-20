@@ -67,17 +67,15 @@
                         type: 'POST',
                         url: 'adminAuthorChildAddAct' ,
                         success: function(data){
-                            alert(data);
                             layer.msg('添加成功!',{icon:1,time:1111});
+                            setTimeout("parent.location.reload()",1111);
                         },
                         error: function(XmlHttpRequest, textStatus, errorThrown){
-                            alert(errorThrown);
                             layer.msg('已存在数据!',{icon:1,time:1111});
+                            setTimeout("parent.location.reload()",1111);
                         }
                     }
                 );
-                // var index = parent.layer.getFrameIndex(window.name);
-                // setTimeout(parent.layer.close(index),1111);
             }
         });
     });

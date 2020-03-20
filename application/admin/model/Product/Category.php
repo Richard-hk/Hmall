@@ -10,7 +10,10 @@ use think\Model;
 class Category extends  Model
 {
     public function getBrandIdAttr($value){
-        $list=Db::name('brand')->field('brand_name')->where('brand_id',$value)->select();
+        $list=Db::name('brand')
+            ->field('brand_name')
+            ->where('brand_id',$value)
+            ->select();
         return $list;
     }
 }

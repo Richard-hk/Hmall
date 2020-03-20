@@ -353,8 +353,8 @@ class Product extends Controller
     }
 
     public function productListChildEdit(){
-        $request = Request::instance();
-        return  '访问ip地址：' . $request->ip();
+//        $request = Request::instance();
+//        return  '访问ip地址：' . $request->ip();
         $good_sku_id=$_GET['good_sku_id'];
         $list=Db::name('good_sku')->where('good_sku_id',$good_sku_id)->find();
         $this->assign([

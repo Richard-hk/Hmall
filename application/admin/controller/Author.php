@@ -60,19 +60,21 @@ class Author extends Controller
         $this->assign('author_id',$author_id);
         return $this->fetch('adminAuthorChild');
     }
-    public function adminAuthorChildAdd($author_id)//添加子页面
+    public function adminAuthorChildAdd()//添加子页面
     {
+        $author_id=$_GET['author_id'];
         $this->assign('author_id',$author_id);
         return $this->fetch('adminAuthorChildAdd');
     }
     public function adminAuthorChildAddAct()//添加子权限
     {
+
         $author_child=[
             'author_id'=>$_POST['author_id'],
             'author_child_name'=>$_POST['author_child_name'],
             'author_child_src'=>$_POST['author_child_desc']
         ];
-       $list=Db::name('author_child')->insert($author_child);
+        $list=Db::name('author_child')->insert($author_child);
         return $list;
     }
 

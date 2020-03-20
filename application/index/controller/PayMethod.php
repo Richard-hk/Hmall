@@ -3,7 +3,7 @@
 
 namespace app\index\controller;
 
-use app\index\model\paymethod\good_sku as good_skuModel;
+use app\index\model\paymethod\GoodSku as goodskuModel;
 use think\Controller;
 use think\Db;
 use think\facade\Request;
@@ -14,7 +14,7 @@ class PayMethod extends Controller
     public function initialize()
     {
         if(!session('customer_name')){
-           $this->success('非法进入，即将进入主页','/');
+           $this->success('请登陆账号，即将进入登陆页','/login');
         }
     }
 
@@ -38,7 +38,7 @@ class PayMethod extends Controller
     }
     public function PayDetail(){
         $good_sku_id=$_POST['good_sku_id'];
-        $good=new good_skuModel();
+        $good=new goodskuModel();
         return json($good->getDetail($good_sku_id));
     }
     public function return_url(){

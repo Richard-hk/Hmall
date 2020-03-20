@@ -17,7 +17,5 @@ class Common extends  Controller
         $this->assign('look_date',$list[0]['look_date']);
         return $this->fetch('common/welcome');
     }
-    public function feedback(){
-        return $this->fetch('common/feedback');
-    }
+    
 }

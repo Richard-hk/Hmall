@@ -31,7 +31,9 @@ Route::get('alipayaccept','index/alipay/alipayAccept');
 Route::get('paymethod','index/PayMethod/payMethod');
 Route::get('userinfo','index/User/userInfo');
 Route::get('judgepay','index/Alipay/judgePay');
-Route::get('myorder','index/Alipay/myOrder');
+Route::get('myorder','index/Order/myOrder');
+Route::get('topay','index/Alipay/toPay');
+Route::get('feedback','index/Common/feedback');
 
 
 

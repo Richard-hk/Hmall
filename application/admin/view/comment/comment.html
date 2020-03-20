@@ -1,0 +1,65 @@
+﻿{include file='common/style'}
+<title>意见反馈</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 评论管理 <span class="c-gray en">&gt;</span> 评论列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+
+
+	<div class="mt-20">
+		<table class="table table-border table-bordered table-hover table-bg table-sort">
+			<thead>
+				<tr class="text-c">
+					<th width="60">spu编号</th>
+					<th width="60">名称</th>
+					<th width="60">sku编号</th>
+					<th width="60">内存</th>
+					<th width="60">存储</th>
+					<th width="60">颜色</th>
+					<th>留言内容</th>
+					<th width="150">留言时间</th>
+				</tr>
+			</thead>
+			<tbody>
+			{volist name='list' id='comment'}
+			{if condition='$comment.comment.comment_text neq null'}
+			<tr class="text-c">
+				<td>{$comment.good_sku.good_spu_id}</td>
+				<td>{$comment.good_sku.good_spu.good_name}</td>
+				<td>{$comment.good_sku_id}</td>
+				<td class="text-l">{$comment.good_sku.good_sku_rom}</td>
+				<td class="text-l">{$comment.good_sku.good_sku_ram}</td>
+				<td class="text-l">{$comment.good_sku.good_sku_color}</td>
+				<td class="text-l">{$comment.comment.comment_text}</td>
+				<td class="text-l">{$comment.comment.comment_time|date='Y-m-d H:i:s'}</td>
+			</tr>
+
+			{/if}
+
+			{/volist}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.table-sort').dataTable({
+		"aaSorting": [[ 1, "desc" ]],//默认第几个排序
+		"bStateSave": true,//状态保存
+		"aoColumnDefs": [
+		  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+		  {"orderable":false,"aTargets":[0,2,4]}// 制定列不参与排序
+		]
+	});
+
+});
+
+</script>
+</body>
+</html>

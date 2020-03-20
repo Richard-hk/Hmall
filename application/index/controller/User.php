@@ -114,6 +114,8 @@ class User extends Controller
                 'customer_sex'=>$_POST['sex'],
                 'customer_psw'=>md5($_POST['password']),
                 'customer_gmt_created'=>time(),
+                'customer_status'=>1,
+                'customer_pic'=>'uploads\index\user\default.jpg'
             ];
             $list=$customerlist->insert($customer);
             if($list){
@@ -158,6 +160,7 @@ class User extends Controller
             'customer_sex'=>$list[0]['customer_sex'],
             'customer_phone'=>$list[0]['customer_phone'],
             'customer_email'=>$list[0]['customer_email'],
+            'customer_pic'=>$list[0]['customer_pic'],
             'customer_gmt_created'=>$list[0]['customer_gmt_created'],
             'address'=>$address
         ]);
