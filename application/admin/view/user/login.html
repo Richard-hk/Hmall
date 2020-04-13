@@ -88,7 +88,9 @@
                             alert('验证码错误');
                         } else if (result == 'name_err') {
                             alert('用户名不存在');
-                        } else {
+                        } else if(result=='banned') {
+                            alert('该账号已经被禁用，请联系管理员');
+                        }else {
                             alert('密码不正确');
                         }
                     },

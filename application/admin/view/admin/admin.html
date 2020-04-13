@@ -90,12 +90,13 @@ function admin_del(obj,name){
 			dataType: 'json',
 			data:{'admin_name':name},
 			success: function(data){
-				if(data){
-					$(obj).parents("tr").remove();
-					layer.msg('已删除!',{icon:1,time:1111});
-				}else{
-					layer.msg('删除失败',{icon:1,time:1111});
-				}
+				alert(data);
+				// if(data){
+				// 	$(obj).parents("tr").remove();
+				// 	layer.msg('已删除!',{icon:1,time:1111});
+				// }else{
+				// 	layer.msg('删除失败',{icon:1,time:1111});
+				// }
 
 			},
 			error:function(data) {

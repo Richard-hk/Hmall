@@ -6,6 +6,12 @@
 <link type="text/css" rel="stylesheet" href="/static/index/css/com.css">
 <link type="text/css" rel="stylesheet" href="/static/index/css/paymethod.css">
 </head>
+<style>
+    
+    .box input{border: 2px solid #DEF0FF; height: 30px;}
+    select{border: 2px solid #DEF0FF;height: 32px;}
+    .submit{background-color: #CF0A2C;color: white; width: 50px; height: 34px; }
+</style>
 
 <body>
 {include file="/common/top"}
@@ -13,9 +19,38 @@
 
 <div class="address comwidth">
         <p class="address-p">收货地址</p>
-        <ul class="shopping_list">
-            <li><input type="radio" name="address_id" value="{$address_id}" checked > 姓名：{$address_name} 电话号码：{$address_phone}
-                详细地址：{$address_province} {$address_city} {$address_region} {$address_detail}</li>
+        <ul class="shopping_list myaddr">
+            {if condition="$list eq null"}
+                <div class="box right3">
+                        <span>&emsp;添加地址:</span>
+                        <span>姓名：<input type="text" placeholder="姓名" class="address_name" name="address_name"></span>
+                        <span>电话号码：<input type="text" placeholder="电话号码" class="address_phone" name="address_phone"></span>
+                        <span>省市地区：<select name="province" class="province"></select>
+                                     <select name="city" class="city"></select>
+                                     <select name="area" class="area"></select></span>
+                        <span>详细地址：<input type="text" placeholder="详细地址" class="address_detail" name="address_detail"></span>
+                        <span><input type="button"  class="submit" name="submit" value="添加" style="border: none;"></span>
+                </div>
+            {else/}
+            <li>
+                <input type="radio" name="address_id" class="address_id" value="{$list->address_id}" checked >&emsp;
+                <span class="address_detail">
+                    姓名：{$list->address_name} 电话号码：{$list->address_phone} 详细地址：{$list->address_province} {$list->address_city} {$list->address_region} {$list->address_detail}
+                </span>
+                
+            </li>
+            <li>
+                修改地址：
+                <select>
+                    <option value ="0">--需要更改，请选择地址--</option>
+                    {volist name='address_list' id='list'}
+                    <option value="{$list->address_id}">  
+                        姓名：{$list->address_name} 电话号码：{$list->address_phone} 详细地址：{$list->address_province} {$list->address_city} {$list->address_region} {$list->address_detail}
+                    </option>
+                    {/volist}
+                  </select>
+            </li>
+            {/if}
         </ul>
 
 </div>
@@ -67,6 +102,31 @@
 <script>
     
     $(document).ready(function () {
+        $('.submit').click(function(){
+            var address_name=$('.address_name').val();
+            var address_phone=$('.address_phone').val();
+            var province=$('.province').val();
+            var city=$('.city').val();
+            var area=$('.area').val();
+            var address_detail=$('.address_detail').val();
+            var provincetext=$('.province').find("option:selected").html();
+            var citytext=$('.city').find("option:selected").html();
+            var areatext=$('.area').find("option:selected").html();
+            $.ajax({
+                url:'index/pay_Method/addAddress',
+                type:'post',
+                dataType:'json',
+                data:{'address_name':address_name,'address_phone':address_phone,'province':province,'city':city,'area':area,'address_detail':address_detail},
+                success:function(result){
+                    if(result){
+                        $('.box').remove();
+                        var address='&emsp;<input type="radio" name="address_id" class="address_id" value="'+result+'" checked >'+
+                        '&emsp;<span class="address_detail">姓名：'+address_name+' 电话号码：'+address_phone+'详细地址：'+provincetext+''+citytext+''+areatext+''+address_detail+'</span>';
+                        $('.myaddr').append(address);
+                    }
+                }
+            });
+        });
 
         var array_info=JSON.parse(sessionStorage.getItem('array_info'));
         var sku_num;
@@ -75,7 +135,63 @@
             sku_num = array_info[index].sku_num;
             select(good_sku_id, sku_num);
         }
-    });
+        $('select').change(function(){
+            var option=$(this).val();
+            if(option!=0){
+                var optiontext=$(this).find("option:selected").html();
+                $('.address_id').val(option);
+                $('.address_detail').html(optiontext);
+            }
+        });
+
+        function province() //省
+        {
+            $.post("{:url('index/User/province')}", {param1: 'value1'}, function(data, textStatus, xhr) {
+                var html;
+                for (var i = 0; i<data.length; i++) {
+                    html += "<option value='"+data[i]['id']+"'>"+data[i]['district_name']+"</option>";
+                }
+                $('.province').html(html);
+            });
+        }
+        province();
+        function city() //市
+        {
+            var provinceid = $('.province').val(); //省id
+            $.post("{:url('index/User/city')}", {provinceid: provinceid}, function(data, textStatus, xhr) {
+                var html;
+                for (var i = 0; i<data.length; i++) {
+                    html += "<option value='"+data[i]['id']+"'>"+data[i]['district_name']+"</option>";
+                }
+                $('.city').html(html);
+                area();
+            });
+        }
+        city();
+
+        function area() //县
+        {
+            var cityid = $('.city').val(); //市id
+    //alert(cityid);
+            $.post("{:url('index/User/area')}", {cityid: cityid}, function(data, textStatus, xhr) {
+                var html;
+                for (var i = 0; i<data.length; i++) {
+                    html += "<option value='"+data[i]['id']+"'>"+data[i]['district_name']+"</option>";
+                }
+                $('.area').html(html);
+            });
+        }
+        area();
+
+        $('.province').change(function(event) { //选择省
+            city();
+        });
+
+        $('.city').change(function(event) { //选择市
+            area();
+        });
+        });
+
     function select(good_sku_id,sku_num) {
         $.ajax(
             {

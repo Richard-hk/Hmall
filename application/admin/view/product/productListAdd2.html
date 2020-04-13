@@ -1,6 +1,6 @@
-{include file='common/style'}
-<title>新增图片</title>
-<link href="/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+	{include file='common/style'}
+	<title>新增图片</title>
+	<link href="/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div class="page-container">
@@ -16,18 +16,18 @@
 		</div>
 
 
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">销售开始时间：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{\$dp.\$D(\'datemax\')||\'%y-%M-%d\'}' })" name="datemin" id="datemin" class="input-text Wdate" style="width:180px;">
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">销售结束时间：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{\$dp.\$D(\'datemin\')}' })" id="datemax" name="datemax" class="input-text Wdate" style="width:180px;">
-			</div>
-		</div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">销售开始时间：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{\$dp.\$D(\'datemax\')||\'%y-%M-%d\'}' })" name="datemin" id="datemin" class="input-text Wdate" style="width:180px;">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">销售结束时间：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{\$dp.\$D(\'datemin\')}' })" id="datemax" name="datemax" class="input-text Wdate" style="width:180px;">
+            </div>
+        </div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">产品描述：</label>
@@ -497,7 +497,7 @@
 							img = $('<img src="'+src+'">');
 							$wrap.empty().append( img );
 						} else {
-							$.ajax('/lib/webuploader/0.1.5/server/preview.php', {
+							$.ajax('lib/webuploader/0.1.5/server/preview.php', {
 								method: 'POST',
 								data: src,
 								dataType:'json'

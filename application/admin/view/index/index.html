@@ -14,7 +14,7 @@
 
 			<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
 				<ul class="cl">
-					<li>欢迎管理员 :</li>
+					<li>欢迎{$role} :</li>
 					<li class="dropDown dropDown_hover">
 						<a href="#" class="dropDown_A">{$Think.session.admin_name} <i class="Hui-iconfont">&#xe6d5;</i></a>
 						<ul class="dropDown-menu menu radius box-shadow">
@@ -23,7 +23,6 @@
 							<li><a href="#">退出</a></li>
 						</ul>
 					</li>
-					<li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
 					<li id="Hui-skin" class="dropDown right dropDown_hover"> <a href="javascript:" class="dropDown_A" title="换肤"><i class="Hui-iconfont" style="font-size:18px">&#xe62a;</i></a>
 						<ul class="dropDown-menu menu radius box-shadow">
 							<li><a href="javascript:" data-val="default" title="默认（黑色）">默认（黑色）</a></li>
@@ -49,7 +48,7 @@
 			<dd>
 				<ul>
 					{volist name="author.author['author_child']" id='child'}
-					<li><a data-href="__ADMIN__{$child.author_child_src}" data-title="图片管理" href="javascript:void(0)">{$child.author_child_name}</a></li>
+					<li><a data-href="__ADMIN__{$child.author_child_src}" data-title="{$child.author_child_name}" href="javascript:void(0)">{$child.author_child_name}</a></li>
 					{/volist}
 				</ul>
 			</dd>

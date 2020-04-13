@@ -1,0 +1,19 @@
+<title>不合法页面</title>
+
+<style>
+
+</style>
+<html>
+    <div>
+        <p>该行为为<span style="color: red;"> 恶意攻击行为 </span>或者<span style="color: red;"> 不合法行为 </span>请停止该行为</p>
+        <p>页面即将会跳转到主页</p>
+    </div>
+    <script type="text/javascript" src="/static/index/js/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            window.setTimeout(function(){
+            location.href="/";
+            }, 10000);
+        });
+    </script>
+</html>

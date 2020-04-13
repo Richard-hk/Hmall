@@ -5,6 +5,8 @@ namespace app\admin\controller;
 use think\Controller;
 use think\Db;
 use \app\admin\model\admin\Admin as AdminModel;
+use think\facade\Request;
+
 class Admin extends Controller
 {
     public function admin()//管理员列表页面
@@ -49,12 +51,16 @@ class Admin extends Controller
         $total=$list->count();
         $this->assign('total',$total);
         $this->assign('list',$list);
-        return $this->fetch('adminList');
+        return $this->fetch('admin');
 
     }
 
-    public function adminDel()//管理员删除
+    public function adminDel(Request $request)//管理员删除
     {
+        return Request::instance()->param('admin_name');
+        $name = $this->request->post('admin_name');
+        return $name;
+
         $admin_name=$_POST['admin_name'];
         $list=Db::name('admin')->where('admin_name',$admin_name)->update(['admin_status'=>'2']);
         return $list;

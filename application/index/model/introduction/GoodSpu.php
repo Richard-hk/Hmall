@@ -14,10 +14,16 @@ class GoodSpu extends Model{
     }
     public function getCategory($good_spu_id){
         $goodSpu =new GoodSpu();
-        return $goodSpu
-            ->with('category')
-            ->where('good_spu_id',$good_spu_id)
-            ->select();
+        $reuslt=$goodSpu::where('good_spu_id',$good_spu_id)->find();
+        if(!$reuslt){
+            return null;
+        }else{
+            return $goodSpu
+                ->with('category')
+                ->where('good_spu_id',$good_spu_id)
+                ->select();
+        }
+
     }
 
 }

@@ -115,7 +115,7 @@
                 <div class="comment_show">
                     <div class="user">
                         <div class="user_pic">
-                        <img src='{$comment.order_info.customer.customer_pic}' style="width: 60px;height: 60px;border-radius: 30px;"/>
+                        <img src='http://101.200.32.25/{$comment.order_info.customer.customer_pic}' style="width: 60px;height: 60px;border-radius: 30px;"/>
                         </div>
                         <span>{$comment.order_info.customer_name}</span></div>
                     <div class="user_right">
@@ -146,7 +146,7 @@
             var num=t = $('.num').val();
             $.ajax(
                 {
-                    url:'index/introduction/toShopCar',
+                    url:'http://101.200.32.25/index/introduction/toShopCar',
                     data:{'good_sku_id':good_sku_id,'num':num},
                     type:'post',
                     dataType:'json',
@@ -189,7 +189,7 @@
                 buy_info['sku_num']= sku_num;
                 array_info[0]=buy_info;
                 sessionStorage.setItem('array_info',JSON.stringify(array_info));
-                window.location.href='payMethod';
+                window.location.href='http://101.200.32.25/payMethod';
             }else {
                 layer.msg('请选择颜色和版本',{icon:1,time:1111});
 
@@ -205,7 +205,7 @@
                 var color = $(this).find('span').html();
                 $.ajax(
                     {
-                        url: 'index/introduction/findRom',
+                        url: 'http://101.200.32.25/index/introduction/findRom',
                         data: {'color': color},
                         type: 'POST',
                         dataType: 'json',
@@ -238,7 +238,7 @@
                         var ram=$(this).find('.span_ram').html();
                         $.ajax(
                             {
-                                url: 'index/introduction/getPrice',
+                                url: 'http://101.200.32.25/index/introduction/getPrice',
                                 data: {'sku_rom': rom,'sku_ram':ram,'sku_color':color},
                                 type: 'POST',
                                 dataType: 'json',
@@ -264,7 +264,7 @@
                 var ram = $(this).find('.span_ram').html();
                 $.ajax(
                     {
-                        url: 'index/introduction/findcolor',
+                        url: 'http://101.200.32.25/index/introduction/findcolor',
                         data: {'good_sku_rom': rom,'good_sku_ram':ram,},
                         type: 'POST',
                         dataType: 'json',
@@ -291,7 +291,7 @@
                          var color=$(this).find('span').html();
                          $.ajax(
                              {
-                                 url: 'index/introduction/getPrice',
+                                 url: 'http://101.200.32.25/index/introduction/getPrice',
                                  data: {'sku_rom': rom,'sku_ram':ram,'sku_color':color},
                                  type: 'POST',
                                  dataType: 'json',

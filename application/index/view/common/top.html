@@ -37,7 +37,7 @@
     /*回到顶部*/
 
 
-    悬浮层
+    
     .to-top,.shopcar_bottom,.login_bottom,.register_bottom{width:40px; height:40px; z-index:11; position:fixed; right:1px;}
     .top_bottom{width:40px; height:40px; z-index:11; position:fixed; right:1px;}
     .top_bottom{bottom:30px;}
@@ -71,7 +71,7 @@
     <div  class="comwidth">
         <div class="leftarea">
             <a href="/" >&emsp;首页&emsp;</a>
-            <a href="feedback" >&emsp;意见反馈&emsp;</a>
+            <a href="http://101.200.32.25/feedback" >&emsp;意见反馈&emsp;</a>
         </div>
         <div class="rightarea">
 
@@ -79,18 +79,18 @@
             <ul class="ul_user">
                 <li class="li_user">&emsp;<span style="color: #CF0A2C">{$Think.session.customer_name}</span>&emsp;</li>
                 <div class="second-user">
-                    <a href="userinfo"><li >个人中心</li></a>
-                    <a href="quit"><li>退出</li></a>
+                    <a href="http://101.200.32.25/userinfo"><li >个人中心</li></a>
+                    <a href="http://101.200.32.25/quit"><li>退出</li></a>
                 </div>
 
             </ul>
             {else/}
-            <a href="login">登录&emsp;</a>
-            <a href="register">&emsp;注册&emsp;</a>
+            <a href="http://101.200.32.25/login">登录&emsp;</a>
+            <a href="http://101.200.32.25/register">&emsp;注册&emsp;</a>
 
             {/if}
-            <a href="myorder">&emsp;我的订单&emsp;</a>
-            <a href="shopcar">&emsp;购物车&emsp;</a>
+            <a href="http://101.200.32.25/myorder">&emsp;我的订单&emsp;</a>
+            <a href="http://101.200.32.25/shopcar">&emsp;购物车&emsp;</a>
 <!--            <div class="rightarea shopcar"><a href="/shopcar">购物车&emsp;</a>-->
 <!--                <div class="second-box">-->
 <!--                    <div class="shopcar_img">-->
@@ -119,8 +119,8 @@
 <!--        <div class="back-top-second">我的订单</div>-->
 <!--    </li>-->
         <li class="top_bottom">
-            <a href=""><img src="/static/index/img/8.jpg" alt="回到顶部" class="cricle"></a>
-            <div class="back-top-second">回到顶部</div>
+            <img src="/static/index/img/8.jpg" alt="回到顶部" class="cricle">
+            <!-- <div class="back-top-second">回到顶部</div> -->
         </li>
 </ul>
 </body>

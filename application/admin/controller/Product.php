@@ -217,7 +217,7 @@ class Product extends Controller
 
     public function productListStop($good_spu_id)//分类产品下架
     {
-        $list=Db::name('good_spu')->where('good_spu_id',$good_spu_id)->update(['good_status'=>2]);
+        $list=Db::name('good_spu')->where('good_spu_id',$good_spu_id)->update(['good_status'=>-1]);
         return $list;
     }
 
@@ -353,8 +353,6 @@ class Product extends Controller
     }
 
     public function productListChildEdit(){
-//        $request = Request::instance();
-//        return  '访问ip地址：' . $request->ip();
         $good_sku_id=$_GET['good_sku_id'];
         $list=Db::name('good_sku')->where('good_sku_id',$good_sku_id)->find();
         $this->assign([
@@ -368,5 +366,47 @@ class Product extends Controller
         ]);
         return $this->fetch('productListChildEdit');
     }
+
+
+    // public function webPicSave(Request $request){
+    //     $file = $this->request->file('file');//file是传文件的名称，这是webloader插件固定写入的。因为webloader插件会写入一个隐藏input，这里与TP5的写法有点区别
+    //     $file->size = 524288000;
+    //     $folder = input('folder');
+    //     if ($folder) {
+    //         //保存目录
+    //         $Path = '/public' . DS . 'uploads' . DS . $folder;
+    //         $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads' . DS . $folder);
+    //     }else{
+    //         $Path = '/public' . DS . 'uploads';
+    //         $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+    //     }
+
+    //     if($info){
+    //         // 成功上传后 获取上传信息
+    //         // 输出 jpg 地址
+    //         $filePath = "/".$Path. DS .$info->getSaveName();
+    //         $filePath = str_replace("\\","/",$filePath);   //替换\为/
+    //         return json(['success'=>true,'filePath'=>$filePath]);
+    //     }else{
+    //         // 上传失败获取错误信息
+    //         echo $file->getError();
+    //     }
+    // }
+
+
+
+//        try{
+//            $file=$request->file('file');
+//            $serverFile=$file->move('/uploads/test');
+//            $imageUrl = $serverFile->getPathname();
+//
+//            $ajaxJson['success'] = true;
+//            $ajaxJson['msg'] = $imageUrl;
+//
+//        }catch (Exception $e){
+//            $ajaxJson['success'] = false;
+//        }
+//        return json_encode($ajaxJson);
+//    }
 
 }

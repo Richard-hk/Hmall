@@ -11,6 +11,8 @@ use service\AlipayTradeService;
 use think\Controller;
 use think\Db;
 use app\index\model\alipay\SkuCar as skuCarModel;
+use app\index\model\alipay\SkuOrder;
+use app\index\validate\alipay\Alipay as alipayValidate;
 use think\facade\Request;
 use think\facade\Session;
 
@@ -23,13 +25,6 @@ class Alipay extends Controller
         }
     }
 
-    public  function alipayaccept(){
-//        return md5('admin');
-//        return date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);;
-
-        return $this->fetch('index');
-
-    }
     public function config_str(){
             return array (
             //应用ID,您的APPID。
@@ -58,16 +53,69 @@ class Alipay extends Controller
 //                                  MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApFuMQkmYp78lKkxoM8ZIBrf8ouuOQGfG5lYL0ZFwhxRmNFVqs4RTkLJgcNKvM/HwTpvzXWlz4l1MG4l/y06mJT7vcJW86tGNDdGVRQouJa5PpSktSVm07VzF+c3VgY7f6YcD1QuT+OJf6gezT42nd2fnfwBaCAM/zdfWfIlzlW139VAslRXkGCNDSseWZDqHiiVzhslh8NtaDpkTsdFLF4sajuDyIfRgA73t2SUbjKDiR0+7CvcHyDLVK+4MZQhKqSxZ3aTxt9ImFdlr1dTw1AqR/oth8PwY7R8cftrI8++SDuWthZlKGPhDFzfaBf6LE20DX7wT6Lv7oAQOLxqXGQIDAQAB
             );
     }
-    public function alipay(){
+    public function alipay($order_id=null,$address_id=null){
         $config=Alipay::config_str();
-
-        if(Request::isGet()){
-            $out_trade_no=$_GET['order_id'];
-            $total_amount = trim($_GET['price']);
+        $validate=new alipayValidate();
+        $data=['order_id'=>$order_id];
+        if(!$validate->check($data)){
+             $this->success('非法订单字符','/');
+        }else{
+            $orderInfo=new OrderInfo();
+            if($order_id==null){
+                $out_trade_no = trim($this->request->param('WIDout_trade_no'));
+                $total_amount = trim($this->request->param('WIDtotal_amount'));
+                $good_sku_id=($_POST['good_sku_id']);
+                $sku_num=($_POST['sku_num']);
+                $address_id=$_POST['address_id'];
+                
+                $order_info=[
+                    'order_id'=>$out_trade_no,
+                    'customer_name'=>session('customer_name'),
+                    'address_id'=>$address_id,
+                    'order_gmt_created'=>time(),
+                    'order_status'=>0
+                ];
+                try {
+                    $order=$orderInfo->addOrder($order_info);
+                } catch (\Throwable $th) {
+                    $orderInfo->deleteOrderId($out_trade_no);
+                    $this->success('订单创建失败','/');
+                }
+                if($order){
+                    $sku_order=array();
+                    $skuOrder=new SkuOrder();
+                    try {
+                        $list=$skuOrder->addsku($sku_order,$out_trade_no,$good_sku_id,$sku_num);
+                    } catch (\Throwable $th) {
+                        $orderInfo->deleteOrderId($out_trade_no);
+                        $this->success('订单创建失败','/');
+                    }
+                    Alipay::deleteCar($out_trade_no);//创建订单成功后，在购物车中删除订单商品
+                }else{
+                    $this->success('创建订单失败','/');
+                }
+            }else{
+                if($address_id!=null){//更新地址
+                    try {
+                        $orderInfo->updateOrder($order_id,$address_id);
+                    } catch (\Throwable $th) {
+                       $this->success('错误地址编号');
+                    } 
+                }
+                $out_trade_no=$order_id;
+                $orderInfo=new OrderInfo();
+                $order=$orderInfo->getMoney($out_trade_no);
+                if($order==null){
+                    $this->success('该订单号不存在或者该订单已经支付','/');
+                    return ;
+                }else{
+                    $money=$order[0]['money'];
+                    $total_amount = $money;
+                }
+            }
             $subject = 'test';
             $body = "123";
-
-            //构造参数
+    
             $payRequestBuilder = new AlipayTradePagePayContentBuilder();
             $payRequestBuilder->setBody($body);
             $payRequestBuilder->setSubject($subject);
@@ -77,6 +125,7 @@ class Alipay extends Controller
             try {
                 $aop = new AlipayTradeService($config);
             } catch (\Exception $e) {
+                
             }
 
             /**
@@ -88,76 +137,8 @@ class Alipay extends Controller
              */
             $response = $aop->pagePay($payRequestBuilder,$config['return_url'],$config['notify_url']);
             //输出表单
-            var_dump($response);
-        }else {
-            $total_amount = trim($_POST['WIDtotal_amount']);
-            $good_sku_id=($_POST['good_sku_id']);
-            $sku_num=($_POST['sku_num']);
-            //商户订单号，商户网站订单系统中唯一订单号，必填
-            $out_trade_no = trim($_POST['WIDout_trade_no']);
-            $address_id=$_POST['address_id'];
-            $customer_name=session('customer_name');
-            $order_info=[
-                'order_id'=>$out_trade_no,
-                'customer_name'=>$customer_name,
-                'address_id'=>$address_id,
-                'order_gmt_created'=>time()
-            ];
-            $order=Db::name('order_info')->insert($order_info);
-            if($order){
-                $sku_order=array();
-                $sku_order_list=Db::name('sku_order');
-                foreach ($good_sku_id as $key=>$value){
-                    $sku_order['order_id']=$out_trade_no;
-                    $sku_order['good_sku_id']=$good_sku_id[$key];
-                    $sku_order['sku_order_num']=$sku_num[$key];
-                    $list=$sku_order_list->insert($sku_order);
-                    if(!$list){
-                        $this->success('创建订单失败2','/');
-                    }
-                }
-                //删除购物车信息
-                Alipay::deleteCar($out_trade_no);
-                //        $subject =   ($_POST['WIDsubject']);
-
-                $subject = 'test';
-
-                //付款金额，必填
-
-                //商品描述，可空
-                $body = trim($_POST['WIDbody']);
-                //构造参数
-                $payRequestBuilder = new AlipayTradePagePayContentBuilder();
-                $payRequestBuilder->setBody($body);
-                $payRequestBuilder->setSubject($subject);
-                $payRequestBuilder->setTotalAmount($total_amount);
-                $payRequestBuilder->setOutTradeNo($out_trade_no);
-
-                try {
-                    $aop = new AlipayTradeService($config);
-                } catch (\Exception $e) {
-                }
-
-                /**
-                 * pagePay 电脑网站支付请求
-                 * @param $builder 业务参数，使用buildmodel中的对象生成。
-                 * @param $return_url 同步跳转地址，公网可以访问
-                 * @param $notify_url 异步通知地址，公网可以访问
-                 * @return $response 支付宝返回的信息
-                 */
-                $response = $aop->pagePay($payRequestBuilder,$config['return_url'],$config['notify_url']);
-                //输出表单
-                var_dump($response);
-            }else{
-                $this->success('创建订单失败','/');
-            }
-
-
+            var_dump($response);   
         }
-    }
-
-    public function toPay(){
-        return 0;
     }
 
     public function judgePay(){

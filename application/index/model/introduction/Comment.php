@@ -11,5 +11,4 @@ class Comment extends Model
     public function skuOrder(){
         return $this->belongsTo('SkuOrder');
     }
-
 }

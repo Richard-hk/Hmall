@@ -9,34 +9,44 @@ use think\Db;
 use think\facade\Session;
 use app\index\model\introduction\GoodSpu as goodSpuModel;
 use app\index\model\introduction\GoodSku as goodSkuModel;
+use app\index\validate\introduction\Introduction as IntroductionValidate;
+
 class Introduction extends Controller
 {
-    public function introduction(){
+    public function introduction($good_spu_id){
         \session('customer_name');
-        $good_spu_id=$_GET['good_spu_id'];
-        $goodSpuModel=new goodSpuModel();
-        $goodCategory=$goodSpuModel->getCategory($good_spu_id);
-        if($goodSpuModel){
-            $good_pic=$goodCategory[0]['good_sku_pic'];
-            $good_sku=new goodSkuModel();
-            $comment=$good_sku->getAllSku($good_spu_id);
-            $good_sku_pic_color=$good_sku->goodSkuPicColor($good_spu_id);
-            $good_sku_rom_ram=$good_sku->goodSkuRom($good_spu_id);
-            $max_price=$good_sku->maxPrice($good_spu_id);
-            $min_price=$good_sku->minPrice($good_spu_id);
-            $this->assign([
-                'good_pic'=>$good_pic,
-                'max_price'=>$max_price,
-                'min_price'=>$min_price,
-                'good_sku_pic_color'=>$good_sku_pic_color,
-                'good_sku_rom_ram'=>$good_sku_rom_ram,
-                'goodCategory'=>$goodCategory,
-                'commentList'=>$comment
-            ]);
-            return $this->fetch('introduction');
+        $data=[
+          'good_spu_id'=>$good_spu_id
+        ];
+        $validate=new IntroductionValidate();
+        if($validate->check($data)){
+            $goodSpuModel=new goodSpuModel();
+            $goodCategory=$goodSpuModel->getCategory($good_spu_id);
+            if($goodCategory!=null){
+                $good_pic=$goodCategory[0]['good_sku_pic'];
+                $good_sku=new goodSkuModel();
+                $comment=$good_sku->getAllSku($good_spu_id);
+                $good_sku_pic_color=$good_sku->goodSkuPicColor($good_spu_id);
+                $good_sku_rom_ram=$good_sku->goodSkuRom($good_spu_id);
+                $max_price=$good_sku->maxPrice($good_spu_id);
+                $min_price=$good_sku->minPrice($good_spu_id);
+                $this->assign([
+                    'good_pic'=>$good_pic,
+                    'max_price'=>$max_price,
+                    'min_price'=>$min_price,
+                    'good_sku_pic_color'=>$good_sku_pic_color,
+                    'good_sku_rom_ram'=>$good_sku_rom_ram,
+                    'goodCategory'=>$goodCategory,
+                    'commentList'=>$comment
+                ]);
+                return $this->fetch('introduction');
+            }else{
+                $this->success('非法请求,即将跳转主页','/');
+            }
         }else{
-            $this->success('非法请求spu_id,即将跳转主页','/');
+            return $this->fetch('/common/illegal');
         }
+        
     }
     public function findRom(){
         $good_sku_color=trim($_POST['color']);

@@ -6,12 +6,13 @@ use think\Controller;
 use think\Db;
 use think\facade\Cookie;
 use \think\facade\Request;
+use think\Loader;
 
 class User extends  Controller
 {
     public function login()
     {
-      return $this->fetch('login');
+        return $this->fetch('login');
     }
 
     public function check(){
@@ -24,41 +25,15 @@ class User extends  Controller
                 return json('name_err');
             }elseif ($result['admin_psw']!=$admin_psw){
                 return json('psw_err');
+            }else if($result['admin_status']==0){
+                return json('banned');
             }else{
-//                Cookie::set('admin_name',$admin_name,36000);
                 session('admin_name',$admin_name);
-                User::get_real_ip($admin_name);
+                get_real_ip($admin_name,'后台');
                 return json('correct');
             }
         }else{
             return json('code_err');
         }
-    }
-    public function get_real_ip($value=null){
-        static $realip;
-        if(isset($_SERVER)){
-            if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])){
-                $realip=$_SERVER['HTTP_X_FORWARDED_FOR'];
-            }else if(isset($_SERVER['HTTP_CLIENT_IP'])){
-                $realip=$_SERVER['HTTP_CLIENT_IP'];
-            }else{
-                $realip=$_SERVER['REMOTE_ADDR'];
-            }
-        }else{
-            if(getenv('HTTP_X_FORWARDED_FOR')){
-                $realip=getenv('HTTP_X_FORWARDED_FOR');
-            }else if(getenv('HTTP_CLIENT_IP')){
-                $realip=getenv('HTTP_CLIENT_IP');
-            }else{
-                $realip=getenv('REMOTE_ADDR');
-            }
-        }
-        $ipdetail=[
-            'ip'=>$realip,
-            'look_date'=>date('Y-m-d H:i:s',time()),
-            'look_type'=>'后台',
-            'adminname'=>$value
-        ];
-        Db::name('ip')->insert($ipdetail);
     }
 }
