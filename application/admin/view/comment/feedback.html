@@ -13,7 +13,7 @@
 		<table class="table table-border table-bordered table-hover table-bg table-sort">
 			<thead>
 				<tr class="text-c">
-					<th width="25"><input type="checkbox" name="" value=""></th>
+					<th width="25"><input type="checkbox" name="check-all" value=""></th>
 					<th width="60">ID</th>
 					<th width="60">用户名</th>
 					<th>留言内容</th>
@@ -76,7 +76,7 @@ function datadel() {
 							$(this).parents('tr').remove();
 						}
 					});
-					$("[name='checkbox']").prop("checked",false);
+					$("[name='check-all']").prop("checked",false);
 					layer.msg('已删除!',{icon:1,time:1111});
 				}
 			},

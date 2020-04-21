@@ -19,8 +19,8 @@ class OrderInfo extends Model
             ->where([['customer_name','=',$customer_name],['order_status','<>','-1']])
             ->select();
     }
-    public function getMoney($order_id){//未支付订单获取金额并且判断未支付订单是否存在
-        $result=$this::where('order_id',$order_id)->where('order_status','0')->find();
+    public function getMoney($order_id,$status){//未支付订单获取金额并且判断未支付订单是否存在
+        $result=$this::where('order_id',$order_id)->where('order_status',$status)->find();
         if($result){
             return $this::query("select sum(b.good_price*a.sku_order_num) money from hmall_good_sku b inner join (select *  from hmall_sku_order where order_id=:id) a on a.good_sku_id=b.good_sku_id",['id'=>$order_id]);
         }else{

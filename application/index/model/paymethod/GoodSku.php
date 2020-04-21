@@ -11,7 +11,6 @@ class GoodSku extends  Controller
 {
     public function getDetail($good_sku_id)
     {
-
         return Db::name('good_sku')
             ->alias('t1')
             ->where('good_sku_id',$good_sku_id)

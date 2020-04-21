@@ -12,7 +12,7 @@ class Admin extends Controller
     public function admin()//管理员列表页面
     {
 
-        $list= AdminModel::where('admin_status','<>','2')->select();
+        $list= AdminModel::where('admin_status','<>','-1')->select();
         $total=$list->count();
         $this->assign('list',$list);
         $this->assign('total',$total);
@@ -57,19 +57,15 @@ class Admin extends Controller
 
     public function adminDel(Request $request)//管理员删除
     {
-        return Request::instance()->param('admin_name');
-        $name = $this->request->post('admin_name');
-        return $name;
-
         $admin_name=$_POST['admin_name'];
-        $list=Db::name('admin')->where('admin_name',$admin_name)->update(['admin_status'=>'2']);
+        $list=Db::name('admin')->where('admin_name',$admin_name)->update(['admin_status'=>'-1']);
         return $list;
     }
 
     public function adminAllDel()//管理员选中删除
     {
         $admin_name=$_POST['admin_name_all'];
-        $list=Db::name('admin')->where('admin_name','in',$admin_name)->update(['admin_status'=>'2']);
+        $list=Db::name('admin')->where('admin_name','in',$admin_name)->update(['admin_status'=>'-1']);
         return $list;
     }
 

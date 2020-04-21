@@ -68,7 +68,7 @@
             </p>
             <p>
                 <input type="checkbox" class="checked" name="checked"><span>记住密码</span>
-                <span class="forgetkey fr"><a href="#">忘记密码</a>&emsp;|&emsp;<a href="/register">注册</a></span><br/>
+                <span class="forgetkey fr"><a href="resetPsw">忘记密码</a>&emsp;|&emsp;<a href="/register">注册</a></span><br/>
             </p>
 <!--            <span>&nbsp;第三方账号登录</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>-->
             <div class="disanfang">
@@ -94,6 +94,7 @@
 
 </body>
 <script type="text/javascript" src="/static/index/js/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
 <script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
@@ -110,20 +111,19 @@
                  contentType: false,
                  success:function(data){
                      if(data==0){
-                         alert('用户名不存在');
+                        layer.msg('用户名不存在', { icon: 2, time: 1111 });
                      }else if(data==1){
-                        alert('密码错误');
+                        layer.msg('密码错误', { icon: 2, time: 1111 });
                      }else if(data==2) {
                          window.location.href='/';
                      }else if(data==-1){
-                         alert('该账号已经被禁用或删除');
+                        layer.msg('该账号已经被禁用或删除', { icon: 2, time: 1111 });
                      }else {
-                         alert('非法请求');
-
+                        layer.msg('非法请求', { icon: 2, time: 1111 });
                      }
                  },
                  error:function(){
-                     alert('服务暂时出错，稍后重试');
+                    layer.msg('服务暂时出错，稍后重试', { icon: 2, time: 1111 });
                  }
 
              });
@@ -151,12 +151,12 @@
     function check(){
         fr = document.form1;
         if(fr.user.value==""){
-            alert("用户名不能为空");
+            layer.msg('用户名不能为空', { icon: 2, time: 1111 });
             fr.user.focus();
             return false;
         }
         if(fr.password.value=""){
-            alert("qingghg");
+            layer.msg('密码不能为空', { icon: 2, time: 1111 });
             fr.password.focus();
             return false;
         }

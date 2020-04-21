@@ -43,21 +43,23 @@
     </div>
     </div>
     <div class="com login_div">
+        <input value="{$uid}" class="uid" hidden>
+        <input value="{$uname}" class="uname" hidden>
         <div class="login-box">
             <p style="text-align: center;background-color: white"><span style="font-size: 30px;">绑定用户</span>
             </p>
             <p>用户名称：
-                <input  type="text" name="user" class="login" placeholder="请输入用户名" size="22">
+                <input  type="text" name="user" class="username" placeholder="请输入用户名" size="22">
             </p>
 
             <p>用户密码：
-                <input type="password" name="password" class="login" placeholder="这里输入密码" size="22">
+                <input type="password" name="password" class="password" placeholder="这里输入密码" size="22">
             </p>
             <p>确认密码：
-                <input  class=" login" name="login2" placeholder="请再次确认密码" size="22" type="password" >
+                <input  class=" password1" name="login2"  placeholder="请再次确认密码" size="22" type="password" >
             </p>
 
-            <input type="submit" class="login-button1" name="btn" value="免费绑定" style="margin-left:80px;">
+            <input type="button" class="bind login-button1" name="btn" value="免费绑定" style="margin-left:80px;">
             <input type="reset" class="login-button1" name="btn" value="重置" style="float:right; margin-right:80px;"><br/>
         </div>
 
@@ -67,21 +69,47 @@
     </div>
 </form>
 </body>
+<script type="text/javascript" src="/static/index/js/jquery.min.js"></script>
+
 <script>
-    function validateCode(n){
-        var s="abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ0123456789";
-        var ret="";
-        for(var i=0;i<n;i++)
-        {
-            var index=Math.floor(Math.random()*62);
-            ret+=s.charAt(index);
-        }
-        return ret;
-    }
-    function show(){
-        document.getElementById("msg").innerHTML=validateCode(4);
-    }
-    window.onlosd=show();
+    // 
+    $(document).ready(
+        $('.bind').click(function () {
+            var uid=$('.uid').val();
+            var uname=$('.uname').val();
+            var username=$('.username').val();
+            var password=$.trim($('.password').val());
+            var password1=$.trim($('.password1').val());
+
+            if(password==password1){
+                if(password&&username&&password1){
+                    $.ajax({
+                    url:'/index/user/bindNameAct',
+                    type:"post",
+                    dataType:'json',
+                    data:{'uid':uid,'uname':uname,'username':username,'password':password},
+                    success:function(data){
+                        if(data==1){
+                            layer.msg('绑定成功，请登录', { icon: 1, time: 1111 });
+                            setTimeout("window.location.href='login'", 1111);
+                        }else 
+                        {
+                            layer.msg('绑定失败', { icon: 2, time: 1111 });
+                        }
+                    },
+                    error:function(){
+                        layer.msg('服务暂时出错，稍后重试', { icon: 2, time: 1111 });
+                    }
+                });
+                }else{
+                    layer.msg('请填写空值', { icon: 2, time: 1111 });
+                }
+            }else{
+                layer.msg('密码不一致', { icon: 2, time: 1111 });
+            }
+         }
+        )
+    );
 </script>
 
 </html>

@@ -9,7 +9,9 @@ use think\Db;
 use think\facade\Session;
 use app\index\model\introduction\GoodSpu as goodSpuModel;
 use app\index\model\introduction\GoodSku as goodSkuModel;
+use app\index\model\introduction\SpuPic;
 use app\index\validate\introduction\Introduction as IntroductionValidate;
+use think\facade\Cache;
 
 class Introduction extends Controller
 {
@@ -23,21 +25,30 @@ class Introduction extends Controller
             $goodSpuModel=new goodSpuModel();
             $goodCategory=$goodSpuModel->getCategory($good_spu_id);
             if($goodCategory!=null){
-                $good_pic=$goodCategory[0]['good_sku_pic'];
                 $good_sku=new goodSkuModel();
-                $comment=$good_sku->getAllSku($good_spu_id);
-                $good_sku_pic_color=$good_sku->goodSkuPicColor($good_spu_id);
-                $good_sku_rom_ram=$good_sku->goodSkuRom($good_spu_id);
-                $max_price=$good_sku->maxPrice($good_spu_id);
-                $min_price=$good_sku->minPrice($good_spu_id);
+                try {
+                    $list=cache::store('redisread')->get('spu_pic'.$good_spu_id);//redis服务关闭，切换到mysql
+                } catch (\Throwable $th) {
+                    $list=SpuPic::where('good_spu_id',$good_spu_id)->select()->toArray();
+                }
+                if(!$list){
+                    $list=SpuPic::where('good_spu_id',$good_spu_id)->select()->toArray();
+                    if($list){
+                        cache::store('redisread')->set('spu_pic'.$good_spu_id,$list);
+                    }
+                }
                 $this->assign([
-                    'good_pic'=>$good_pic,
-                    'max_price'=>$max_price,
-                    'min_price'=>$min_price,
-                    'good_sku_pic_color'=>$good_sku_pic_color,
-                    'good_sku_rom_ram'=>$good_sku_rom_ram,
+                    'good_pic'=>$goodCategory[0]['good_sku_pic'],
+                    'good_status'=>$goodCategory[0]['good_status'],
+                    'max_price'=>$good_sku->maxPrice($good_spu_id),
+                    'min_price'=>$good_sku->minPrice($good_spu_id),
+                    'good_sku_pic_color'=>$good_sku->goodSkuPicColor($good_spu_id),
+                    'good_sku_rom_ram'=>$good_sku->goodSkuRom($good_spu_id),
                     'goodCategory'=>$goodCategory,
-                    'commentList'=>$comment
+                    'commentList'=>$good_sku->getAllSku($good_spu_id),
+                    'time_down'=>$goodCategory[0]['gmt_down']<time()?1:0,
+                    'spu_pic'=>$list,
+                    'good_spu_id'=>$good_spu_id
                 ]);
                 return $this->fetch('introduction');
             }else{
@@ -50,15 +61,18 @@ class Introduction extends Controller
     }
     public function findRom(){
         $good_sku_color=trim($_POST['color']);
+        $good_spu_id=trim($_POST['good_spu_id']);
         $good_sku=new goodSkuModel();
-        $list= $good_sku->findRom($good_sku_color);
+        $list= $good_sku->findRom($good_sku_color,$good_spu_id);
         return json_encode($list);
     }
     public function findColor(){
         $good_sku_rom=trim($_POST['good_sku_rom']);
         $good_sku_ram=trim($_POST['good_sku_ram']);
+        $good_spu_id=trim($_POST['good_spu_id']);
+
         $good_sku=new goodSkuModel();
-        $list= $good_sku->findColor($good_sku_rom,$good_sku_ram);
+        $list= $good_sku->findColor($good_sku_rom,$good_sku_ram,$good_spu_id);
         return json_encode($list);
 
     }
@@ -66,8 +80,9 @@ class Introduction extends Controller
         $sku_rom=trim($_POST['sku_rom']);
         $sku_ram=trim($_POST['sku_ram']);
         $sku_color=trim($_POST['sku_color']);
+        $good_spu_id=trim($_POST['good_spu_id']);
         $good_sku=new goodSkuModel();
-        $list= $good_sku->getPrice($sku_rom,$sku_ram,$sku_color);
+        $list= $good_sku->getPrice($sku_rom,$sku_ram,$sku_color,$good_spu_id);
         return json_encode($list);
     }
     public function toShopCar(){

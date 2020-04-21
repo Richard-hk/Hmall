@@ -1,135 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>商品介绍页</title>
     <link type="text/css" rel="stylesheet" href="/static/index/css/introduction.css">
     <link type="text/css" rel="stylesheet" href="/static/index/css/com.css">
+
 </head>
+<style>
+    .shop-item {
+        position: relative;
+    }
+
+    .down {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 680px;
+        height: 485px;
+        background-color: gray;
+        opacity: 0.3;
+        text-align: center;
+        line-height: 485px;
+        font-size: 70px;
+        color: white;
+    }
+
+    .down span {
+        text-align: center;
+        font-size: 40px;
+    }
+</style>
 
 <body>
-{include file='common/top'/}
-<div class="comwidth"><div class="link"><a href="/">首页</a>
-    {volist name='goodCategory' id='category'}
-    <span>&gt;</span>{$category.category.p_category.brand.brand_name}
-    <span>&gt;</span>{$category.category.p_category.category_name}
-    <span>&gt;</span>{$category.category.category_name}
-    <span>&gt;</span>{$category.good_name}
-</div></div>
-<div class="shop-buy comwidth">
-    <div class="shop-pic fl">
-        <img class="pic" src="{$good_pic}">
+    {include file='common/top'/}
+    <div class="comwidth">
+        <div class="link"><a href="/">首页</a>
+            {volist name='goodCategory' id='category'}
+            <span>&gt;</span>{$category.category.p_category.brand.brand_name}
+            <span>&gt;</span>{$category.category.p_category.category_name}
+            <span>&gt;</span>{$category.category.category_name}
+            <span>&gt;</span>{$category.good_name}
+        </div>
     </div>
-    <div class="shop-item fl">
-        <div class="top">
-            <h3>{$category.category.p_category.brand.brand_name}{$category.good_name}</h3>
-            <p class="item">{$category.good_desc}</p>
-            {/volist}
-            <p  class="item1"><span>{$min_price}~{$max_price}</span></p>
+    <div class="shop-buy comwidth">
+        <input type="text" value="{$good_spu_id}" class="good_spu_id" hidden>
+        <div class="shop-pic fl">
+            <img class="pic" src="{$good_pic}" style="height: 500px;height: 500px;">
         </div>
-
-        <div class="box">
-            <div  class="box1 fl">选择颜色</div>
-            <div class="box2 fr">
-                {volist name='good_sku_pic_color' id='list'}
-                <div class="pic1 color fl"><span style="line-height: 40px;float: left; padding-left: 15px;">{$list.good_sku_color}</span><img  style="height: 40px" src="{$list.good_sku_pic}"></div>
+        <div class="shop-item fl">
+            <div class="top">
+                <h3>{$category.category.p_category.brand.brand_name}{$category.good_name}</h3>
+                <p class="item">{$category.good_desc}</p>
                 {/volist}
+                <p class="item1"><span>{$min_price}~{$max_price}</span></p>
             </div>
-        </div>
-        <div class="box" >
-            <div  class="box1 fl">选择版本</div>
-            <div class="box2 fr">
-                {volist name='good_sku_rom_ram' id='list1'}
-                <div class="pic1 ram fl"><span class="span_rom">{$list1.good_sku_rom}</span>G+<span class="span_ram">{$list1.good_sku_ram}</span>G</div>
-                {/volist}
-            </div>
-        </div>
 
-        <div class="box " style="clear: both">
-            <div  class="box1 fl">选择数量</div>
-            <div class="box2 fr">
-                <div class="dl">
-                    <div class="dd clearfix">
-                        <div class="des_number">
-                            <div class="reduction">-</div>
-                            <div class="des_input">
-                                <input type="text" class="num" value="1">
+            <div class="box">
+                <div class="box1 fl">选择颜色</div>
+                <div class="box2 fr">
+                    {volist name='good_sku_pic_color' id='list'}
+                    <div class="pic1 color fl"><span
+                            style="line-height: 40px;float: left; padding-left: 15px;">{$list.good_sku_color}</span><img
+                            style="height: 40px" src="{$list.good_sku_pic}"></div>
+                    {/volist}
+                </div>
+            </div>
+            <div class="box">
+                <div class="box1 fl">选择版本</div>
+                <div class="box2 fr">
+                    {volist name='good_sku_rom_ram' id='list1'}
+                    <div class="pic1 ram fl"><span class="span_rom">{$list1.good_sku_rom}</span>G+<span
+                            class="span_ram">{$list1.good_sku_ram}</span>G</div>
+                    {/volist}
+                </div>
+            </div>
+
+            <div class="box " style="clear: both">
+                <div class="box1 fl">选择数量</div>
+                <div class="box2 fr">
+                    <div class="dl">
+                        <div class="dd clearfix">
+                            <div class="des_number">
+                                <div class="reduction">-</div>
+                                <div class="des_input">
+                                    <input type="text" class="num" value="1">
+                                </div>
+                                <div class="plus">+</div>
                             </div>
-                            <div class="plus">+</div>
+                            <span class="xg"></span>
                         </div>
-                        <span class="xg"></span>
                     </div>
                 </div>
             </div>
+
+            <div class="des_select">
+                <span></span>
+            </div>
+            <div class="choose">
+                <span class="sku_id" style="display: none"></span>
+                <div class="add fl"><a href="#" onclick="addToShopCar()">加入购物车</a></div>
+                <div class="buy fl"><a>立即购买</a></div>
+            </div>
+
+            {if condition="$good_status eq -1"}
+            <div class="down">
+                已经下架
+            </div>
+            {else/}
+            {if condition="$time_down eq 1"}
+            <div class="down">
+                商品销售时间已过
+            </div>
+            {/if}
+            {/if}
+
+
         </div>
 
-        <div class="des_select">
-           <span></span>
-        </div>
-        <div class="choose">
-            <span class="sku_id"  style="display: none"></span>
-            <div class="add fl"><a href="#" onclick="addToShopCar()">加入购物车</a></div>
-            <div class="buy fl"><a>立即购买</a></div>
-        </div>
     </div>
-</div>
-<div class="shop-show comwidth">
-    <div class="show1" style="width: 400px;">
-        <ul>
-            <li class="show1-li li-1">产品介绍</li><li class="li-2"> 产品评价</li>
-        </ul>
-    </div>
-    <div class="show-detail">
-        <div class="show2">
-            <div class="show3">
-                <div  class="show3-in" ><input type="button" value="查看商品详细信息" onclick="show4()" class="show3-btn"></div>
-            </div>
-            <img src="/static/index/images/introduction/item/1.jpg">
-            <img src="/static/index/images/introduction/item/2.jpg">
+    <div class="shop-show comwidth">
+        <div class="show1" style="width: 400px;">
+            <ul>
+                <li class="show1-li li-1">产品介绍</li>
+                <li class="li-2"> 产品评价</li>
+            </ul>
         </div>
-        <div class="show4" style="display:none;">
-            <img src="/static/index/images/introduction/item/3.jpg">
-            <img src="/static/index/images/introduction/item/4.jpg">
-            <img src="/static/index/images/introduction/item/5.jpg">
-            <img src="/static/index/images/introduction/item/6.jpg">
-            <img src="/static/index/images/introduction/item/7.jpg">
-            <img src="/static/index/images/introduction/item/8.jpg">
-            <img src="/static/index/images/introduction/item/9.jpg">
-            <img src="/static/index/images/introduction/item/10.jpg">
-            <img src="/static/index/images/introduction/item/11.jpg">
-            <img src="/static/index/images/introduction/item/12.jpg">
-            <img src="/static/index/images/introduction/item/13.jpg">
-            <img src="/static/index/images/introduction/item/14.jpg">
-            <img src="/static/index/images/introduction/item/15.jpg">
-            <img src="/static/index/images/introduction/item/16.jpg">
-            <img src="/static/index/images/introduction/item/17.jpg">
-        </div>
-        <div class="show5 hide" onclick="hide4()">
-            <img src="/static/index/images/introduction/6.jpg" class="show5-img">
-        </div>
-    </div>
-    <div class="comment fl"  style="display: none" >
-        {volist name='commentList' id='sku'}
-            {volist name="sku['sku_order']" id='comment'}
-                {if condition="$comment.comment.comment_text neq null"}
-                <div class="comment_show">
-                    <div class="user">
-                        <div class="user_pic">
-                        <img src='http://101.200.32.25/{$comment.order_info.customer.customer_pic}' style="width: 60px;height: 60px;border-radius: 30px;"/>
-                        </div>
-                        <span>{$comment.order_info.customer_name}</span></div>
-                    <div class="user_right">
-                        <div class="comment_text">{$comment.comment.comment_text}<span class="time">{$comment.comment.comment_time|date='Y-m-d H:i:s'}</span></div>
-                        <div class="size">颜色：{$sku.good_sku_color} &emsp;规格：{$sku.good_sku_rom}G+{$sku.good_sku_ram}G </div>
-                    </div>
-                </div>
-               {/if}
+        <div class="show-detail">
+            {volist name='spu_pic' id='pic' empty='暂无介绍'}
+            <img src="{$pic.spu_pic_src}" class="comwidth">
             {/volist}
-        {/volist}
-    </div>
-</div>
 
-{include file='common/foot'/}
+        </div>
+        <div class="comment fl" style="display: none;">
+
+            {volist name='commentList' id='sku' empty='暂无评论'}
+            {volist name="sku['sku_order']" id='comment'}
+            {if condition="$comment.comment.comment_text neq null"}
+            <div class="comment_show">
+                <div class="user">
+                    <div class="user_pic">
+                        <img src='http://101.200.32.25/{$comment.order_info.customer.customer_pic}'
+                            style="width: 60px;height: 60px;border-radius: 30px;" />
+                    </div>
+                    <span>{$comment.order_info.customer_name}</span>
+                </div>
+                <div class="user_right">
+                    <div class="comment_text">{$comment.comment.comment_text}<span
+                            class="time">{$comment.comment.comment_time|date='Y-m-d H:i:s'}</span></div>
+                    <div class="size">颜色：{$sku.good_sku_color} &emsp;规格：{$sku.good_sku_rom}G+{$sku.good_sku_ram}G </div>
+                </div>
+            </div>
+            {/if}
+            {/volist}
+            {/volist}
+        </div>
+    </div>
+
+    {include file='common/foot'/}
 
 </body>
 <script type="text/javascript" src="/static/index/js/jquery.min.js"></script>
@@ -140,23 +169,23 @@
 <script type="text/javascript" src="/static/admin/h-ui.admin/js/H-ui.admin.js"></script>
 <script>
 
-    function addToShopCar(){
-        var good_sku_id=$.trim($('.sku_id').html());
-        if(good_sku_id){
-            var num=t = $('.num').val();
+    function addToShopCar() {
+        var good_sku_id = $.trim($('.sku_id').html());
+        if (good_sku_id) {
+            var num = t = $('.num').val();
             $.ajax(
                 {
-                    url:'http://101.200.32.25/index/introduction/toShopCar',
-                    data:{'good_sku_id':good_sku_id,'num':num},
-                    type:'post',
-                    dataType:'json',
-                    success:function (result) {
-                        if(result==-1){
-                            layer.msg('请先登陆',{icon:1,time:1111});
-                        }else if(result==0){
-                            layer.msg('添加购物车失败', {icon: 1, time: 1111});
-                        }else {
-                            layer.msg('添加购物车成功', {icon: 1, time: 1111});
+                    url: 'http://101.200.32.25/index/introduction/toShopCar',
+                    data: { 'good_sku_id': good_sku_id, 'num': num },
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result == -1) {
+                            layer.msg('请先登陆', { icon: 1, time: 1111 });
+                        } else if (result == 0) {
+                            layer.msg('添加购物车失败', { icon: 1, time: 1111 });
+                        } else {
+                            layer.msg('添加购物车成功', { icon: 1, time: 1111 });
 
                         }
                     }
@@ -164,60 +193,60 @@
             );
         }
     }
-    $(function(){
+    $(function () {
+        var good_spu_id = $('.good_spu_id').val();
+
         $('.li-2').click(function () {
             $('.li-1').removeClass('show1-li');
             $(this).addClass('show1-li');
-            $('.show-detail').css('display','none');
-            $('.comment').css('display','block');
+            $('.show-detail').css('display', 'none');
+            $('.comment').css('display', 'block');
         });
         $('.li-1').click(function () {
             $('.li-2').removeClass('show1-li');
             $(this).addClass('show1-li');
-            $('.show-detail').css('display','block');
-            $('.comment').css('display','none');
+            $('.show-detail').css('display', 'block');
+            $('.comment').css('display', 'none');
         });
 
 
         $('.buy').click(function () {
-            var good_sku_id=$('.sku_id').html();
-            if(good_sku_id!=''){
-                var sku_num=$('.num').val();
-                var array_info=[];
-                var buy_info={};
-                buy_info['good_sku_id']=good_sku_id;
-                buy_info['sku_num']= sku_num;
-                array_info[0]=buy_info;
-                sessionStorage.setItem('array_info',JSON.stringify(array_info));
-                window.location.href='http://101.200.32.25/payMethod';
-            }else {
-                layer.msg('请选择颜色和版本',{icon:1,time:1111});
+            var good_sku_id = $('.sku_id').html();
+            if (good_sku_id != '') {
+                var sku_num = $('.num').val();
+                var array_info = [];
+                var buy_info = {};
+                buy_info['good_sku_id'] = good_sku_id;
+                buy_info['sku_num'] = sku_num;
+                array_info[0] = buy_info;
+                sessionStorage.setItem('array_info', JSON.stringify(array_info));
+                window.location.href = 'http://101.200.32.25/payMethod';
+            } else {
+                layer.msg('请选择颜色和版本', { icon: 1, time: 1111 });
 
             }
         });
-        $('.test').click(function () {
-            alert(1);
-        });
         $('.color').click(function () {
-            if(!$(this).hasClass('enable_select')) {
+            if (!$(this).hasClass('enable_select')) {
                 $(this).addClass('select_1');
                 $(this).siblings('div').removeClass('select_1');
                 var color = $(this).find('span').html();
                 $.ajax(
                     {
                         url: 'http://101.200.32.25/index/introduction/findRom',
-                        data: {'color': color},
+                        data: { 'color': color, 'good_spu_id': good_spu_id },
                         type: 'POST',
                         dataType: 'json',
                         success: function (result) {
                             var result = eval(result);
+                            var pic = result[0]['good_sku_pic'];
                             $('.ram').each(function () {
                                 var count = 0;
                                 var rom = $(this).find('.span_rom').html();
                                 var ram = $(this).find('.span_ram').html();
                                 $(this).removeClass('enable_select');
                                 $.each(result, function (index, value) {
-                                    if (rom==value.good_sku_rom&&ram== value.good_sku_ram) {
+                                    if (rom == value.good_sku_rom && ram == value.good_sku_ram) {
                                         count = 1;
                                     }
                                 });
@@ -225,39 +254,40 @@
                                     $(this).addClass('enable_select');
                                 }
                             });
+                            $('.pic').attr('src', pic);
                         },
                         error: function (result) {
-                            layer.msg('服务出现问题，请刷新稍后再试', {icon: 1, time: 1111});
+                            layer.msg('服务出现问题，请刷新稍后再试', { icon: 1, time: 1111 });
                         }
 
                     }
                 );
                 $('.ram').each(function () {
-                    if($(this).hasClass('select_1')){
-                        var rom=$(this).find('.span_rom').html();
-                        var ram=$(this).find('.span_ram').html();
+                    if ($(this).hasClass('select_1')) {
+                        var rom = $(this).find('.span_rom').html();
+                        var ram = $(this).find('.span_ram').html();
                         $.ajax(
                             {
                                 url: 'http://101.200.32.25/index/introduction/getPrice',
-                                data: {'sku_rom': rom,'sku_ram':ram,'sku_color':color},
+                                data: { 'sku_rom': rom, 'sku_ram': ram, 'sku_color': color, 'good_spu_id': good_spu_id },
                                 type: 'POST',
                                 dataType: 'json',
                                 success: function (result) {
-                                    var result= eval('('+result+')');
+                                    var result = eval('(' + result + ')');
                                     $('.sku_id').html(result.good_sku_id);
                                     $('.item1').find('span').html(result.good_price);
-                                    $('.xg').html('剩余<em>'+result.left_num+'</em>');
-                                    $('.des_select').find('span').html('已选择：'+color+"  "+rom+"G+"+ram+'G  '+result.good_price+'元');
+                                    $('.xg').html('剩余<em>' + result.left_num + '</em>');
+                                    $('.des_select').find('span').html('已选择：' + color + "  " + rom + "G+" + ram + 'G  ' + result.good_price + '元');
                                 },
                             }
                         );
                     }
-            });
+                });
             }
 
         });
         $('.ram').click(function () {
-             if (!$(this).hasClass('enable_select')){
+            if (!$(this).hasClass('enable_select')) {
                 $(this).addClass('select_1');
                 $(this).siblings('div').removeClass('select_1');
                 var rom = $(this).find('.span_rom').html();
@@ -265,7 +295,7 @@
                 $.ajax(
                     {
                         url: 'http://101.200.32.25/index/introduction/findcolor',
-                        data: {'good_sku_rom': rom,'good_sku_ram':ram,},
+                        data: { 'good_sku_rom': rom, 'good_sku_ram': ram, 'good_spu_id': good_spu_id },
                         type: 'POST',
                         dataType: 'json',
                         success: function (result) {
@@ -286,41 +316,41 @@
                         },
                     }
                 );
-                 $('.color').each(function () {
-                     if($(this).hasClass('select_1')){
-                         var color=$(this).find('span').html();
-                         $.ajax(
-                             {
-                                 url: 'http://101.200.32.25/index/introduction/getPrice',
-                                 data: {'sku_rom': rom,'sku_ram':ram,'sku_color':color},
-                                 type: 'POST',
-                                 dataType: 'json',
-                                 success: function (result) {
-                                     var result= eval('('+result+')');
-                                     $('.sku_id').html(result.good_sku_id);
-                                     $('.item1').find('span').html(result.good_price);
-                                     $('.xg').html('剩余<em>'+result.left_num+'</em>');
-                                     $('.des_select').find('span').html('已选择：'+color+"  "+rom+"G+"+ram+'G  '+result.good_price+'元');
-                                 },
-                             }
-                         );
-                     }
-                 });
+                $('.color').each(function () {
+                    if ($(this).hasClass('select_1')) {
+                        var color = $(this).find('span').html();
+                        $.ajax(
+                            {
+                                url: 'http://101.200.32.25/index/introduction/getPrice',
+                                data: { 'sku_rom': rom, 'sku_ram': ram, 'sku_color': color, 'good_spu_id': good_spu_id },
+                                type: 'POST',
+                                dataType: 'json',
+                                success: function (result) {
+                                    var result = eval('(' + result + ')');
+                                    $('.sku_id').html(result.good_sku_id);
+                                    $('.item1').find('span').html(result.good_price);
+                                    $('.xg').html('剩余<em>' + result.left_num + '</em>');
+                                    $('.des_select').find('span').html('已选择：' + color + "  " + rom + "G+" + ram + 'G  ' + result.good_price + '元');
+                                },
+                            }
+                        );
+                    }
+                });
             }
         });
 
         function isJSON(str) {
             if (typeof str == 'string') {
                 try {
-                    var obj=JSON.parse(str);
-                    if(typeof obj == 'object' && obj ){
+                    var obj = JSON.parse(str);
+                    if (typeof obj == 'object' && obj) {
                         return true;
-                    }else{
+                    } else {
                         return false;
                     }
 
-                } catch(e) {
-                    console.log('error：'+str+'!!!'+e);
+                } catch (e) {
+                    console.log('error：' + str + '!!!' + e);
                     return false;
                 }
             }
@@ -328,29 +358,29 @@
         }
 
         $('.num').change(function () {
-            if(isNaN($('.num').val())){
-                alert('请输入纯数字');
+            if (isNaN($('.num').val())) {
+                layer.msg('请输入纯数字', { icon: 2, time: 1111 });
                 $('.num').val(1);
             }
         });
 
         var t = $('.num');/*  数量显示框*/
-        $('.plus').click(function(){
-            var max=$('.xg').find('em').html();
-            max=parseInt(max);
-            if($.trim(max)!=""){
-                if(t.val()<max){/* 数量最大不能超过商品库存量 */
-                    t.val(parseInt(t.val())+1);
-                }else{
+        $('.plus').click(function () {
+            var max = $('.xg').find('em').html();
+            max = parseInt(max);
+            if ($.trim(max) != "") {
+                if (t.val() < max) {/* 数量最大不能超过商品库存量 */
+                    t.val(parseInt(t.val()) + 1);
+                } else {
                     t.val(1);
                 }
             }
         });
         $('.num').blur(function () {
-            var max=$('.xg').find('em').html();
-            max=parseInt(max);
-            if($.trim(max)!=""){
-                if(t.val()>max){/* 数量最大不能超过商品库存量 */
+            var max = $('.xg').find('em').html();
+            max = parseInt(max);
+            if ($.trim(max) != "") {
+                if (t.val() > max) {/* 数量最大不能超过商品库存量 */
                     t.val(1);
                 }
             }
@@ -358,14 +388,15 @@
         $('.num').dblclick(function () {
             t.val(1);
         });
-        $('.reduction').click(function(){
-            if(t.val()<=1){	/*数量最少为1  */
+        $('.reduction').click(function () {
+            if (t.val() <= 1) {	/*数量最少为1  */
                 t.val(1);
-            }else{
-                t.val(parseInt(t.val())-1);
+            } else {
+                t.val(parseInt(t.val()) - 1);
             }
         })
     });
 
 </script>
+
 </html>

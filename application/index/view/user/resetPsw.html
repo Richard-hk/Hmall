@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>重置密码</title>
+    <style>
+        input {
+            outline: none;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        input {
+            outline: none;
+            border: 0;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: #F2F2F2;
+        }
+
+        .top_div {
+            height: 30px;
+            line-height: 30px;
+            float: left
+        }
+
+        .top_a {
+            text-decoration: none;
+            color: #FFFfff;
+        }
+
+        img {
+            float: left
+        }
+
+        .top {
+            width: 100%;
+            height: 70px;
+            background-color: #333333
+        }
+
+        .pic {
+            width: 350px;
+            height: 30px;
+            float: left;
+            margin-top: 20px;
+            line-height: 30px;
+            font-size: 21px
+        }
+
+        .login-box {
+            width: 450px;
+            font-size: 18px;
+            height: 430px;
+            margin: 0 auto;
+            padding: 5px 5px 15px 10px;
+        }
+
+        .login-box h2 {
+            text-align: center;
+        }
+
+        .login {
+            width: 290px;
+            height: 30px;
+            padding: 0 5px;
+            margin: 5px 0 5px;
+        }
+
+        .login1 {
+            width: 290px;
+            height: 30px;
+            padding: 0 5px;
+            margin: 5px 0 5px;
+        }
+
+        .login2 {
+            height: 30px;
+            width: 180px;
+            margin: 5px 0 5px;
+            padding: 0 5px;
+        }
+
+        .login-button {
+            width: 70px;
+            height: 35px;
+        }
+
+        .login-button1 {
+            width: 80px;
+            height: 35px;
+            margin-top: 20px;
+        }
+
+        .stern {
+            width: 1000px;
+            margin: 30px auto;
+            text-align: center
+        }
+
+        #msg {
+            margin: 0 5px;
+        }
+
+        .com {
+            width: 700px;
+            margin: 0 auto
+        }
+
+        .login_div {
+            background-color: #FFFfff;
+            margin-top: 40px;
+        }
+
+        .login_div p {
+            background-color: #F7F7F7;
+            height: 40px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            padding: 0 25px;
+            line-height: 40px
+        }
+
+        input {
+            border: none;
+            background-color: #F7F7F7;
+        }
+
+        /*.radio{padding:0 5px; margin:5px 0 5px;}*/
+        .login-button1 {
+            background-color: #D1314B;
+            color: #FFFfff;
+            border-radius: 10px;
+        }
+
+        a {
+            blr: expression(this.onFocus=this.blur());
+            outline: none;
+        }
+
+        a:focus {
+            outline: none;
+        }
+
+        .top_a img {
+            height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <form>
+        <div class="top">
+            <div class="com">
+                <div class="pic"><a href="/" class="top_a"><img src="/static/index/img/register.png">
+                        <div class="top_div">&nbsp;<strong>|</strong>&nbsp;&nbsp;灰灰商城
+                    </a></div>
+            </div>
+        </div>
+        </div>
+        <div class="com login_div">
+            <div class="login-box">
+                <p style="text-align: center;background-color: white"><span style="font-size: 30px;">邮件重置密码
+                        {:token()}</span>
+                </p>
+                <p>电子邮件：
+                    <input type="text" name="email" class="email" placeholder="请输入用户名" size="22">
+                </p>
+
+                <p>验 &nbsp;证 &nbsp;码：
+                    <input type="text" name="checkcode" class="checkcode" placeholder="这里输入密码" size="22"
+                        style="width: 160px;">
+                    <input type="button" name="code" class="code" value="免费获取验证码" size="22"
+                        style="width: 130px; height:40px;color: white;background-color: gray;">
+
+                </p>
+                <p>用户密码：
+                    <input type="password" value="" name="password" class="password" placeholder="这里输入密码" size="22">
+                </p>
+                <p>确认密码：
+                    <input class=" password1" value="" name="password1" placeholder="请再次确认密码" size="22" type="password">
+                </p>
+
+                <input type="button" class="submit login-button1" name="btn" value="提交"
+                    style="margin-left:80px; background-color: gray;" disabled>
+                <input type="reset" class="login-button1" name="btn" value="重置"
+                    style="float:right; margin-right:80px;"><br />
+            </div>
+
+        </div>
+        <div class="stern">
+            <p>Sponsor：Richard-hk Company&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Address：China Hubei
+                Province&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Telephone：15797274125</p>
+        </div>
+    </form>
+</body>
+<script type="text/javascript" src="/static/index/js/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script>
+    // 
+    function daojishi(seconds, obj) {
+        if (seconds > 1) {
+            seconds--;
+            $(obj).val(seconds + "秒后可重新获取 ").attr("disabled", true);
+            setTimeout(function () {
+                daojishi(seconds, obj);
+            }, 1000);
+        } else {
+            $(obj).val("免费获取验证码").attr("disabled", false);
+        }
+    }
+
+    $(document).ready(
+        $('.code').click(function () {
+            var email = $.trim($('.email').val());
+            var obj = $('.code');
+            if (email == "") {
+                layer.msg('电子邮件不能为空', { icon: 2, time: 1111 });
+            } else {
+                daojishi(60, obj)
+                $.ajax({
+                    url: '/index/user/sentEmail',
+                    type: "post",
+                    dataType: 'json',
+                    data: { 'email': email },
+                    success: function (data) {
+                        if (data == -1) {
+                            layer.msg('验证码格式不正确', { icon: 2, time: 1111 });
+                        } else if (data == 0) {
+                            layer.msg('发送失败', { icon: 2, time: 1111 });
+                        } else if (data == 1) {
+                            layer.msg('发送成功', { icon: 1, time: 1111 });
+                        }
+                    },
+                    error: function () {
+                        layer.msg('服务暂时出错，稍后重试', { icon: 2, time: 1111 });
+                    }
+                });
+            }
+        })
+    );
+    $('.checkcode').blur(function () {
+        var checkcode = $('.checkcode').val();
+        var email = $.trim($('.email').val());
+        if (checkcode) {
+            $.ajax({
+                url: '/index/user/checkCode',
+                type: "post",
+                dataType: 'json',
+                data: { 'checkCode': checkcode, 'email': email },
+                success: function (data) {
+                    if (data == 1) {
+                        $('.submit').css('background', '#D1314B');
+                        $('.submit').attr('disabled', false);
+                    } else {
+                        layer.msg('验证码错误，或者已经过期', { icon: 2, time: 1111 });
+                    }
+                },
+                error: function () {
+                    layer.msg('服务暂时出错，稍后重试', { icon: 2, time: 1111 });
+                }
+            });
+        } else {
+            layer.msg('验证码不能为空', { icon: 2, time: 1111 });
+        }
+    })
+    $('.submit').click(function () {
+        var email = $.trim($('.email').val());
+        var password = $.trim($('.password').val());
+        var password1 = $.trim($('.password1').val());
+        if (password1 != password || password1 == "") {
+            layer.msg('密码不一致,或者密码为空', { icon: 2, time: 1111 });
+        } else {
+            $.ajax({
+                url: '/index/user/changePsw',
+                type: "post",
+                dataType: 'json',
+                data: { 'email': email, 'password': password },
+                success: function (data) {
+                    if (data == 1) {
+                        layer.msg('密码修改成功，即将跳转登录', { icon: 1, time: 1111 });
+                        setTimeout("window.location.href='login'", 1111);
+                    } else {
+                        layer.msg('密码修改失败', { icon: 2, time: 1111 });
+                    }
+                },
+                error: function () {
+                    layer.msg('服务暂时出错，稍后重试', { icon: 2, time: 1111 });
+                }
+
+            });
+        }
+    })
+</script>
+
+</html>

@@ -1,8 +1,10 @@
 <?php
 namespace app\admin\controller;
 
-use app\admin\model\Product\Category;
-use app\admin\model\Product\Good_spu;
+use app\admin\model\product\Brand;
+use app\admin\model\product\Category;
+use app\admin\model\product\Good_sku;
+use app\admin\model\product\Good_spu;
 use think\Controller;
 use think\Db;
 use think\Exception;
@@ -15,13 +17,13 @@ class Product extends Controller
 {
     public function productBrand($page_count=5,$brand_search=null)//品牌管理页面
     {
-        $brand_name=[
-            ['brand_name','like','%'.$brand_search.'%'],
-            ];
-        $brand_desc=[
-            ['brand_desc','like','%'.$brand_search.'%']
-            ];
-        $list = Db::name('brand')->whereor([$brand_name,$brand_desc])->order('brand_id', 'desc')->paginate($page_count);
+        if($brand_search){
+            $brand_name=['brand_name','like','%'.$brand_search.'%'];
+            $brand_desc=['brand_desc','like','%'.$brand_search.'%'];
+            $list=Brand::order('brand_id', 'desc')->whereor([$brand_name,$brand_desc])->paginate($page_count);
+        }else{
+            $list = Brand::order('brand_id', 'desc')->paginate($page_count);
+        }
         $total = $list->total();
         $current_page = $list->CurrentPage();
         $per_page = $list->Count();
@@ -34,7 +36,7 @@ class Product extends Controller
             'page_count' => $page_count,
             'last_page' => $last_page
         ]);
-        return $this->fetch('product/productBrand');
+        return $this->fetch('productBrand');
     }
 
     public function productBrandAdd()//品牌添加
@@ -66,7 +68,7 @@ class Product extends Controller
         $list=Db::name('brand')->where('brand_id','=',$brand_id)->select();
         $this->assign('list',$list);
         $this->assign('brand_id',$brand_id);
-        return $this->fetch('product/productBrandEdit');
+        return $this->fetch('productBrandEdit');
     }
 
     public function productBrandAlert()//品牌编辑
@@ -95,8 +97,8 @@ class Product extends Controller
     public function productBrandDelete()//品牌删除
     {
         $brand_id = $_POST['brand_id'];
-        $res = Db::name('brand')->where('brand_id', '=', $brand_id)->delete();
-        return $res;
+        // $res = Db::name('brand')->where('brand_id', '=', $brand_id)->destory();
+        // return $res;
     }
 
     public function productBrandAllDel()//品牌全选删除
@@ -115,25 +117,26 @@ class Product extends Controller
     {
         if(isset($_GET['category_id'])){
             $category_id=$_GET['category_id'];
-            $category=Category::where('category_id','=',$category_id)->find();
-            $category_level=$category->category_level;
+            $categoryAll=Db::name('category');
+            $category=$categoryAll->where('category_id','=',$category_id)->find();
+            $category_level=$category['category_level'];
             if($category_level==1){
-                $name1=$category->category_name;
+                $name1=$category['category_name'];
                 $this->assign('name1',$name1);
             }elseif($category_level==2){
-                $hma_category_id=$category->hma_category_id;
-                $name2=$category->category_name;
-                $category=Category::where('category_id','=',$hma_category_id)->find();
-                $name1=$category->category_name;
+                $hma_category_id=$category['hma_category_id'];
+                $name2=$category['category_name'];
+                $category=$categoryAll->removeOption('where')->where('category_id','=',$hma_category_id)->find();
+                $name1=$category['category_name'];
                 $this->assign(['name1'=>$name1,'name2'=>$name2]);
             }else{
-                $name3=$category->category_name;
-                $hma_category_id=$category->hma_category_id;
-                $category=Category::where('category_id','=',$hma_category_id)->find();
-                $name2=$category->category_name;
-                $hma_category_id=$category->hma_category_id;
-                $category=Category::where('category_id','=',$hma_category_id)->find();
-                $name1=$category->category_name;
+                $name3=$category['category_name'];
+                $hma_category_id=$category['hma_category_id'];
+                $category=$categoryAll->removeoption('where')->where('category_id','=',$hma_category_id)->find();
+                $name2=$category['category_name'];
+                $hma_category_id=$category['hma_category_id'];
+                $category=$categoryAll->removeoption('where')->where('category_id','=',$hma_category_id)->find();
+                $name1=$category['category_name'];
                 $this->assign(['name1'=>$name1,'name2'=>$name2,'name3'=>$name3]);
             }
             $brand=Db::name('brand')->where('brand_name',$name1)->find();
@@ -141,6 +144,7 @@ class Product extends Controller
             $this->assign('category_level',$category_level);
             $this->assign('brand_id',$brand_id);
             $this->assign('category_id',$category_id);
+            
         }else{
             $this->assign('category_level',0);
         }
@@ -149,6 +153,7 @@ class Product extends Controller
 
     public function productCategoryAddAct()//品牌分类添加
     {
+        
         $category = [
             'brand_id'=>$_POST['brand_id'],
             'hma_category_id'=>$_POST['category_id'],
@@ -157,6 +162,16 @@ class Product extends Controller
             'category_level'=>$_POST['category_level']+1
         ];
         $list=Db::name('category')->insert($category);
+        return $list;
+    }
+    public function productCategoryEditAct()//品牌分类添加
+    {
+        $category_id=$_POST['category_id'];
+        $category = [
+            'category_name'=>$_POST['category_name'],
+            'category_desc'=>$_POST['category_desc'],
+        ];
+        $list=Db::name('category')->where('category_id',$category_id)->data($category)->update();
         return $list;
     }
 
@@ -188,9 +203,9 @@ class Product extends Controller
             if (isset($_GET['search']) == 1) {
                 $datemin = strtotime($_GET['datemin']);
                 $datemax = strtotime($_GET['datemax']);
-                $good_spu = Db::name('good_spu')->where('gmt_up', ['>', $datemin], ['<', $datemax], 'and')->select();
+                $good_spu = Db::name('good_spu')->where('gmt_up', ['>', $datemin], ['<', $datemax], 'and')->where('good_status','<>','-2')->select();
             } else {
-                $good_spu = Db::name('good_spu')->where('category_id', $category_id)->select();
+                $good_spu = Db::name('good_spu')->where('category_id', $category_id)->where('good_status','<>','-2')->select();
             }
             $total = count($good_spu);
             $this->assign([
@@ -229,7 +244,7 @@ class Product extends Controller
 
     public function productListDelete($good_spu_id)//分类产品删除
     {
-        $list=Db::name('good_spu')->where('good_spu_id',$good_spu_id)->delete();
+        $list=Db::name('good_spu')->where('good_spu_id',$good_spu_id)->data(['good_status'=>-2])->update();
         return $list;
 
     }
@@ -237,6 +252,7 @@ class Product extends Controller
 
     public function productListAdd($category_id)//分类产品添加页面
     {
+
         $this->assign('category_id',$category_id);
         return $this->fetch('productListAdd');
     }
@@ -268,8 +284,51 @@ class Product extends Controller
         }
 
     }
+    
 
-    public function productListEdit()//分类产品编辑
+    public function productListPicture(){
+        $good_spu_id=$_GET['good_spu_id'];
+        $good_spu=Good_spu::where('good_spu_id','=',$good_spu_id)->find();
+        $this->assign([
+            'good_spu_id'=>$good_spu_id,
+            'good_name'=>$good_spu->good_name,
+        ]);
+        return $this->fetch('productListPicture');
+    }
+    public function productListPictureAct(){
+        $file = request()->file('file');
+        $good_spu_id=$_POST['good_spu_id'];
+        $filename =date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 6);
+        $file_path = 'uploads/index/spu/'.$good_spu_id;
+        $info = $file->move($file_path, $filename);
+        $path=$info->getPathname();
+        if($info){
+            $data=[
+                'good_spu_id'=>$good_spu_id,
+                'spu_pic_src'=>'/'.$path
+            ];
+            $res=db('spu_pic')->insert($data);
+
+        }
+    }
+    public function productListPictureShow(){
+        $good_spu_id=$_GET['good_spu_id'];
+        $good_spu=Good_spu::where('good_spu_id','=',$good_spu_id)->find();
+        $list=db('spu_pic')->where('good_spu_id',$good_spu_id)->select();
+        $this->assign([
+            'good_spu_id'=>$good_spu_id,
+            'good_name'=>$good_spu->good_name,
+            'count'=>count($list),
+            'list'=>$list
+        ]);
+        return $this->fetch('productListPictureShow');
+    }
+    public function productListPictureDelete($spu_pic_id){
+        $res=db('spu_pic')->where('spu_pic_id',$spu_pic_id)->delete();
+        return $res;
+    }
+
+    public function productListEdit()//分类产品编辑页面
     {
         $category_id=$_GET['category_id'];
         $good_spu_id=$_GET['good_spu_id'];
@@ -284,8 +343,36 @@ class Product extends Controller
         ]);
         return $this->fetch('productListEdit');
     }
+    public function productListEditAct(){
+        // $category_id=$_POST['category_id'];
+        // $good_name=$_POST['good_name'];
+        // $good_desc=$_POST['good_desc'];
+        // $good_pic=$this->request->file('brand_logo');
+
+        // $good_pic_path='uploads/admin/product_logo/';
+        // $res=$good_pic->move($good_pic_path,$good_name);
+        // $pic_extension=$res->getExtension();
+
+        // if($res){
+        //     $good_spu=[
+        //         'category_id'=>$category_id,
+        //         'gmt_up'=>strtotime($_POST['datemin']),
+        //         'gmt_down'=>strtotime($_POST['datemax']),
+        //         'good_name'=>$good_name,
+        //         'good_desc'=>$good_desc,
+        //         'good_status'=>1,
+        //         'good_sku_pic'=>'/'.$good_pic_path.$good_name.'.'.$pic_extension
+        //     ];
+        //     $list=Db::name('good_spu')->insert($good_spu);
+        //     return $list;
+        // }else{
+        //     return 0;
+        // }
+    }
+
     public function productListChild()//产品规格页面
     {
+
         $good_spu_id=$_GET['good_spu_id'];
         $good_name=$_GET['good_name'];
         $list=Db::name('good_sku')->where('good_spu_id',$good_spu_id)->select();
@@ -299,20 +386,20 @@ class Product extends Controller
 
         return $this->fetch('productListChild');
     }
-    public function productListChildAdd()//产品规格添加
+    public function productListChildAdd()//产品规格添加页面
     {
-        $good_sku_id=$_GET['good_spu_id'];
+        $good_spu_id=$_GET['good_spu_id'];
         $good_name=$_GET['good_name'];
-        $good_sku=Db::name('good_sku')->field('good_sku_color,good_sku_pic')->group('good_sku_color,good_sku_pic')->select();
+        $good_sku=Db::name('good_sku')->where('good_spu_id',$good_spu_id)->field('good_sku_color,good_sku_pic')->group('good_sku_color,good_sku_pic')->select();
         $this->assign([
-            'good_spu_id'=>$good_sku_id,
+            'good_spu_id'=>$good_spu_id,
             'good_name'=>$good_name,
             'good_sku'=>$good_sku,
         ]);
 
         return $this->fetch('productListChildAdd');
     }
-    public function productListChildAddAct(){
+    public function productListChildAddAct(){//产品规格添加
         $good_sku_color=trim($_POST['good_sku_color']);
         $good_spu_id=trim($_POST['good_spu_id']);
         if($_POST['good_color_select']==-1){
@@ -355,6 +442,7 @@ class Product extends Controller
     public function productListChildEdit(){
         $good_sku_id=$_GET['good_sku_id'];
         $list=Db::name('good_sku')->where('good_sku_id',$good_sku_id)->find();
+        $good_sku=Db::name('good_sku')->field('good_sku_color,good_sku_pic')->group('good_sku_color,good_sku_pic')->select();
         $this->assign([
             'good_sku_id'=>$good_sku_id,
             'good_sku_rom'=>$list['good_sku_rom'],
@@ -362,11 +450,20 @@ class Product extends Controller
             'good_sku_pic'=>$list['good_sku_pic'],
             'good_sku_color'=>$list['good_sku_color'],
             'good_price'=>$list['good_price'],
-            'stock_num'=>$list['stock_num']
+            'stock_num'=>$list['stock_num'],
+            'good_sku'=>$good_sku,
+
         ]);
         return $this->fetch('productListChildEdit');
     }
+    public function productListChildEditAct(){
 
+    }
+    public function productListChildDelete($good_sku_id){
+        $good_sku=new Good_sku();
+        $res=$good_sku->goodSkuCheck($good_sku_id);
+        return $res==-1?-1:$res;
+    }
 
     // public function webPicSave(Request $request){
     //     $file = $this->request->file('file');//file是传文件的名称，这是webloader插件固定写入的。因为webloader插件会写入一个隐藏input，这里与TP5的写法有点区别

@@ -18,6 +18,7 @@ define('WB_CALLBACK_URL','http://101.200.32.25/callback');
 // 加载基础文件
 require __DIR__ . '/../thinkphp/base.php';
 
+// require __DIR__.'/../vendor/autoload.php'; 
 
 // 支持事先使用静态方法设置Request对象和Config对象
 

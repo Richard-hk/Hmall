@@ -86,10 +86,12 @@
                             success: function (result) {
                                 if (result == 1||result==0) {
                                     layer.msg('品牌修改成功',{icon:1,time:1111});
-                                    window.location.reload();
+                                   
                                 } else {
                                     layer.msg('数据库数据修改失败',{icon:1,time:1111});
                                 }
+                                setTimeout('parent.location.reload()',1111);
+                                setTimeout('layer_close()',1111);
                             },
                             error: function (result) {
                                 layer.msg('服务出现问题，请稍后再试',{icon:1,time:1111});

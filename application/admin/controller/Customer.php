@@ -49,26 +49,32 @@ class Customer extends Controller
 
     public function customerStart(){
         $customer_name=$_POST['customer_name'];
-        return customerModel::where('customer_name',$customer_name)->update(['customer_status'=>1]);
+        $customer=new customerModel();
+        return $customer->changeStatus($customer_name,1);
     }
     public function customerStop(){
         $customer_name=$_POST['customer_name'];
-        return customerModel::where('customer_name',$customer_name)->update(['customer_status'=>0]);
+        $customer=new customerModel();
+        return $customer->changeStatus($customer_name,0);
     }
     public function customerRestart(){
         $customer_name=$_POST['customer_name'];
-        return customerModel::where('customer_name',$customer_name)->update(['customer_status'=>1]);
+        $customer=new customerModel();
+        return $customer->changeStatus($customer_name,0);
     }
     public function customerDelete(){
         $customer_name=$_POST['customer_name'];
-        return customerModel::where('customer_name',$customer_name)->update(['customer_status'=>-1]);
+        $customer=new customerModel();
+        return $customer->changeStatus($customer_name,-1);
     }
     public function customerAllDelete(){
         $customer_names=$_POST['customer_names'];
-        return customerModel::where('customer_name','in',$customer_names)->update(['customer_status'=>-1]);
+        $customer=new customerModel();
+        return $customer->changeAllStatus($customer_names,-1);
     }
     public function customerAllRestart(){
         $customer_names=$_POST['customer_names'];
-        return customerModel::where('customer_name','in',$customer_names)->update(['customer_status'=>1]);
+        $customer=new customerModel();
+        return $customer->changeAllStatus($customer_names,1);
     }
 }
