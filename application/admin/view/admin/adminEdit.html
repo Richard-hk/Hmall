@@ -103,12 +103,8 @@ $(function(){
 				url: "adminEditAct" ,
 				success: function(data){
 					layer.msg('修改成功!',{icon:1,time:1111});
-					// var index = parent.layer.getFrameIndex(window.name);
-					// setTimeout(parent.$('.btn-refresh').click(),1111);
-					// setTimeout(parent.layer.close(index),1111);
 				},
                 error: function(XmlHttpRequest, textStatus, errorThrown){
-					alert(errorThrown);
 					layer.msg('已存在数据!',{icon:1,time:1111});
 				}
 			});
@@ -117,6 +113,5 @@ $(function(){
 	});
 });
 </script> 
-<!--/请在上方写此页面业务相关的脚本-->
 </body>
 </html>

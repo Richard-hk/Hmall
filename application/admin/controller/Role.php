@@ -24,8 +24,13 @@ class Role extends Controller
     public function adminRoleDel()//管理员角色删除
     {
         $role_id=$_POST['role_id'];
-        $list=Db::name('role')->delete($role_id);
-        return $list;
+        $list=Db::name('role');
+        $check=Db::name('admin')->where('role_id',$role_id)->find();
+        if($check){
+            return -1;
+        }else{
+            return $list->delete($role_id);
+        }
     }
 
     public function adminRoleAdd()//管理员角色添加页面
@@ -87,11 +92,14 @@ class Role extends Controller
 
     public function roleAuthorUpdate()//管理员角色权限修改
     {
-        $status=$_POST['status'];
-        if($_POST['status']==1){
+        // $status=$_POST['status'];
+        $status=1;
+        if($status==1){
             $list=Db::name('role_author')->where([
-                ['role_id','=',$_POST['role_id']],
-                ['author_id','=',$_POST['author_id']]
+                // ['role_id','=',$_POST['role_id']],
+                ['role_id','=',2],
+                // ['author_id','=',$_POST['author_id']]
+                ['author_id','=',1]
             ])->delete();
         }else{
             $list=Db::name('role_author')->insert([

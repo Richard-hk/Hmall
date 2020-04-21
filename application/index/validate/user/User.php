@@ -10,6 +10,7 @@ class User extends Validate
 {
     protected $rule=[
         'username'=>'chsDash',
-        'password'=>'chsDash'
+        'password'=>'chsDash',
+        'email'=>'email',
     ];
 }

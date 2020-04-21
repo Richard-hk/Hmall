@@ -21,6 +21,7 @@ Route::get('login','index/user/login');
 Route::get('callback','index/user/callback');
 Route::get('bindname','index/user/bindName');
 Route::get('register','index/user/register');
+Route::get('resetpsw','index/user/resetPsw');
 Route::get('quit','index/user/quit');
 
 Route::get('introduction','index/introduction/introduction');

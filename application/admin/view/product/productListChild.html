@@ -18,7 +18,7 @@
             <th scope="col" colspan="9" >当前产品编号：<span style="color:#DD514C">{$good_spu_id}</span>&emsp;&emsp;名称：<span style="color:#DD514C">{$good_name}</span><span class="r">共有数据：<strong>{$count}</strong> 条</span> </th>
         </tr>
         <tr class="text-c">
-            <th width="40">ID</th>
+            <th width="50">SKU_ID</th>
             <th width="100">内存</th>
             <th width="100">存储</th>
             <th width="100">颜色</th>
@@ -67,7 +67,7 @@
     {
         var index = layer.open({
             type: 2,
-            title: '品牌编辑',
+            title: 'sku编辑',
             content: "productListChildEdit?good_sku_id=" + good_sku_id
         });
         layer.full(index);
@@ -75,21 +75,21 @@
     function active_del(good_sku_id) //单个删除
     {
 
-        layer.confirm('确定要删除吗？',function(index){
+        layer.confirm('确定要删除sku吗？',function(index){
             $.ajax(
                 {
-                    url: 'productBranDelete',
-                    data: {"good_sku_id": good_sku_id},
+                    url: 'productListChildDelete/good_sku_id/'+good_sku_id,
+                    // data: {"good_sku_id": good_sku_id},
                     type: 'POST',
                     dataType: 'json',
                     //contentType: 'application/json',
                     success: function (result) {
-                        if (result) {
-                            layer.msg('数据删除成功',{icon:1,time:1111});
+                        if (result==1) {
+                            layer.msg('sku数据删除成功',{icon:1,time:1111});
+                            setTimeout('window.location.reload()',1111) ;
                         } else {
-                            layer.msg('数据删除失败',{icon:1,time:1111});
+                            layer.msg('sku数据存在用户订单和购物车中，无法删除',{icon:1,time:2222});
                         }
-                        window.location.reload();
                     },
                     error: function (result) {
                         layer.msg('服务器暂时出现问题，请稍后重试',{icon:1,time:1111});

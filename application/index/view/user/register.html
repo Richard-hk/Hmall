@@ -1,114 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>注册</title>
     <style>
-        input{ outline:none; }
-        input:focus{ outline:none; }
-        input{ outline:none; border:0; }
-        body{padding: 0;margin: 0;background-color: #F2F2F2;}
-        .top_div{height: 30px;line-height: 30px;float: left}
-        .top_a{text-decoration: none;color: #FFFfff;}
-        img{float: left}
-        .top{width: 100%;height: 70px;background-color: #333333}
-        .pic{ width:350px; height:30px;float: left;  margin-top: 15px;line-height: 30px;font-size: 21px}
-        .login-box{ width:450px;font-size: 18px; height:580px; margin:0 auto; padding:5px 5px 15px 10px;}
-        .login-box h2{ text-align:center;}
-        .login{ width:290px; height:30px;padding:0 5px; margin:5px 0 5px;}
-        .login1{ width:290px; height:30px;padding:0 5px;margin:5px 0 5px;}
-        .login2{ height:30px; width:180px; margin:5px 0 5px;padding:0 5px; }
-        .login-button{ width:70px; height:35px;}
-        .login-button1{ width:80px; height:35px; margin-top:20px;}
-        .stern{ width:1000px;margin:30px auto; text-align: center}
-        #msg{margin:0 5px;}
-        .com{width:700px;margin: 0 auto}
-        .login_div{background-color: #FFFfff;margin-top: 30px;}
-        .login_div p{background-color: #F7F7F7; height:40px;border-radius: 10px;margin-bottom: 30px;padding: 0 25px;line-height: 40px}
-        input{border: none;background-color:#F7F7F7; }
-        /*.radio{padding:0 5px; margin:5px 0 5px;}*/
-        .login-button1{background-color: #D1314B;color: #FFFfff;border-radius: 10px;}
-        a {blr:expression(this.onFocus=this.blur());outline: none;}
-        a:focus {outline: none;}
-        .top_a img{height: 30px;}
+        input {
+            outline: none;
+        }
 
+        input:focus {
+            outline: none;
+        }
+
+        input {
+            outline: none;
+            border: 0;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: #F2F2F2;
+        }
+
+        .top_div {
+            height: 30px;
+            line-height: 30px;
+            float: left
+        }
+
+        .top_a {
+            text-decoration: none;
+            color: #FFFfff;
+        }
+
+        img {
+            float: left
+        }
+
+        .top {
+            width: 100%;
+            height: 70px;
+            background-color: #333333
+        }
+
+        .pic {
+            width: 350px;
+            height: 30px;
+            float: left;
+            margin-top: 15px;
+            line-height: 30px;
+            font-size: 21px
+        }
+
+        .login-box {
+            width: 450px;
+            font-size: 18px;
+            height: 620px;
+            margin: 0 auto;
+            padding: 5px 5px 15px 10px;
+        }
+
+        .login-box h2 {
+            text-align: center;
+        }
+
+        .login {
+            width: 290px;
+            height: 30px;
+            padding: 0 5px;
+            margin: 5px 0 5px;
+        }
+
+        .login1 {
+            width: 290px;
+            height: 30px;
+            padding: 0 5px;
+            margin: 5px 0 5px;
+        }
+
+        .login2 {
+            height: 30px;
+            width: 180px;
+            margin: 5px 0 5px;
+            padding: 0 5px;
+        }
+
+        .login-button {
+            width: 70px;
+            height: 35px;
+        }
+
+        .login-button1 {
+            width: 80px;
+            height: 35px;
+            margin-top: 5px;
+        }
+
+        .stern {
+            width: 1000px;
+            margin: 30px auto;
+            text-align: center
+        }
+
+        #msg {
+            margin: 0 5px;
+        }
+
+        .com {
+            width: 700px;
+            margin: 0 auto
+        }
+
+        .login_div {
+            background-color: #FFFfff;
+            margin-top: 30px;
+        }
+
+        .login_div p {
+            background-color: #F7F7F7;
+            height: 40px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            padding: 0 25px;
+            line-height: 40px
+        }
+
+        input {
+            border: none;
+            background-color: #F7F7F7;
+        }
+
+        /*.radio{padding:0 5px; margin:5px 0 5px;}*/
+        .login-button1 {
+            background-color: #D1314B;
+            color: #FFFfff;
+            border-radius: 10px;
+        }
+
+        a {
+            blr: expression(this.onFocus=this.blur());
+            outline: none;
+        }
+
+        a:focus {
+            outline: none;
+        }
+
+        .top_a img {
+            height: 30px;
+        }
     </style>
 </head>
 
 <body>
-<form id="form">
-    <div class="top">
-        <div class="com">
-            <div class="pic"><a href="/" class="top_a"><img src="/static/index/img/register.png"><div class="top_div">&nbsp;<strong>|</strong>&nbsp;&nbsp;灰灰商城</a></div></div>
+    <form id="form">
+        <div class="top">
+            <div class="com">
+                <div class="pic"><a href="/" class="top_a"><img src="/static/index/img/register.png">
+                        <div class="top_div">&nbsp;<strong>|</strong>&nbsp;&nbsp;灰灰商城
+                    </a></div>
+            </div>
         </div>
-    </div>
-    <div class="com login_div">
-        <div class="login-box">
-            <p style="text-align: center;background-color: white"><span style="font-size: 30px;">欢迎注册</span>
-            </p>
-            <p>用户名称：
-                <input  type="text" value="kehui" name="username" class="login username" placeholder="请输入用户名" size="22">
-            </p>
-            <p>电话号码：
-                <input  type="text" value="15797274125" name="phone" class="login" placeholder="请输入电话号码" size="22">
-            </p>
-            <p>性&emsp;&emsp;别：
-                <input type="radio" value="1" name="sex" checked>男&emsp;
-                <input type="radio" value="0" name="sex">女
-            </p>
-            <p>用户密码：
-                <input type="password" value="kehui" name="password" class="login" placeholder="这里输入密码" size="22">
-            </p>
-            <p>确认密码：
-                <input  class=" login" value="kehui" name="password1" placeholder="请再次确认密码" size="22" type="password" >
-            </p>
-            <p>验&ensp;证&ensp;码：
-                <input  type="text" name="user" class="login2" placeholder="请输入验证码" size="22" >
-                <span id="msg" style=" font-size:18px;" onclick="show()"></span>
-            </p>
-            <input type="button" onclick="register()" class="login-button1" name="btn" value="免费注册" style="margin-left:80px;">
-            <input type="reset" class="login-button1" name="btn" value="重置" style="float:right; margin-right:80px;"><br/>
         </div>
+        <div class="com login_div">
+            <div class="login-box">
+                <p style="text-align: center;background-color: white"><span style="font-size: 30px;">欢迎注册</span>
+                </p>
+                <p>用户名称：
+                    <input type="text" value="" name="username" class="login username" placeholder="请输入用户名" size="22">
+                </p>
+                <p>电话号码：
+                    <input type="text" value="" name="phone" class="login phone" placeholder="请输入电话号码" size="22">
+                </p>
+                <p>电子邮箱：
+                    <input type="text" value="" name="email" class="login email" placeholder="请输入电子邮件" size="22">
+                </p>
+                <p>性&emsp;&emsp;别：
+                    <input type="radio" value="1" name="sex" checked="checked">男&emsp;
+                    <input type="radio" value="0" name="sex">女
+                </p>
+                <p>用户密码：
+                    <input type="password" value="" name="password" class="login password" placeholder="这里输入密码"
+                        size="22">
+                </p>
+                <p>确认密码：
+                    <input class=" login password1" value="" name="password1" placeholder="请再次确认密码" size="22"
+                        type="password">
+                </p>
+                <p>验&ensp;证&ensp;码：
+                    <input type="text" name="user" class="login2" placeholder="请输入验证码" size="22">
+                    <span id="msg" style=" font-size:18px;" onclick="show()"></span>
+                </p>
+                <input type="button" onclick="register()" class="login-button1" name="btn" value="免费注册"
+                    style="margin-left:80px;">
+                <input type="reset" class="login-button1" name="btn" value="重置"
+                    style="float:right; margin-right:80px;"><br />
+            </div>
 
-    </div>
-    <div class="stern">
-        <p>Sponsor：Richard-hk Company&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Address：China Hubei Province&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Telephone：15797274125</p>
-    </div>
-</form>
+        </div>
+        <div class="stern">
+            <p>Sponsor：Richard-hk Company&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Address：China Hubei
+                Province&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Telephone：15797274125</p>
+        </div>
+    </form>
 </body>
 <script type="text/javascript" src="/static/index/js/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
 
 <script>
-    function validateCode(n){
-        var s="abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ0123456789";
-        var ret="";
-        for(var i=0;i<n;i++)
-        {
-            var index=Math.floor(Math.random()*62);
-            ret+=s.charAt(index);
+    function validateCode(n) {
+        var s = "abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ0123456789";
+        var ret = "";
+        for (var i = 0; i < n; i++) {
+            var index = Math.floor(Math.random() * 62);
+            ret += s.charAt(index);
         }
         return ret;
     }
-    function show(){
-        document.getElementById("msg").innerHTML=validateCode(4);
+    function show() {
+        document.getElementById("msg").innerHTML = validateCode(4);
     }
-    window.onlosd=show();
+    window.onlosd = show();
     $('.username').blur(function () {
-        var username=$.trim($('.username').val());
-        if(username){
+        var username = $.trim($('.username').val());
+        if (username) {
             $.ajax(
                 {
                     url: 'index/user/usernameCheck',
-                    data: {'username':username},
+                    data: { 'username': username },
                     type: 'POST',
                     dataType: 'json',
                     success: function (result) {
-                        if(result==-1){
-                            alert('该用户名已经存在');
+                        if (result == -1) {
+                            layer.msg('该用户名已经存在', { icon: 2, time: 1111 });
                             $('.username').val("")
-                        }else if(result==-2){
-                            alert('用户名称只能是汉字、字母、数字和下划线_及破折号-');
+                        } else if (result == -2) {
+                            layer.msg('密码用户名称只能是汉字、字母、数字和下划线_及破折号修改失败', { icon: 2, time: 1111 });
                             $('.username').val("")
+                        }
+                    },
+                }
+            );
+        }
+
+    });
+    $('.email').blur(function () {
+        var email = $.trim($('.email').val());
+        if (email) {
+            $.ajax(
+                {
+                    url: 'index/user/emailCheck',
+                    data: { 'email': email },
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result == -1) {
+                            layer.msg('该邮件已经已经存在', { icon: 2, time: 1111 });
+                            $('.email').val("")
+                        } else if (result == -2) {
+                            layer.msg('邮件格式错误', { icon: 2, time: 1111 });
+                            $('.email').val("")
                         }
                     },
                 }
@@ -119,29 +272,53 @@
 
     function register() {
         var formData = new FormData($('#form')[0]);
-        $.ajax(
-            {
-                url: 'index/user/registerAct',
-                data: formData,
-                type: 'POST',
-                dataType: 'json',
-                processData: false,
-                contentType: false,
-                success: function (result) {
-                    if(result==-1){
-                        alert('该用户名已经存在')
-                    }else if (result==1){
-                        window.location.href='/';
-                    }else if(result==-2) {
-                        alert('用户名称只能是汉字、字母、数字和下划线_及破折号-');
-                        $('.login').val("");
-                    }else{
-                        alert('系统出错，稍后重试');
+        var name = $.trim($('.username').val());
+        var email = $.trim($('.email').val());
+        var phone = $.trim($('.phone').val());
+        var password = $.trim($('.password').val());
+        var password1 = $.trim($('.password1').val());
+        console.log(name);
+        console.log(email);
+        console.log(phone);
+        console.log(password);
+        console.log(password1);
+        if (name == "" || email == "" || phone == "" || password == "" || password1 == "") {
+            layer.msg('请填满空值', { icon: 2, time: 1111 });
 
+        } else {
+            if (password1 != password) {
+                layer.msg('密码不一致', { icon: 2, time: 1111 });
+
+            } else {
+                $.ajax(
+                    {
+                        url: 'index/user/registerAct',
+                        data: formData,
+                        type: 'POST',
+                        dataType: 'json',
+                        processData: false,
+                        contentType: false,
+                        success: function (result) {
+                            if (result == -1) {
+                                layer.msg('该用户名已经存在', { icon: 2, time: 1111 });
+                            } else if (result == 1) {
+                                window.location.href = '/';
+                            } else if (result == -2) {
+                                layer.msg('用户名称和密码只能是汉字、字母、数字和下划线_及破折号-,或者手机号格式不正确', { icon: 2, time: 1111 });
+                                $('.login').val("");
+                            } else {
+                                layer.msg('系统出错，稍后重试', { icon: 2, time: 1111 });
+                            }
+                        },
                     }
-                },
+                );
             }
-        );
+
+        }
+
+
+
+
     }
 </script>
 

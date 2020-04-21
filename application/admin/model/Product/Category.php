@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\admin\model\Product;
+namespace app\admin\model\product;
 
 
 use think\Db;

@@ -50,6 +50,27 @@ class Order extends Controller
             return -2;
         }
     }
+    public  function cancleOrder()//取消订单(订单状态改为2)
+    {
+        $order_id=$this->request->param('order_id');
+        $data=['order_id'=>$order_id];
+        $validate=new Alipay();
+        if($validate->check($data)){
+            $order=new OrderInfo();
+            $list=$order->getdetail($order_id);
+            if($list){
+                $data['order_status']=2;
+                $list->data($data,true);
+                return $list->save();
+            }else{
+                return 0;
+            }
+        }else{
+            return -2;
+        }
+    }
+
+
     public function orderDetail($order_id){//某一订单详情
         $address=new Address();
         $addressObj=$address->getAllAddress(Session::get('customer_name'));
@@ -60,7 +81,7 @@ class Order extends Controller
             'address_list'=>$addressList,
             'list'=>$list
         ]);
-        return $this->fetch('OrderDetail');
+        return $this->fetch('orderDetail');
     }
 
 }

@@ -8,19 +8,18 @@
     <nav class="breadcrumb">
         {switch category_level}
         {case 1}品牌：{$name1}
-        <input name="brand_id" value="{$brand_id}" class="hidden"></input>
-        <input name="category_id" value="{$category_id}" class="hidden"></input>
-        <input name="category_level" value="{$category_level}" class="hidden"></input>{/case}
+        {/case}
         {case 2}品牌：{$name1}<span class="c-gray en">&gt;</span>{$name2}
-        <input name="brand_id" value="{$brand_id}" class="hidden"></input>
-        <input name="category_id" value="{$category_id}" class="hidden"></input>
-        <input name="category_level" value="{$category_level}" class="hidden"></input>{/case}
+        {/case}
         {case 3}品牌：{$name1}<span class="c-gray en">&gt;</span>{$name2}<span class="c-gray en">&gt;</span>{$name3}
-        <input name="brand_id" value="{$brand_id}" class="hidden"></input>
-        <input name="category_id" value="{$category_id}" class="hidden"></input>
-        <input name="category_level" value="{$category_level}" class="hidden"></input>{/case}
+        {/case}
         {default /}&emsp; <span style="color:#DD514C">请选择左侧分类再添加</span>
         {/switch}
+        {if condition="$category_level neq 0"}
+        <input name="brand_id" value="{$brand_id}" class="hidden"></input>
+        <input name="category_level" value="{$category_level}" class="hidden"></input>
+        <input name="category_id" value="{$category_id}" class="hidden"></input>
+        {/if}
         <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
     </nav>
         <div class="row cl">
@@ -44,11 +43,9 @@
                 <input class="btn btn-primary radius" onclick="add()"  type="button" value="&nbsp;&nbsp;添加&nbsp;&nbsp;">
                 {elseif $category_level==2}
                 <input class="btn btn-primary radius" onclick="add()"  type="button" value="&nbsp;&nbsp;添加&nbsp;&nbsp;">
-                <input class="btn btn-primary radius" onclick="update()"  type="button" value="&nbsp;&nbsp;修改&nbsp;&nbsp;">
-                <input class="btn btn-primary radius" onclick="del()"  type="button" value="&nbsp;&nbsp;删除&nbsp;&nbsp;">
-                {else/}
-                <input class="btn btn-primary radius" onclick="add()"  type="button" value="&nbsp;&nbsp;修改&nbsp;&nbsp;">
-                <input class="btn btn-primary radius" onclick="del()"  type="button" value="&nbsp;&nbsp;删除&nbsp;&nbsp;">
+                <input class="btn btn-primary radius" onclick="update('{$category_id}')"  type="button" value="&nbsp;&nbsp;修改&nbsp;&nbsp;">
+                {elseif $category_level==3}
+                <input class="btn btn-primary radius" onclick="update('{$category_id}')"  type="button" value="&nbsp;&nbsp;修改&nbsp;&nbsp;">
                 {/if}
             </div>
         </div>
@@ -84,6 +81,35 @@
                         setTimeout("parent.location.reload()",1111);
 
                         // setTimeout("window.location.reload()",1111);
+                    },
+                    error: function (result) {
+                        layer.msg('服务出现问题，请稍后再试',{icon:1,time:1111});
+                    }
+                });
+        }else {
+            layer.msg('分类名称不能为空',{icon:1,time:1111});
+        }
+
+    }
+    function update() {
+        var category_name=$.trim($('#category_name').val());
+        var formData = new FormData($('#form')[0]);
+        if(category_name!=''){
+            $.ajax(
+                {
+                    url: 'productCategoryEditAct',
+                    data: formData,
+                    type: 'POST',
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    success: function (result) {
+                        if (result == '1') {
+                            layer.msg('分类修改成功',{icon:1,time:1111});
+                        } else {
+                            layer.msg('数据库数据修改失败',{icon:1,time:1111});
+                        }
+                        setTimeout("parent.location.reload()",1111);
                     },
                     error: function (result) {
                         layer.msg('服务出现问题，请稍后再试',{icon:1,time:1111});

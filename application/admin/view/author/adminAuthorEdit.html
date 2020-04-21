@@ -71,19 +71,14 @@
                             setTimeout("parent.location.reload()",1111);
                         },
                         error: function(XmlHttpRequest, textStatus, errorThrown){
-                            alert(errorThrown);
                             layer.msg('修改失败!',{icon:1,time:1111});
                             setTimeout("parent.location.reload()",1111);
                         }
-
                     }
                 );
-                // var index = parent.layer.getFrameIndex(window.name);
-                // setTimeout(parent.layer.close(index),1111);
             }
         });
     });
 </script>
-<!--/请在上方写此页面业务相关的脚本-->
 </body>
 </html>

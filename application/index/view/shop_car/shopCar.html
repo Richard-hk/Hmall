@@ -254,7 +254,7 @@
                 }
             });
             if(count==0){
-                alert('请选择需要购买的商品')
+                layer.msg('请选择需要购买的商品', { icon: 2, time: 1111 });
             }else {
                 sessionStorage.setItem('array_info',JSON.stringify(array_info));
                 window.location.href='paymethod';

@@ -46,24 +46,27 @@ class GoodSku extends Model
             ->where('good_spu_id',$good_spu_id)
             ->min('good_price');
     }
-    public function findRom($good_sku_color){
+    public function findRom($good_sku_color,$good_spu_id){
         return $this
             ->where('good_sku_color',$good_sku_color)
-            ->field('good_sku_rom,good_sku_ram')
-            ->group('good_sku_rom,good_sku_ram')
+            ->where('good_spu_id',$good_spu_id)
+            ->field('good_sku_rom,good_sku_ram,good_sku_pic')
+            ->group('good_sku_rom,good_sku_ram,good_sku_pic')
             ->select();
     }
-    public function findColor($good_sku_rom,$good_sku_ram){
+    public function findColor($good_sku_rom,$good_sku_ram,$good_spu_id){
         return $this
             ->where([['good_sku_rom','=',$good_sku_rom],['good_sku_ram','=',$good_sku_ram]])
+            ->where('good_spu_id',$good_spu_id)
             ->field('good_sku_color')
             ->group('good_sku_color')
             ->select();
     }
-    public function getPrice($sku_rom,$sku_ram,$sku_color)
+    public function getPrice($sku_rom,$sku_ram,$sku_color,$good_spu_id)
     {
         return $this
             ->where([['good_sku_rom', '=', $sku_rom], ['good_sku_ram', '=', $sku_ram], ['good_sku_color', '=', $sku_color]])
+            ->where('good_spu_id',$good_spu_id)
             ->field('good_price,left_num,good_sku_id')
             ->find();
 

@@ -14,12 +14,42 @@
 // +----------------------------------------------------------------------
 
 return [
+
+  // 缓存配置为复合类型
+  'type'  =>  'complex',
+ 
+  'default'    =>    [
     // 驱动方式
-    'type'   => 'File',
-    // 缓存保存目录
-    'path'   => '',
-    // 缓存前缀
-    'prefix' => '',
-    // 缓存有效期 0表示永久缓存
-    'expire' => 0,
+      'type'    =>    'file',
+      // 全局缓存有效期（0为永久有效）
+      'expire'=>  0,
+      // 缓存前缀
+      'prefix'=>  'think',
+      // 缓存目录
+      'path'  =>  '',
+  ],
+
+  'rediswrite'    =>    [
+      'type'    =>    'redis',
+      'host'    =>    '127.0.0.1',
+      'port' => 6379,
+      'password' => 'Kh@666666',
+      // 全局缓存有效期（0为永久有效）
+      //        'expire'=>  0,
+      // 缓存前缀
+      'prefix'=>  '',
+      'timeout'=> 3600
+  ],
+  'redisread'    =>    [
+      'type'    =>    'redis',
+      'host'    =>    'r-2ze0a4ff02168094pd.redis.rds.aliyuncs.com',
+      'port' => 6379,
+      'password' => 'Kh@666666',
+      // 全局缓存有效期（0为永久有效）
+      //        'expire'=>  0,
+      // 缓存前缀
+      'prefix'=>  '',
+      'timeout'=> 3600
+  ],
+   
 ];

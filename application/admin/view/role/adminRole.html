@@ -62,8 +62,12 @@ function admin_role_del(obj,id){
 			data:{'role_id':id},
 			dataType: 'json',
 			success: function(data){
-				$(obj).parents("tr").remove();
-				layer.msg('已删除!',{icon:1,time:1111});
+				if(data==-1){
+				layer.msg('角色已经分配无法删除!',{icon:1,time:1111});
+				}else{
+					$(obj).parents("tr").remove();
+					layer.msg('已删除!',{icon:1,time:1111});
+				}
 			},
 			error:function(data) {
 				console.log(data.msg);
@@ -75,10 +79,8 @@ function admin_role_all_del(){
 	var role_id_all = $("input:checkbox[name='checkbox']:checked").map(function (index, elem) {
 		return $(elem).val();
 	}).get();
-	alert(role_id_all);
 	if(role_id_all!=''){
 		layer.confirm('确认要删除选中数据吗？（软删除）请谨慎删除，建议停用！',function(index){
-			// if (confirm("确定要删除选中数据吗？")) {
 			$.ajax(
 					{
 						url: 'adminRoleAllDel',
@@ -86,7 +88,6 @@ function admin_role_all_del(){
 						type: 'POST',
 						dataType: 'json',
 						success: function (result) {
-							alert(result);
 							if (result) {
 								layer.msg('选中数据删除成功',{icon:1,time:1111});
 							} else {

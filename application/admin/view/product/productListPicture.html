@@ -1,58 +1,17 @@
-	{include file='common/style'}
-	<title>新增图片</title>
-	<link href="/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+{include file='common/style'}
+<title>新增图片</title>
+<link href="/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div class="page-container">
 
 	<form class="form form-horizontal" id="form">
-		<input type="text" class="input-text hidden" value="{$category_id}" placeholder="" id="" name="category_id">
+		<input type="text" class="good_spu_id hidden" value="{$good_spu_id}" placeholder="" id="" name="good_spu_id">
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>产品名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="" name="good_name">
-			</div>
-		</div>
-
-
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">销售开始时间：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{\$dp.\$D(\'datemax\')||\'%y-%M-%d\'}' })" name="datemin" id="datemin" class="input-text Wdate" style="width:180px;">
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">销售结束时间：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{\$dp.\$D(\'datemin\')}' })" id="datemax" name="datemax" class="input-text Wdate" style="width:180px;">
-            </div>
-        </div>
-
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">产品描述：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<textarea name="good_desc" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-100" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this,200)"></textarea>
-				<p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
-			</div>
-		</div>
-		<div class="row cl small_pic" style="display: none">
-			<label class="form-label col-xs-4 col-sm-2">后台缩略图预览：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<img src="" alt="" id="small_pic" name="small_pic" style="width: 100px;height: 100px; border: 1px solid rgb(221,221,221);">
-			</div>
-		</div>
-
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">前台商品展示图：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<div class="uploader-thum-container">
-                    <span class="btn-upload form-group">
-                    <input class="input-text upload-url" type="text" name="" id="brand_logo1" placeholder="选择图片" readonly style="width:140px">
-                    <a href="javascript:void();" class="btn btn-primary upload-btn"><i class="Hui-iconfont">&#xe642;</i> 上传logo</a>
-                    <input type="file" multiple name="brand_logo" class="input-file" id="brand_logo">
-			        &emsp;&emsp;相当于后台展示图</span>
-				</div>
+				<input type="text" class="input-text" value="{$good_name}" placeholder="" id="" name="good_name" disabled>
 			</div>
 		</div>
 		<div class="row cl">
@@ -76,12 +35,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="row cl">
-			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button onClick="product_add();" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 提交</button>
-				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
-			</div>
-		</div>
 	</form>
 </div>
 
@@ -96,36 +49,6 @@
 <script type="text/javascript" src="/lib/ueditor/1.4.3/ueditor.all.min.js"> </script>
 <script type="text/javascript" src="/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
-	$('#brand_logo').change(function(){
-		var f = document.getElementById('brand_logo').files[0];
-		src = window.URL.createObjectURL(f);
-		document.getElementById('small_pic').src = src;
-		$(".small_pic").css('display','block');
-	});
-
-	function product_add() {
-		var formData = new FormData($('#form')[0]);
-		$.ajax(
-				{
-					url: 'productListAddAct',
-					data: formData,
-					type: 'POST',
-					dataType: 'json',
-					processData: false,
-					contentType: false,
-					success: function (result) {
-						alert(result)
-						layer.msg('商品添加成功',{icon:1,time:1111});
-						setTimeout("parent.location.reload()",1111);
-					},
-					error: function (result) {
-						layer.msg('服务出现问题，请稍后再试',{icon:1,time:1111});
-						setTimeout("parent.location.reload()",1111);
-
-					}
-				});
-	}
-
 	$(function(){
 		$('.skin-minimal input').iCheck({
 			checkboxClass: 'icheckbox-blue',
@@ -140,10 +63,11 @@
 
 		var uploader = WebUploader.create({
 			auto: true,
-			swf: '/lib/webuploader/0.1.5/Uploader.swf',
+			// swf: '/lib/webuploader/0.1.5/Uploader.swf',
 
 			// 文件接收服务端。
-			server: '/lib/webuploader/0.1.5/server/fileupload.php',
+			// server: '/lib/webuploader/0.1.5/server/fileupload.php',
+			server: 'test2',
 
 			// 选择文件的按钮。可选。
 			// 内部根据当前运行是创建，可能是input元素，也可能是flash.
@@ -237,6 +161,7 @@
 	(function( $ ){
 		// 当domReady的时候开始初始化
 		$(function() {
+			var good_spu_id=parseInt($('.good_spu_id').val());
 			var $wrap = $('.uploader-list-container'),
 
 					// 图片容器
@@ -380,14 +305,16 @@
 					label: '点击选择图片'
 				},
 				formData: {
-					uid: 123
+					uid: 123,
+					good_spu_id:good_spu_id
 				},
 				dnd: '#dndArea',
 				paste: '#uploader',
 				swf: '/lib/webuploader/0.1.5/Uploader.swf',
 				chunked: false,
 				chunkSize: 512 * 1024,
-				server: '/lib/webuploader/0.1.5/server/fileupload.php',
+				server: 'productListPictureAct',
+				// server: '/lib/webuploader/0.1.5/server/fileupload.php',
 				// runtimeOrder: 'flash',
 
 				// accept: {
@@ -497,7 +424,8 @@
 							img = $('<img src="'+src+'">');
 							$wrap.empty().append( img );
 						} else {
-							$.ajax('lib/webuploader/0.1.5/server/preview.php', {
+							// $.ajax('/lib/webuploader/0.1.5/server/preview.php', {
+							$.ajax('test3', {
 								method: 'POST',
 								data: src,
 								dataType:'json'
@@ -710,7 +638,8 @@
 					case 'finish':
 						stats = uploader.getStats();
 						if ( stats.successNum ) {
-							alert( '上传成功' );
+
+							alert('上传成功');
 						} else {
 							// 没有成功的图片，重设
 							state = 'done';

@@ -1,67 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>订单详情</title>
     <link type="text/css" rel="stylesheet" href="/static/index/css/com.css">
     <link type="text/css" rel="stylesheet" href="/static/index/css/paymethod.css">
 </head>
+
 <body>
-{include file='common/top'}
-<div class="comwidth">
-    <div class="top">
-        <span style="font-size: 24px;color: black;">订单详情</span>
-    </div>
-    {volist name='list' id='list'}
-    <div class="address comwidth">
-        <p class="address-p">收货地址</p>
-        <ul class="shopping_list">
-            <li><input type="radio" name="address_id" class="address_id" value="{}" checked >&emsp;<span class="address_detail"> 姓名：{$list.address.address_name} 电话号码：{$list.address.address_phone}
-                详细地址：{$list.address.address_province} {$list.address.address_city} {$list.address.address_region} {$list.address.address_detail}</span>
-            </li>
-            <li>
-                修改地址：
-                <select>
-                    <option value ="0">--需要更改，请选择地址--</option>
-                    {volist name='address_list' id='list1'}
-                    <option value="{$list1->address_id}">  
-                        姓名：{$list1->address_name} 电话号码：{$list1->address_phone} 详细地址：{$list1->address_province} {$list1->address_city} {$list1->address_region} {$list1->address_detail}
-                    </option>
-                    {/volist}
-                  </select>
-            </li>    
-        
+    {include file='common/top'}
+    <div class="comwidth">
+        <div class="top">
+            <span style="font-size: 24px;color: black;">订单详情</span>
+        </div>
+        {volist name='list' id='list'}
+        <div class="address comwidth">
+            <p class="address-p">收货地址</p>
+            <ul class="shopping_list">
+                <li><input type="radio" name="address_id" class="address_id" value="{}" checked>&emsp;<span
+                        class="address_detail"> 姓名：{$list.address.address_name} 电话号码：{$list.address.address_phone}
+                        详细地址：{$list.address.address_province} {$list.address.address_city}
+                        {$list.address.address_region} {$list.address.address_detail}</span>
+                </li>
+                {if condition="$list.order_status neq 1"}
+                <li>
+                    修改地址：
+                    <select>
+                        <option value="0">--需要更改，请选择地址--</option>
+                        {volist name='address_list' id='list1'}
+                        <option value="{$list1->address_id}">
+                            姓名：{$list1->address_name} 电话号码：{$list1->address_phone} 详细地址：{$list1->address_province}
+                            {$list1->address_city} {$list1->address_region} {$list1->address_detail}
+                        </option>
+                        {/volist}
+                    </select>
+                </li>
+                {/if}
             </ul>
 
-    </div>
-    <div class="pay comwidth">
-    {if condition="$list.order_status eq 1"}
-    <p>&nbsp;快递详情</p>    
-    <p>&nbsp;快递编号：202003115499984833，商品正在派送中！！！！(由于没有接入第三方快递，故该模块省略)</p>    
-    {else/}
-   
-        <p>&nbsp;支付方式</p>
-        <ul class="shopping_list">
-            <li><input type="radio" class="radio" checked id="r2"><label for="r2">&nbsp;支付宝支付</label><span class="notice1">支付订单，有机会赢取1999红包</span></li>
-        </ul>
-    {/if}
-    </div>
-    
-    <div class="top">
-        <h3>订单商品</h3><span class="return fr" style="margin:-40px 15px 0 0;"><a href="http://101.200.32.25/myorder">返回我的订单</a></span>
+        </div>
+        <div class="pay comwidth">
+            {if condition="$list.order_status eq 1"}
+            <p>&nbsp;快递详情</p>
+            <p>&nbsp;快递编号：202003115499984833，商品正在派送中！！！！(由于没有接入第三方快递，故该模块省略)</p>
+            {else/}
+
+            <p>&nbsp;支付方式</p>
+            <ul class="shopping_list">
+                <li><input type="radio" class="radio" checked id="r2"><label for="r2">&nbsp;支付宝支付</label><span
+                        class="notice1">支付订单，有机会赢取1999红包</span></li>
+            </ul>
+            {/if}
+        </div>
+
+        <div class="top">
+            <h3>订单商品</h3><span class="return fr" style="margin:-40px 15px 0 0;"><a
+                    href="http://101.200.32.25/myorder">返回我的订单</a></span>
         </div>
         <div class="center">
+
             <span style="margin-left:30px;">商品信息</span>
             <span style="margin-left:560px;">单价</span>
             <span style="margin-left:160px;">数量</span>
             <span style="margin-left:155px;">金额</span>
-            </div>
-        <div class="middle " >
 
-        {volist name="list['sku_order']" id='sku'}
-        <div class="item fl">
+        </div>
 
-                <div class="left1 fl" >
+        <div class="middle ">
+
+            {volist name="list['sku_order']" id='sku'}
+            <div class="item fl">
+
+                <div class="left1 fl">
                     <img style="height: 140px;" src="{$sku.good_sku.good_sku_pic}">
                 </div>
                 <div class="center1 fl" style="width:200px;">
@@ -70,114 +81,144 @@
                     {$sku.good_sku.good_sku_color}
                     {$sku.good_sku.good_sku_rom}G+
                     {$sku.good_sku.good_sku_ram}G</div>
-                <div class="right1 right11 fr" >
+                <div class="right1 right11 fr">
                     <div class="nu">{$sku.good_sku.good_price}</div>
                     <div class="nu sku_num">{$sku.sku_order_num}</div>
                     <div class="nu single_price">{$sku.good_sku.good_price*$sku.sku_order_num }</div>
                 </div>
             </div>
+            {/volist}
+        </div>
+        <div class="bottom">
+            <p>结算详情</p>
+            &emsp;订单号：<span class="order_id">{$list.order_id}</span>&emsp;
+            订单日期：{$list.order_gmt_created|date="Y-m-d H:i:s"}&emsp;
+
+            支付状态：
+            {switch $list.order_status}
+            {case 1}已支付{/case}
+            {case 2}<span style="color: red;">退款中</span>{/case}
+            {case 3}<span style="color: red;">交易成功</span>{/case}
+            {case 4}<span style="color: red;">交易失败</span>{/case}
+            {default /}<span style="color: red" class="topay">未支付</span>
+            {/switch}
+
+            &emsp;
+            总件数：<span class="all_num"></span>&emsp;
+            总金额：<span class="all_price" style="color: red;"></span>&emsp;
+            <span style="margin-left:10px;">
+                <div class="count fr">
+                    {if $list.order_status ==" 0"}
+                    <input type="submit" class="topay" value="去支付"
+                        style="background-color:#CF0A2C; color: #FFFfff; height:40px; font-size:18px; width:100px; margin-right:5px;"></a>
+                    {elseif $list.order_status=="1" }
+                        <input type="button" class="cancle" value="申请退款"
+                        style="background-color:#CF0A2C; color: #FFFfff; height:40px; font-size:18px; width:100px; margin-right:5px;">
+                    {else/}
+                    {/if}
+                    </div>
+            </span>
+        </div>
         {/volist}
-        </div>
-    <div class="bottom">
-        <p>结算详情</p>
-        <!-- <span style="margin-left:820px;"> -->
-        &emsp;订单号：<span class="order_id">{$list.order_id}</span>&emsp;
-        订单日期：{$list.order_gmt_created|date="Y-m-d H:i:s"}&emsp;
-
-        支付状态：
-        {if condition="$list.order_status eq 1"}
-        已支付 
-        {else/}<span style="color: red;">未支付</span>{/if}&emsp;
-        总件数：<span class="all_num"></span>&emsp;
-        总金额：<span class="all_price" style="color: red;"></span>&emsp;
-        <!-- </span> -->
-        {if condition="$list.order_status eq 0"}
-        <span style="margin-left:10px;">
-        <div class="count fr">
-            <input type="submit" class="topay"   value="去支付" 
-            style="background-color:#CF0A2C; color: #FFFfff; height:40px; font-size:18px; width:100px; margin-right:5px;"></a>
-        </div>
-        </span>
-        {else/}{/if}
     </div>
-    {/volist}
-</div>
 
 
-{include file='common/foot'}
-<script type="text/javascript" src="/static/index/js/jquery.min.js"></script>
-<script type="text/javascript" src="/static/index/js/introduction.js"></script>
-<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="/static/admin/h-ui/js/H-ui.min.js"></script>
-<script type="text/javascript" src="/static/admin/h-ui.admin/js/H-ui.admin.js"></script>
+    {include file='common/foot'}
+    <script type="text/javascript" src="/static/index/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/index/js/introduction.js"></script>
+    <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="/static/admin/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="/static/admin/h-ui.admin/js/H-ui.admin.js"></script>
 </body>
 <script>
     $(document).ready(
         function () {
-            var pre_address_id=$.trim($('.address_id').val());
-            $('select').change(function(){
-            var option=$(this).val();
-            if(option!=0){
-                var optiontext=$(this).find("option:selected").html();
-                $('.address_id').val(option);
-                $('.address_detail').html(optiontext);
-            }
+            var pre_address_id = $.trim($('.address_id').val());
+            $('select').change(function () {
+                var option = $(this).val();
+                if (option != 0) {
+                    var optiontext = $(this).find("option:selected").html();
+                    $('.address_id').val(option);
+                    $('.address_detail').html(optiontext);
+                }
             });
 
-            var sku_num=0;
-            var all_price=0;
-            $('.item').each(function(){
-               
-                var numobj=$(this).children('.right1').children('.sku_num');
-                numobj.each(function(){
-                    sku_num+=parseInt($(this).html());
+            var sku_num = 0;
+            var all_price = 0;
+            $('.item').each(function () {
+
+                var numobj = $(this).children('.right1').children('.sku_num');
+                numobj.each(function () {
+                    sku_num += parseInt($(this).html());
                 });
-                var priceobj=$(this).children('.right1').children('.single_price');
-                priceobj.each(function(){
-                    all_price+=parseInt($(this).html());
+                var priceobj = $(this).children('.right1').children('.single_price');
+                priceobj.each(function () {
+                    all_price += parseInt($(this).html());
                 });
-               
+
             });
             $('.all_num').html(sku_num);
             $('.all_price').html(all_price);
+            var order_id = $.trim($('.order_id').html());
             $('.topay').click(function () {
-                var order_id=$.trim($('.order_id').html());
-                var address_id=$.trim($('.address_id').val());
-                if(address_id==pre_address_id){
-                    window.location.href='http://101.200.32.25/index/Alipay/alipay/order_id/'+order_id;
-                }else{
-                    window.location.href='http://101.200.32.25/index/Alipay/alipay/order_id/'+order_id+'/address_id/'+address_id;
+                var address_id = $.trim($('.address_id').val());
+                if (address_id == pre_address_id) {
+                    window.location.href = 'http://101.200.32.25/index/Alipay/alipay/order_id/' + order_id;
+                } else {
+                    window.location.href = 'http://101.200.32.25/index/Alipay/alipay/order_id/' + order_id + '/address_id/' + address_id;
                 }
                 // var total_price=parseInt($(this).parents('.pay_status').siblings('div').children('.total_price').html());
-               
+
             });
-            $('.delete').click(function(){
-                var obj=$(this).parent('.center').siblings('.bottom2').children('div').children('.order_id').html();
-                var order_id=parseInt(obj);
-                layer.confirm('确认要删除吗?不可恢复',function(index){
+            $('.cancle').click(function () {
                 $.ajax(
                     {
-                        url:'index/Order/deleteOder',
-                        data:{'order_id':order_id},
-                        dataType:'json',
-                        type:'post',
-                        success:function(result){
-                            if(result==1){
-                                layer.msg('订单删除成功', {icon: 1, time: 1111});
-                            }else if(result==0){
-                                layer.msg('不存在改订单编号', {icon: 1, time: 1111});
-                            }else{
-                                layer.msg('订单编号中含有非法支付', {icon: 1, time: 1111});
+                        url: 'http://101.200.32.25/index/Order/cancleOrder',
+                        data: { 'order_id': order_id },
+                        dataType: 'json',
+                        type: 'post',
+                        success: function (result) {
+                            if (result == 1) {
+                                layer.msg('申请退款成功', { icon: 1, time: 1111 });
+                            } else if (result == 0) {
+                                layer.msg('申请退款失败', { icon: 1, time: 1111 });
+                            } else {
+                                layer.msg('订单编号中含有非法支付', { icon: 1, time: 1111 });
                             }
-                            window.location.reload();
+                            setTimeout('window.location.reload()',1111);
                         }
                     }
                 );
+            });
+
+            $('.delete').click(function () {
+                var obj = $(this).parent('.center').siblings('.bottom2').children('div').children('.order_id').html();
+                var order_id = parseInt(obj);
+                layer.confirm('确认要删除吗?不可恢复', function (index) {
+                    $.ajax(
+                        {
+                            url: 'index/Order/deleteOder',
+                            data: { 'order_id': order_id },
+                            dataType: 'json',
+                            type: 'post',
+                            success: function (result) {
+                                if (result == 1) {
+                                    layer.msg('订单删除成功', { icon: 1, time: 1111 });
+                                } else if (result == 0) {
+                                    layer.msg('不存在改订单编号', { icon: 1, time: 1111 });
+                                } else {
+                                    layer.msg('订单编号中含有非法支付', { icon: 1, time: 1111 });
+                                }
+                                setTimeout('window.location.reload()',1111);
+                            }
+                        }
+                    );
                 });
             });
         }
-            
+
     );
 </script>
+
 </html>

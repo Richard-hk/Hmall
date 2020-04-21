@@ -1,292 +1,299 @@
 ﻿{include file='common/style'}
-    <title>品牌管理</title>
+<title>品牌管理</title>
 
 </head>
+
 <body>
-<nav class="breadcrumb">
-    <i class="Hui-iconfont">&#xe67f;</i>首页
-    <span class="c-gray en">&gt;</span> 产品管理
-    <span class="c-gray en">&gt;</span>品牌管理
-    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" onclick="reload_all()" title="刷新">
-        <i class="Hui-iconfont">&#xe68f;</i></a>
-</nav>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i>首页
+        <span class="c-gray en">&gt;</span> 产品管理
+        <span class="c-gray en">&gt;</span>品牌管理
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" onclick="reload_all()" title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
 
-<div class="page-container">
-    <div class="text-c">
+    <div class="page-container">
+        <div class="text-c">
 
-        <form id="form" enctype="multipart/form-data">
-            品牌名称：<input type="text" id="brand_name" name="brand_name" placeholder="品牌名称" class="input-text" style="width:120px">
-            <span class="btn-upload form-group">
-			&emsp;logo：<input class="input-text upload-url" type="text" name="" id="brand_logo1" placeholder="png格式图片" readonly style="width:140px">
-			<a href="javascript:void();" class="btn btn-primary upload-btn"><i class="Hui-iconfont">&#xe642;</i> 上传logo</a>
-			<input type="file" multiple name="brand_logo" class="input-file">
-			</span>
-            &emsp;品牌描述：<input type="text" id="brand_desc" name="brand_desc" placeholder="品牌描述" class="input-text" style="width:520px">
-            <button type="button" class="btn btn-success" id="brand_add" name="">
-                <i class="Hui-iconfont">&#xe600;</i> 添加
-            </button>
-        </form>
-    </div>
+            <form id="form" enctype="multipart/form-data">
+                品牌名称：<input type="text" id="brand_name" name="brand_name" placeholder="品牌名称" class="input-text"
+                    style="width:120px">
+                <span class="btn-upload form-group">
+                    &emsp;logo：<input class="input-text upload-url" type="text" name="" id="brand_logo1"
+                        placeholder="png格式图片" readonly style="width:140px">
+                    <a href="javascript:void();" class="btn btn-primary upload-btn"><i class="Hui-iconfont">&#xe642;</i>
+                        上传logo</a>
+                    <input type="file" multiple name="brand_logo" class="input-file">
+                </span>
+                &emsp;品牌描述：<input type="text" id="brand_desc" name="brand_desc" placeholder="品牌描述" class="input-text"
+                    style="width:520px">
+                <button type="button" class="btn btn-success" id="brand_add" name="">
+                    <i class="Hui-iconfont">&#xe600;</i> 添加
+                </button>
+            </form>
+        </div>
 
-    <div class="cl pd-5 bg-1 bk-gray mt-20">
-		<span class="l">
-			<a href="javascript:;" onclick="all_del()" class="btn btn-danger radius">
-			<i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a></span> <span class="r">共有数据：<strong>{$total}</strong> 条
-		</span>
-    </div>
+        <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <span class="l">
+                <a href="javascript:;" onclick="all_del()" class="btn btn-danger radius">
+                    <i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a></span> <span class="r">共有数据：<strong>{$total}</strong>
+                条
+            </span>
+        </div>
 
-    <div class="mt-20">
-        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-            <div class="dataTables_length" id="DataTables_Table_0_length">
-                <label>显示 <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="select">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                </select> 条</label>
-            </div>
-            <div id="DataTables_Table_0_filter" class="dataTables_filter">
-                <label>从当前数据中检索：<input type="search" class="input-text" id="search_input"
-                                       aria-controls="DataTables_Table_0">
-                    <button type="button" class="btn btn-success" id="brand_search" name="">查找</button>
-                </label>
-            </div>
-            <table class="table table-border table-bordered table-bg table-sort">
-                <thead>
-                <tr class="text-c">
-                    <th width="25"><input type="checkbox" name="" value=""></th>
-                    <th width="70">ID</th>
-                    <th width="80">排序</th>
-                    <th width="200">LOGO</th>
-                    <th width="120">品牌名称</th>
-                    <th>具体描述</th>
-                    <th width="100">操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                {volist name='list' id='brand'}
-                <tr class="text-c">
-                    <td><input name="checkbox" type="checkbox" value="{$brand.brand_id}"></td>
-                    <td>{$brand.brand_id}</td>
-                    <td><input type="text" class="input-text text-c" value="1"></td>
-                    <td><img src='{$brand.brand_logo}'></td>
-                    <td>{$brand.brand_name}</td>
-                    <td>{$brand.brand_desc}</td>
-                    <td class="f-14 product-brand-manage">
-                        <a style="text-decoration:none" onClick="product_brand_edit('{$brand.brand_id}')"
-                           href="javascript:;" title="编辑">
-                            <i class="Hui-iconfont">&#xe6df;</i>
-                        </a>
-                        <a style="text-decoration:none" class="ml-5" onClick="active_del('{$brand.brand_id}')"
-                           href="javascript:;" title="删除">
-                            <i class="Hui-iconfont">&#xe6e2;</i>
-                        </a>
-                    </td>
-                </tr>
-                {/volist}
-                </tbody>
-            </table>
-            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
-                &nbsp;{$current_page}/{$last_page}页&emsp;共{$per_page} 条数据
-            </div>
-            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
-                <ul class="pagination">
-                    <li class=" paginate_button"><span>共{$last_page}页</span></li>
+        <div class="mt-20">
+            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <div class="dataTables_length" id="DataTables_Table_0_length">
+                    <label>显示 <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
+                            class="select">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                        </select> 条</label>
+                </div>
+                <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                    <label>从当前数据中检索：<input type="search" class="input-text" id="search_input"
+                            aria-controls="DataTables_Table_0">
+                        <button type="button" class="btn btn-success" id="brand_search" name="">查找</button>
+                    </label>
+                </div>
+                <table class="table table-border table-bordered table-bg table-sort">
+                    <thead>
+                        <tr class="text-c">
+                            <th width="25"><input type="checkbox" name="" value=""></th>
+                            <th width="70">ID</th>
+                            <th width="80">排序</th>
+                            <th width="200">LOGO</th>
+                            <th width="120">品牌名称</th>
+                            <th>具体描述</th>
+                            <th width="100">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {volist name='list' id='brand'}
+                        <tr class="text-c">
+                            <td><input name="checkbox" type="checkbox" value="{$brand.brand_id}"></td>
+                            <td>{$brand.brand_id}</td>
+                            <td><input type="text" class="input-text text-c" value="1"></td>
+                            <td><img src='{$brand.brand_logo}'></td>
+                            <td>{$brand.brand_name}</td>
+                            <td>{$brand.brand_desc}</td>
+                            <td class="f-14 product-brand-manage">
+                                <a style="text-decoration:none" onClick="product_brand_edit('{$brand.brand_id}')"
+                                    href="javascript:;" title="编辑">
+                                    <i class="Hui-iconfont">&#xe6df;</i>
+                                </a>
+                                <a style="text-decoration:none" class="ml-5" onClick="active_del('{$brand.brand_id}')"
+                                    href="javascript:;" title="删除">
+                                    <i class="Hui-iconfont">&#xe6e2;</i>
+                                </a>
+                            </td>
+                        </tr>
+                        {/volist}
+                    </tbody>
+                </table>
+                <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
+                    &nbsp;{$current_page}/{$last_page}页&emsp;共{$per_page} 条数据
+                </div>
+                <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                    <ul class="pagination">
+                        <li class=" paginate_button"><span>共{$last_page}页</span></li>
 
-                    <li class="paginate_button" id="li_1" value="{$current_page-1}"><a id="a_1 " class="disabled" onclick="back({$current_page})" >上一页</a></li>
-                    <li class="active paginate_button"><span>{$current_page}</span></li>
-                    <li class=" paginate_button" id="li_2"  value="{$current_page+1}"><a id="a_2 " class="disabled" onclick="next({$current_page},{$last_page})"> 下一页</a>
-                    </li>
-                </ul>
+                        <li class="paginate_button" id="li_1" value="{$current_page-1}"><a id="a_1 " class="disabled"
+                                onclick="back({$current_page})">上一页</a></li>
+                        <li class="active paginate_button"><span>{$current_page}</span></li>
+                        <li class=" paginate_button" id="li_2" value="{$current_page+1}"><a id="a_2 " class="disabled"
+                                onclick="next({$current_page},{$last_page})"> 下一页</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
+
     </div>
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+    <!--<script src="/static/admin/js/jquery.js"></script>-->
 
-</div>
-<!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
-<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
-<!--<script src="/static/admin/js/jquery.js"></script>-->
+    <script>
 
-<script>
+        function back(current_page)//前一页
+        {
+            current_page--;
+            if (current_page <= 0) {
+                layer.msg('已经在第一页', { icon: 1, time: 1111 });
+            } else {
+                var page_count = $(".select").val();
+                window.location.href = "?page_count=" + page_count + "&page=" + current_page;
+            }
 
-    function back(current_page)//前一页
-    {
-        current_page--;
-        if(current_page<=0){
-            layer.msg('已经在第一页',{icon:1,time:1111});
-        }else {
-            var page_count=$(".select").val();
-            window.location.href="?page_count="+page_count+"&page="+current_page;
         }
 
-    }
+        function next(current_page, last_page) //下一页
+        {
+            current_page++;
 
-    function next(current_page,last_page) //下一页
-    {
-        current_page++;
+            if (current_page <= last_page) {
+                var page_count = $(".select").val();
+                window.location.href = "?page_count=" + page_count + "&page=" + current_page;
+            } else {
+                layer.msg('已经在最后一页', { icon: 1, time: 1111 });
+            }
 
-        if(current_page<=last_page){
-            var page_count=$(".select").val();
-            window.location.href="?page_count="+page_count+"&page="+current_page;
-        }else {
-            layer.msg('已经在最后一页',{icon:1,time:1111});
         }
 
-    }
-
-    function reload_all() //重新加载
-    {
-        // var url = window.location.href;
-        // if (url.indexOf("?") != -1) {
-        //     url = url.replace(/(\?|#)[^'"]*/, '');
-        //     window.history.pushState({}, 0, url);
+        function reload_all() //重新加载
+        {
+            // var url = window.location.href;
+            // if (url.indexOf("?") != -1) {
+            //     url = url.replace(/(\?|#)[^'"]*/, '');
+            //     window.history.pushState({}, 0, url);
             window.location.href = "productBrand";
-        // }
-    }
-
-    function active_del(brand_id) //单个删除
-    {
-
-        layer.confirm('确定要删除吗？',function(index){
-
-        // if (confirm("确定要删除吗？")) {
-            $.ajax(
-                {
-                    url: 'productBranDelete',
-                    data: {"brand_id": brand_id},
-                    type: 'POST',
-                    dataType: 'json',
-                    //contentType: 'application/json',
-                    success: function (result) {
-                        if (result) {
-                            layer.msg('数据删除成功',{icon:1,time:1111});
-                        } else {
-                            layer.msg('数据删除失败',{icon:1,time:1111});
-                        }
-                        window.location.reload();
-                    },
-                    error: function (result) {
-                        layer.msg('服务器暂时出现问题，请稍后重试',{icon:1,time:1111});
-                    }
-                });
-        } );
-    }
-
-    function all_del(brand_id_all)//选中删除
-    {
-        brand_id_all = $("input:checkbox[name='checkbox']:checked").map(function (index, elem) {
-            return $(elem).val();
-        }).get().join(',');
-        if (brand_id_all) {
-            layer.confirm('确定要删除选中数据吗？',function(index){
-                // if (confirm("确定要删除选中数据吗？")) {
-                $.ajax(
-                    {
-                        url: 'productBrandAllDel',
-                        data: {"brand_id_all": brand_id_all},
-                        type: 'POST',
-                        dataType: 'json',
-                        success: function (result) {
-                            if (result) {
-                                layer.msg('选中数据删除成功',{icon:1,time:1111});
-                            } else {
-                                layer.msg('选中数据删除失败',{icon:1,time:1111});
-                            }
-                            setTimeout("window.location.reload()",1111);
-                        },
-                        error: function (result) {
-                            layer.msg('服务器暂时出现问题，请稍后重试',{icon:1,time:1111});
-                        }
-                    });
-            } );
-        } else {
-            layer.msg('请勾选删除数据',{icon:1,time:1111});
+            // }
         }
 
-    }
-
-    function getQueryString(name) //去掉url。。
-    {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]);
-        return null;
-    };
-
-    function product_brand_edit(brand_id)//品牌编辑
-    {
-
-        var index = layer.open({
-            type: 2,
-            title: '品牌编辑',
-            content: "productBrandEdit?brand_id=" + brand_id
-        });
-        layer.full(index);
-    }
-
-    $(document).ready(function () {
-        var page_count = getQueryString("page_count");
-        $(".select").val(page_count);
-        $(".select").change(function ()//分页查询
+        function active_del(brand_id) //单个删除
         {
-            var page_count = $(this).val();
-            window.location.href = "productBrand?page_count=" + page_count;
-        });
 
-        $('#brand_search').click(function ()//品牌搜索
+            layer.confirm('确定要删除吗？', function (index) {
+                layer.msg('涉及到级联删除，删除功能停止，请修改', { icon: 1, time: 1111 });
+                // $.ajax(
+                //     {
+                //         url: 'productBrandDelete',
+                //         data: {"brand_id": brand_id},
+                //         type: 'POST',
+                //         dataType: 'json',
+                //         //contentType: 'application/json',
+                //         success: function (result) {
+                //             if (result) {
+                //                 layer.msg('数据删除成功',{icon:1,time:1111});
+                //             } else {
+                //                 layer.msg('数据删除失败',{icon:1,time:1111});
+                //             }
+                //             window.location.reload();
+                //         },
+                //         error: function (result) {
+                //             layer.msg('服务器暂时出现问题，请稍后重试',{icon:1,time:1111});
+                //         }
+                //     });
+            });
+        }
+
+        function all_del(brand_id_all)//选中删除
         {
-            if (!$("#search_input").val()) {
-                layer.msg('请输入查询的数据',{icon:1,time:1111});
+            brand_id_all = $("input:checkbox[name='checkbox']:checked").map(function (index, elem) {
+                return $(elem).val();
+            }).get().join(',');
+            if (brand_id_all) {
+                layer.confirm('确定要删除选中数据吗？', function (index) {
+                    layer.msg('涉及到级联删除，删除功能停止，请修改', { icon: 1, time: 1111 });
+
+                    // $.ajax(
+                    //     {
+                    //         url: 'productBrandAllDel',
+                    //         data: {"brand_id_all": brand_id_all},
+                    //         type: 'POST',
+                    //         dataType: 'json',
+                    //         success: function (result) {
+                    //             if (result) {
+                    //                 layer.msg('选中数据删除成功',{icon:1,time:1111});
+                    //             } else {
+                    //                 layer.msg('选中数据删除失败',{icon:1,time:1111});
+                    //             }
+                    //             setTimeout("window.location.reload()",1111);
+                    //         },
+                    //         error: function (result) {
+                    //             layer.msg('服务器暂时出现问题，请稍后重试',{icon:1,time:1111});
+                    //         }
+                    //     });
+                });
             } else {
-                var brand_search = $("#search_input").val();
-                window.location.href = "productBrand?brand_search=" + brand_search;
+                layer.msg('请勾选删除数据', { icon: 1, time: 1111 });
             }
-        });
 
-        $("#brand_add").click(function () //品牌添加
+        }
+
+        function getQueryString(name) //去掉url。。
         {
-            var brand_name = $("#brand_name").val();
-            if (brand_name == "") {
-                layer.msg('品牌名称不能空',{icon:1,time:1111});
-            } else {
-                var location = $("input[name='brand_logo']").val();
-                if (location) {
-                    var point = location.lastIndexOf(".");
-                    var type = location.substr(point);
-                    if (type == '.png') {
-                        var formData = new FormData($('#form')[0]);
-                        $.ajax(
-                            {
-                                url: 'productBrandAdd',
-                                data: formData,
-                                type: 'POST',
-                                dataType: 'json',
-                                processData: false,
-                                contentType: false,
-                                success: function (result) {
-                                    // alert(result);
-                                    if (result == 'correct') {
-                                        layer.msg('品牌添加成功',{icon:1,time:1111});
-                                    } else {
-                                        layer.msg('数据库数据添加失败',{icon:1,time:1111});
-                                    }
-                                    setTimeout("window.location.reload()",1111);
-                                },
-                                error: function (result) {
-                                    layer.msg('服务出现问题，请稍后再试',{icon:1,time:1111});
-                                }
-                            });
-                    } else {
-                        layer.msg('请上传png格式图片',{icon:1,time:1111});
-                    }
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return null;
+        };
+
+        function product_brand_edit(brand_id)//品牌编辑
+        {
+
+            var index = layer.open({
+                type: 2,
+                title: '品牌编辑',
+                content: "productBrandEdit?brand_id=" + brand_id
+            });
+            layer.full(index);
+        }
+
+        $(document).ready(function () {
+            var page_count = getQueryString("page_count");
+            $(".select").val(page_count);
+            $(".select").change(function ()//分页查询
+            {
+                var page_count = $(this).val();
+                window.location.href = "productBrand?page_count=" + page_count;
+            });
+
+            $('#brand_search').click(function ()//品牌搜索
+            {
+                if (!$("#search_input").val()) {
+                    layer.msg('请输入查询的数据', { icon: 1, time: 1111 });
                 } else {
-                    layer.msg('请选择图片',{icon:1,time:1111});
+                    var brand_search = $("#search_input").val();
+                    window.location.href = "productBrand?brand_search=" + brand_search;
                 }
-            }
+            });
+
+            $("#brand_add").click(function () //品牌添加
+            {
+                var brand_name = $("#brand_name").val();
+                if (brand_name == "") {
+                    layer.msg('品牌名称不能空', { icon: 1, time: 1111 });
+                } else {
+                    var location = $("input[name='brand_logo']").val();
+                    if (location) {
+                        var point = location.lastIndexOf(".");
+                        var type = location.substr(point);
+                        if (type == '.png') {
+                            var formData = new FormData($('#form')[0]);
+                            $.ajax(
+                                {
+                                    url: 'productBrandAdd',
+                                    data: formData,
+                                    type: 'POST',
+                                    dataType: 'json',
+                                    processData: false,
+                                    contentType: false,
+                                    success: function (result) {
+                                        if (result == 'correct') {
+                                            layer.msg('品牌添加成功', { icon: 1, time: 1111 });
+                                        } else {
+                                            layer.msg('数据库数据添加失败', { icon: 1, time: 1111 });
+                                        }
+                                        setTimeout("window.location.href = 'productBrand'", 1111);
+                                    },
+                                    error: function (result) {
+                                        layer.msg('服务出现问题，请稍后再试', { icon: 1, time: 1111 });
+                                    }
+                                });
+                        } else {
+                            layer.msg('请上传png格式图片', { icon: 1, time: 1111 });
+                        }
+                    } else {
+                        layer.msg('请选择图片', { icon: 1, time: 1111 });
+                    }
+                }
+            });
         });
-    });
-</script>
+    </script>
 </body>
+
 </html>
-
-

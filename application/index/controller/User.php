@@ -13,6 +13,7 @@ use think\facade\Session;
 use app\index\model\user\Customer as userModel;
 use app\index\model\user\Address as addressModel;
 use app\index\validate\user\User as userValidate;
+use think\facade\Cache;
 
 use function Sodium\add;
 
@@ -85,14 +86,13 @@ class User extends Controller
                 $info = new SaeTClientV2(WB_AKEY, WB_SKEY, $token['access_token']);
                 $get_uid=$info->get_uid();
                 $uid=$get_uid['uid'];
-                return $uid;
                 $uname=$info->show_user_by_id($uid)['name'];
                 $oauth=Db::name('oauth')->where([['third_uid','=',$uid],['third_id','=','1']])->find();
                 if($oauth){
                     \session('customer_name',$oauth['customer_name']);
                     $this->success('微博用户 '.$uname.'  授权登陆成功,3秒后进入主页','/');
                 }else{
-                    $this->success('授权成功，绑定用户名,3秒后进入','/bindname');
+                    $this->success('授权成功，绑定用户名,3秒后进入','/bindname?uid='.$uid.'&uname='.$uname);
                 }
             }else{
                 $this->success('授权失败，3秒后进入登陆页面','/login');
@@ -109,13 +109,14 @@ class User extends Controller
     public function registerAct(){//注册
         $username=trim($_POST['username']);
         $password=$_POST['password'];
+        $email=$_POST['email'];
         $data=[
             'username'=>$username,
-            'password'=>$password
+            'password'=>$password,
+            'email'=>$email,
         ];
         $validate=new userValidate();
         if($validate->check($data)){
-            return 0;
             $customerlist=Db::name('customer');
             $customer_name=$customerlist->where('customer_name',$username)->find();
             if($customer_name){
@@ -124,6 +125,7 @@ class User extends Controller
                 $customer=[
                     'customer_name'=> $username,
                     'customer_phone'=>$_POST['phone'],
+                    'customer_email'=>$email,
                     'customer_sex'=>$_POST['sex'],
                     'customer_psw'=>md5($password),
                     'customer_gmt_created'=>time(),
@@ -161,11 +163,88 @@ class User extends Controller
             return -2;
         }
     }
-
-    public function bindname()//oauth后绑定用户名
-    {
-        return $this->fetch('bindname');
+    public function emailCheck(){//email检查
+        $email=$_POST['email'];
+        $data=[
+            'email'=>$email
+        ];
+        $validate=new userValidate();
+        if($validate->check($data)){
+            $customerlist=Db::name('customer');
+            $customer_email=$customerlist->where('customer_email',$email)->find();
+            if($customer_email){
+                return -1;
+            }else{
+                return 0;
+            }
+        }else{
+            return -2;
+        }
     }
+
+    public function bindname()//oauth后绑定用户名页面
+    {
+        $uid=$_GET['uid'];
+        $uname=$_GET['uname'];
+        $this->assign(['uid'=>$uid,'uname'=>$uname]);
+        return $this->fetch('bindName');
+    }
+    public function bindNameAct()//绑定用户名
+    {
+        $uid=$_POST['uid'];
+        $uname=$_POST['uname'];
+        $username=$_POST['username'];
+        $password=$_POST['password'];
+        $data=[
+            'third_id'=>1,
+            'third_uid'=>$uid,
+            'third_uname'=>$uname,
+            'customer_name'=>$username,
+        ];
+        try {
+           Db('customer')->data(['customer_name'=>$username,'customer_psw'=>md5($password)])->insert();
+        } catch (\Throwable $th) {
+            return -1;
+        }
+        return Db::name('oauth')->data($data)->insert();
+    }
+    public function resetPsw(){//重置密码页面
+        return $this->fetch('resetPsw');
+    }
+    public function sentEmail()//发送邮件
+    {
+        $email=$_POST['email'];
+        $data=['email'=>$email];
+        $user=new userValidate();
+        if($user->check($data)){
+            $code = rand(10000, 99999);
+            $res = SendMail($email,'Hmall商城测试find_password','一分钟内有效  '.$code);
+            Cache::store('redisread')->set('Code'.$email,$code,60);
+            if(!$res){
+                return 0;
+            }
+            return 1;
+        }else{
+            return -1;
+        }
+       
+    }
+    public function checkCode(){//校验email验证码
+        $checkCode=$_POST['checkCode'];
+        $email=$_POST['email'];
+        $redisCode=cache::store('redisread')->get('Code'.$email);
+        if($redisCode==$checkCode){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    public function changePsw(){//修改密码
+        $email=$_POST['email'];
+        $password=$_POST['password'];
+        return Db::name('customer')->where('customer_email',$email)->data(['customer_psw'=>md5($password)])->update();
+    }
+
 
     public function  quit()//退出
     {
