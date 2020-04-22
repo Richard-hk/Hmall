@@ -1,0 +1,34 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*购物车*/
+.top{ height:40px; color:red; line-height:40px; padding-left:10px; }
+.top a:hover{ text-decoration:underline; color:#F00;}
+.center{height:40px; line-height:40px; font-size:18px;background:#DEF0FF;}
+.middle{border:4px solid#DEF0FF; overflow:auto;   padding:10px 10px 0 10px;}
+.bottom{height:85px; margin-top:10px;line-height:40px; font-size:18px;border:4px solid#DEF0FF;}
+.bottom p{ margin-left:15px; font-size:18px;}
+/*地址*/
+.address{height:105px;border:4px solid#DEF0FF; margin-top:15px;}
+.address li{ margin-bottom:10px; margin-left:20px;}
+.address-p{margin-left:15px; line-height:40px; font-size:18px;}
+.input{width:250px; height:30px;  border:4px solid#DEF0FF; padding:0 5px;}
+.address-text{ margin-left:20px;}
+.notice1,.notice{ font-size:12px; margin-left:30px; color:#999;}
+/*支付方式*/
+.pay{ margin-top:15px;border:4px solid#DEF0FF; height:100px; }
+.pay p{line-height:40px; margin-left:15px; font-size:18px;}
+.pay li{line-height:40px; margin-left:20px;}
+/*商品*/
+.item{ margin-bottom:10px; width:1170px;}
+.choose1{width:55px; height:20px; margin:60px 2px;}
+.left1{ width:140px; height:140px;}
+.center1{width:100px;height:140px; margin-left:10px; text-align:center;display: flex;justify-content: space-around;flex-direction: column;}
+.right1{ width:600px; height:140px; }
+.left2{ width:200px; height:140px;}
+.center2{ width:150px; height:140px; padding-left:50px;}
+.right2{ width:200px; height:140px;color:red;}
+.left2,.center2,.right2{text-align:center;display: flex;justify-content: space-around;flex-direction: column;}
+ .nu{width: 200px;text-align:center;height: 150px;line-height:150px;float: left;}
+
+
