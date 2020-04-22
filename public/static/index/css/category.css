@@ -1,0 +1,38 @@
+@charset "utf-8";
+/* CSS Document */
+/*headerbar*/
+/*topbar登录与注册*/
+.topbar{ height:45px;  line-height:45px; font-size:16px;}
+.topbar a:hover{ color:#F30;}
+/*logo和搜索框*/
+.logobar{height:100px;}
+.search-box{padding:30px 0 0 120px;width:480px;}
+.searchtext{width:410px; height:40px; border:1px solid #6f3e2a; padding:0 5px;}
+.search-btn{width:58px; height:42px; border:1px solid #6f3e2a; background-color: #6f3e2a; color:#FFF;}
+/*购物车区*/
+.shopcar{width:115px; height:25px; margin-top:35px;line-height:25px;font-size:18px; background-color:#e8dbb8; margin-right:100px;}
+.shopcar p{float:left; margin-right:7px;}
+.shopcar a:hover{color:#f00;}
+/*顶部品牌商品导航区*/
+.top-nav-box{height:40px; border-bottom:2px solid #6f3e2a; }
+.shopclassify{ width:250px; height:40px; }
+.shopclassify h3{ text-align:center; line-height:40px; background-color: #6f3e2a; color:#fff;}
+.top-nav li{float:left; color:#000;}
+.top-nav a{padding:0 55px; text-align:center; line-height:40px;color:#000;}
+.top-nav li:hover { background-color:#e8dbb8;}
+.link{ height:35px; padding:5px 0 0 5px; font-size:18px; line-height:30px;}
+.link a:hover{text-decoration: underline;}
+/*轮播区域*/
+.banner-box{ height:460px;overflow:hidden; position:relative;}
+.button{width:90px; height:18px; position:absolute; left:50%; bottom:15px; margin-left:-45px;}
+.button li{ float:left;width:18px; height:18px; border-radius:9px;background-color:#666; text-align:center; line-height:18px;margin:0 4px;}
+.banner-box ul li.hover{ background-color:#FFF;}
+/*商品分类*/
+.shop-box{font-size:22px; color:#ff6700; line-height:50px;}
+.shop-pic{ height:50px; width:50px; overflow:hidden;}
+.shop-category{;border-top:1.5px solid #666;}
+.shop-category td{ width:241px; height:242px;border-bottom:1px solid #666; border-right:1px solid #666; background-color:#fff;}
+
+
+
+

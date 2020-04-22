@@ -1,0 +1,45 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*topbar登录与注册*/
+.topbar{ height:45px; background-color:#e3e4e5; line-height:45px; font-size:16px;}
+.logobar{ height:101px; border-bottom:2px solid #F00;}
+.search-box{padding:30px 0 0 120px;width:480px; margin-right:100px;}
+.searchtext{width:410px; height:40px; border:1px solid #6f3e2a; padding:0 5px;}
+.search-btn{width:58px; height:42px; border:1px solid #6f3e2a; background-color: #6f3e2a; color:#FFF;}
+/*购物车*/
+.shop-item{padding:10px;}
+.top{ height:40px;  line-height:40px; padding-left:10px; }
+.center{height:40px; line-height:40px; font-size:18px;background:#DEF0FF;}
+.middle{border-left:4px solid #DEF0FF;border-right:4px solid #DEF0FF;; overflow:auto;   padding: 10px}
+.bottom{background:#DEF0FF;;height:40px;line-height:40px; font-size:18px;}
+/*支付方式*/
+.pay{height:100px; background:#666;}
+/*商品*/
+/*.item{ margin-bottom:10px; width:1170px;}*/
+.choose1{width:55px; height:20px; margin:40px 2px;}
+.left1{ width:140px; height:100px;}
+.center1{width:300px;height:100px; margin-left:10px; text-align:center;display: flex;justify-content: space-around;flex-direction: column;}
+.right1{ width:600px; height:100px; }
+.left2{ width:200px; height:100px;}
+.center2{ width:200px; height:100px; }
+.right2{ width:200px; height:100px;color:#CF0A2C;}
+.left2,.center2,.right2{text-align:center;display: flex;justify-content: space-around;flex-direction: column;}
+.submit{background-color:#CF0A2C; color: #FFFfff; height:40px; font-size:18px; width:80px;}
+.money{margin-right:15px; text-align: center; width:100px; color:#CF0A2C; font-size:22px;}
+.middle-bottom{border-bottom: 4px solid #DEF0FF}
+.center div{     float: left;    text-align: center; }
+.right11 div{    float: left;    text-align: center;    line-height: 100px;}
+.bottom2 div{    text-align: center;}
+.center span{    display: inline-block;    float: left;    text-align: center;}
+/*数量*/
+.des_number{border:#B2B2B2 solid 1px; height:32px; width:82px;  margin: 0 auto}
+.des_number div{height:100%; float:left;}
+.reduction,.plus{width:15px; line-height:32px; text-align:center; color:#333;}
+.reduction{border-right:#CCC solid 1px;}
+.plus{border-left:#CCC solid 1px;}
+.des_input{width:42px; padding:0 4px; overflow:hidden;}
+.des_input input{width:100%; height:32px; line-height:32px\9; text-align:center;}
+.xg{line-height:32px;  float:left; padding-left:10px; font-weight:bold; color:#656565;}
+.xg em{color:#FB7700; font-style:normal;}
+.des_content .des_num{line-height:32px;}

@@ -1,0 +1,48 @@
+@charset "utf-8";
+/* CSS Document */
+<!--清零-->
+body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div,dl,dt,dd,input{margin:0;padding:0;}
+body{font-size:16px; font-family:"Microsoft YaHei UI";}
+img{border:none;}
+li{list-style:none;}
+input,select,textarea{outline:none;border:none; background:none;}
+textarea{resize:none;}
+a{text-decoration:none; color:#afafaf;}
+body{
+    -ms-overflow-x:hidden;
+    overflow-x:hidden;
+}
+a {
+    blr:expression(this.onFocus=this.blur());
+    outline: none;
+}
+a:focus {
+      outline: none;
+  }
+/*清浮动*/
+.clearfix:after{content:"";display:block;clear:both;}
+.clearfix{zoom:1;}
+.fl{float:left;}
+.fr{float:right;}
+
+/*公用*/
+*{margin:0;//外边距
+padding:0;//内边距}
+.comwidth{width:1210px; margin: 0 auto;}
+.leftarea{ float:left;}
+.rightarea{ float:right;}
+.hide{display:none;}
+.show{display:inline-block;}	
+
+/*尾部区域*/
+.stern{ width:1210px; margin:0 auto; height:120px;line-height:50px;}
+.stern a{ font-size:18px; padding-right:50px;}
+.stern a:hover{ color: #F00;}
+.stern p{font-size:18px; }
+.stern-left{width:960px; float:left;}
+.stern-right{width:250px; height:100px; float:right;}
+.end{height:40px;} 
+.end p{ font-size:16px; text-align:center; line-height:40px;}
+
+
+
