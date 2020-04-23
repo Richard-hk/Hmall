@@ -103,8 +103,8 @@
                 window.location.href='index/Alipay/alipay/order_id/'+order_id;
             });
             $('.delete').click(function(){
-                var obj=$(this).parent('.center').siblings('.bottom2').children('div').children('.order_id').html();
-                var order_id=parseInt(obj);
+                var order_id=$(this).parent('.center').siblings('.bottom2').children('div').children('.order_id').html();
+
                 layer.confirm('确认要删除吗?不可恢复',function(index){
                 $.ajax(
                     {
@@ -116,11 +116,11 @@
                             if(result==1){
                                 layer.msg('订单删除成功', {icon: 1, time: 1111});
                             }else if(result==0){
-                                layer.msg('不存在改订单编号', {icon: 1, time: 1111});
+                                layer.msg('不存在订单编号', {icon: 1, time: 1111});
                             }else{
                                 layer.msg('订单编号中含有非法支付', {icon: 1, time: 1111});
                             }
-                            window.location.reload();
+                            setTimeout('window.location.reload()',1111) ;
                         }
                     }
                 );

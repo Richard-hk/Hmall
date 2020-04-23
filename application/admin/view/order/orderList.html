@@ -33,7 +33,6 @@
 						<th width="100">用户名</th>
 						<th width="150">物流号</th>
 						<th width="">支付宝订单号</th>
-						<th width="100">总金额</th>
 						<th width="180">创建日期</th>
 						<th width="80">状态</th>
 						<th width="80">操作</th>
@@ -48,7 +47,6 @@
 						<td>{$order.customer_name}</td>
 						<td class="text-l">{$order.delivery_id}</td>
 						<td class="text-c">{$order.alipay_id}</td>
-						<td class="text-c ">2222222</td>
 						<td>{$order.order_gmt_created|date='Y-m-d H:i:s'}</td>
 						<td class="td-status">
 							{switch $order.order_status}
@@ -57,7 +55,7 @@
 									{case 2}<span class="label  radius" style="background-color: #742F9B " 74309C
 										onclick="return_money(this)">在退款中</span>{/case}
 									{case 3}<span class="label  radius"
-										style="background-color: #1A86DB ">超时被取消</span>{/case}
+										style="background-color: #19A97B ">超时被取消</span>{/case}
 									{case 4}<span class="label  radius"
 										style="background-color: #1A86DB ">交易失败</span>{/case}
 									{default /}<span class="label radius">未支付</span>
@@ -120,7 +118,7 @@
 				"bStateSave": true,//状态保存
 				"aoColumnDefs": [
 					//{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-					{ "orderable": false, "aTargets": [0, 9] }// 制定列不参与排序
+					{ "orderable": false, "aTargets": [0, 8] }// 制定列不参与排序
 				]
 			});
 			$('.select').change(function () {

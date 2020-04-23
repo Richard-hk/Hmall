@@ -1,124 +1,129 @@
 {include file='common/style'}
 <title>添加管理员 - 管理员管理 </title>
 </head>
+
 <body>
-<article class="page-container">
-	<form class="form form-horizontal" id="form-admin-add">
-	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>管理员：</label>
-		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="" placeholder="" id="admin_name" name="admin_name">
-		</div>
-	</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>默认密码：</label>
-			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
-				<div class="radio-box">
-					<input name="admin_psw_default" type="checkbox" id="admin_psw_default" >
-					<label for="admin_psw_default">同用户名</label>
+	<article class="page-container">
+		<form class="form form-horizontal" id="form-admin-add">
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>管理员：</label>
+				<div class="formControls col-xs-8 col-sm-9">
+					<input type="text" class="input-text" value="admin2" placeholder="" id="admin_name" name="admin_name">
 				</div>
-
 			</div>
-		</div><div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>初始密码：</label>
-		<div class="formControls col-xs-8 col-sm-9">
-			<input type="password" class="input-text" autocomplete="off" value="" placeholder="密码" id="admin_psw" name="admin_psw">
-		</div>
-	</div>
-	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>确认密码：</label>
-		<div class="formControls col-xs-8 col-sm-9">
-			<input type="password" class="input-text" autocomplete="off"  placeholder="确认新密码" id="admin_psw1" name="admin_psw1" value="">
-		</div>
-	</div>
+			<!-- <div class="row cl">
+				<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>默认密码：</label>
+				<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+					<div class="radio-box">
+						<input name="admin_psw_default" type="checkbox" id="admin_psw_default">
+						<label for="admin_psw_default">同用户名</label>
+					</div>
 
-	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
-		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="" placeholder="" id="admin_phone" name="admin_phone" >
-		</div>
-	</div>
+				</div>
+			</div> -->
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>初始密码：</label>
+				<div class="formControls col-xs-8 col-sm-9">
+					<input type="password" class="input-text" autocomplete="off" value="admin" placeholder="密码"
+						id="admin_psw" name="admin_psw">
+				</div>
+			</div>
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>确认密码：</label>
+				<div class="formControls col-xs-8 col-sm-9">
+					<input type="password" class="input-text" autocomplete="off" placeholder="确认新密码" id="admin_psw1"
+						name="admin_psw1" value="admin">
+				</div>
+			</div>
 
-	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色：</label>
-		<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
-			<select class="select" name="role_id" size="1">
-				<option value="0">--请选择角色--</option>
-				{volist id='list' name='role'}
-				<option value="{$list.role_id}">&emsp;{$list.role_name}&emsp;</option>
-				{/volist}
-			</select>
-			</span> </div>
-	</div>
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
+				<div class="formControls col-xs-8 col-sm-9">
+					<input type="text" class="input-text" value="15797274125" placeholder="" id="admin_phone" name="admin_phone">
+				</div>
+			</div>
 
-	<div class="row cl">
-		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
-		</div>
-	</div>
-	</form>
-</article>
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色：</label>
+				<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
+						<select class="select" name="role_id" size="1">
+							<option value="0">--请选择角色--</option>
+							{volist id='list' name='role'}
+							<option value="{$list.role_id}">&emsp;{$list.role_name}&emsp;</option>
+							{/volist}
+						</select>
+					</span> </div>
+			</div>
 
-<!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
-<script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
-<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
-<script type="text/javascript">
+			<div class="row cl">
+				<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+					<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+				</div>
+			</div>
+		</form>
+	</article>
 
-
-
-$(function(){
-	$('.skin-minimal input').iCheck({
-		checkboxClass: 'icheckbox-blue',
-		radioClass: 'iradio-blue',
-		increaseArea: '20%'
-
-	});
+	<!--请在下方写此页面业务相关的脚本-->
+	<script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+	<script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+	<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+	<script type="text/javascript">
 
 
-	$("#form-admin-add").validate({
-		rules:{
-			admin_name:{
-				required:true,
-				minlength:4,
-				maxlength:16
-			},
-			admin_psw:{
-				required:true,
-			},
-			admin_psw1:{
-				required:true,
-				equalTo: "#admin_psw"
-			},
-			admin_phone:{
-				required:true,
-				isPhone:true,
-			},
-			role_id:{
-				required:true,
-			},
-		},
-		onkeyup:false,
-		focusCleanup:true,
-		success:"valid",
-		submitHandler:function(form){
-			$(form).ajaxSubmit({
-				type: 'post',
-				url: "adminAddAct" ,
-				success: function(data){
-					layer.msg('添加成功!',{icon:1,time:1111});
-					setTimeout("parent.location.reload()",1111);
-				},
-                error: function(XmlHttpRequest, textStatus, errorThrown){
-					layer.msg('已存在数据!',{icon:1,time:1111});
-					setTimeout("parent.location.reload()",1111);
-				}
+
+		$(function () {
+			$('.skin-minimal input').iCheck({
+				checkboxClass: 'icheckbox-blue',
+				radioClass: 'iradio-blue',
+				increaseArea: '20%'
+
 			});
 
-		}
-	});
-});
-</script> 
-<!--/请在上方写此页面业务相关的脚本-->
+
+			$("#form-admin-add").validate({
+				rules: {
+					admin_name: {
+						required: true,
+						minlength: 4,
+						maxlength: 16
+					},
+					admin_psw: {
+						required: true,
+					},
+					admin_psw1: {
+						required: true,
+						equalTo: "#admin_psw"
+					},
+					admin_phone: {
+						required: true,
+						isPhone: true,
+					},
+					role_id: {
+						required: true,
+					},
+				},
+				onkeyup: false,
+				focusCleanup: true,
+				success: "valid",
+				submitHandler: function (form) {
+					$(form).ajaxSubmit({
+						type: 'post',
+						url: "adminAddAct",
+						success: function (data) {
+							layer.msg('添加成功!', { icon: 1, time: 1111 });
+							setTimeout("parent.location.reload()", 1111);
+						},
+						error: function (XmlHttpRequest, textStatus, errorThrown) {
+							layer.msg('已存在数据!', { icon: 1, time: 1111 });
+							setTimeout("parent.location.reload()", 1111);
+						}
+					});
+
+				}
+			});
+		});
+	</script>
+	<!--/请在上方写此页面业务相关的脚本-->
 </body>
+
 </html>

@@ -21,13 +21,14 @@ class ReceivePay extends Command
                 $job = $pheanstalk->watchOnly('pay')->ignore('default')->reserve();
                 if($job->getData()){
                     $order=db('order_info')->where('order_id',$job->getData())->select();
-                    if($order[0]['order_status']==1){
+                    if($order[0]['order_status']==0){
                         $username=$order[0]['customer_name'];
                         echo $username;
                         $customer=db('customer')->where('customer_name',$username)->select();
                         if($customer){
                             echo $customer[0]['customer_email'];
                             SendMail($customer[0]['customer_email'],'Hmall商城测试订单取消通知','你的订单'.$job->getData().'超时被取消');
+                            db('order_info')->where('order_id',$job->getData())->data('order_status',3)->update();
                         }
                     }
                 }

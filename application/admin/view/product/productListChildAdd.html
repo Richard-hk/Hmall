@@ -1,104 +1,117 @@
 {include file='common/style'/}
 <title>产品规格添加</title>
 <style>
-    .select_value{
-       width: 188px;  height: 30px;border: 1px solid #DDDDDD; padding: 0 2px;
+    .select_value {
+        width: 188px;
+        height: 30px;
+        border: 1px solid #DDDDDD;
+        padding: 0 2px;
     }
-    body{
-        -ms-overflow-x:hidden;
-        overflow-x:hidden;
+
+    body {
+        -ms-overflow-x: hidden;
+        overflow-x: hidden;
     }
 </style>
 </head>
+
 <body>
-<table class="table table-border table-bordered table-bg">
-    <thead>
-    <tr>
-        <th scope="col" colspan="7" >当前产品编号：<span style="color:#DD514C">{$good_spu_id}</span>
-            &emsp;&emsp;名称：<span style="color:#DD514C">{$good_name}</span></th>
-    </tr>
-    </thead>
-</table>
-<form class="form form-horizontal" id="form">
-    <input type="text" value="{$good_spu_id}" style="display: none" name="good_spu_id">
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>内存ROM：</label>
-        <div class="formControls col-xs-8 col-sm-9">
+    <table class="table table-border table-bordered table-bg">
+        <thead>
+            <tr>
+                <th scope="col" colspan="7">当前产品编号：<span style="color:#DD514C">{$good_spu_id}</span>
+                    &emsp;&emsp;名称：<span style="color:#DD514C">{$good_name}</span></th>
+            </tr>
+        </thead>
+    </table>
+    <form class="form form-horizontal" id="form">
+        <input type="text" value="{$good_spu_id}" style="display: none" name="good_spu_id">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>内存ROM：</label>
+            <div class="formControls col-xs-8 col-sm-9">
 
-            <input type="text" class="select_value" value="" placeholder="可选择或者输入值" id="good_sku_rom" name="good_sku_rom" >
-            <span style="color: #DD514C;">单位/G</span>
-        </div>
-    </div>
-
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>存储RAM：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-
-            <input type="text" class="select_value" value="" placeholder="可选择或者输入值" id="good_sku_ram" name="good_sku_ram" >
-            <span style="color: #DD514C;">单位/G</span>
-        </div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>颜色：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-            <span class="select-box" style="width:190px;">
-                <select class="select" id="good_color_select" name="good_color_select" size="1">
-                    <option value="-1">没有值请右侧输入</option>
-                    {volist name='good_sku' id='good_color'}
-                        <option value="{$good_color.good_sku_pic}">{$good_color.good_sku_color}</option>
-                    {/volist}
-                </select>
-			</span>
-            <input type="text" class="select_value" value="" placeholder="可选择或者输入值" id="good_sku_color" name="good_sku_color" >
-        </div>
-    </div>
-    <div class="row cl small_pic" style="display: none">
-        <label class="form-label col-xs-4 col-sm-3">图片预览：</label>
-        <div class="formControls col-xs-4 col-sm-4">
-            <img src="" alt="" id="small_pic" name="small_pic" style="width: 100px;height: 100px; border: 1px solid rgb(221,221,221);">
-        </div>
-    </div>
-
-    <div class="row cl good_pic" style="display: none" >
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>图片：</label>
-        <div class="formControls col-xs-4 col-sm-4">
-
-            <div class="uploader-thum-container ">
-                    <span class="btn-upload form-group">
-                    <input class="input-text upload-url" type="text" name="" id="good_pic1" placeholder="选择图片" readonly style="width:190px">
-                    <a href="javascript:void();" class="btn btn-primary upload-btn"><i class="Hui-iconfont">&#xe642;</i> 上传logo</a>
-                    <input type="file" multiple name="good_pic" class="input-file" id="good_pic">
-			        </span>
+                <input type="text" class="select_value" value="4" placeholder="可选择或者输入值" id="good_sku_rom"
+                    name="good_sku_rom">
+                <span style="color: #DD514C;">单位/G</span>
             </div>
         </div>
 
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>库存：</label>
-        <div class="formControls col-xs-8 col-sm-9">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>存储RAM：</label>
+            <div class="formControls col-xs-8 col-sm-9">
 
-            <input type="text" class="select_value" value="" placeholder="" id="stock_num" name="stock_num" >
-            <span style="color: #DD514C;">单位/G</span>
+                <input type="text" class="select_value" value="4" placeholder="可选择或者输入值" id="good_sku_ram"
+                    name="good_sku_ram">
+                <span style="color: #DD514C;">单位/G</span>
+            </div>
         </div>
-    </div>
-    <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>价格：</label>
-        <div class="formControls col-xs-8 col-sm-9">
-
-            <input type="text" class="select_value" value="" placeholder="" id="good_price" name="good_price" >
-            <span style="color: #DD514C;">单位/G</span>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>颜色：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box" style="width:190px;">
+                    <select class="select" id="good_color_select" name="good_color_select" size="1">
+                        <option value="-1">没有值请右侧输入</option>
+                        {volist name='good_sku' id='good_color'}
+                        <option value="{$good_color.good_sku_pic}">{$good_color.good_sku_color}</option>
+                        {/volist}
+                    </select>
+                </span>
+                <input type="text" class="select_value" value="" placeholder="可选择或者输入值" id="good_sku_color"
+                    name="good_sku_color">
+            </div>
         </div>
-    </div>
-    <div class="row cl">
-
-        <div class="col-xs-8 col-sm-9 col-xs-offset-8 col-sm-offset-3">
-            <button onClick="product_list_child_add();" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 添加</button>
-            <button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+        <div class="row cl small_pic" style="display: none">
+            <label class="form-label col-xs-4 col-sm-3">图片预览：</label>
+            <div class="formControls col-xs-4 col-sm-4">
+                <img src="" alt="" id="small_pic" name="small_pic"
+                    style="width: 100px;height: 100px; border: 1px solid rgb(221,221,221);">
+            </div>
         </div>
-    </div>
+
+        <div class="row cl good_pic" style="display: none">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>图片：</label>
+            <div class="formControls col-xs-4 col-sm-4">
+
+                <div class="uploader-thum-container ">
+                    <span class="btn-upload form-group">
+                        <input class="input-text upload-url" type="text" name="" id="good_pic1" placeholder="选择图片"
+                            readonly style="width:190px">
+                        <a href="javascript:void();" class="btn btn-primary upload-btn"><i
+                                class="Hui-iconfont">&#xe642;</i> 上传logo</a>
+                        <input type="file" multiple name="good_pic" class="input-file" id="good_pic">
+                    </span>
+                </div>
+            </div>
+
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>库存：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+
+                <input type="text" class="select_value" value="22" placeholder="" id="stock_num" name="stock_num">
+                <span style="color: #DD514C;">单位/G</span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>价格：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+
+                <input type="text" class="select_value" value="22" placeholder="" id="good_price" name="good_price">
+                <span style="color: #DD514C;">单位/G</span>
+            </div>
+        </div>
+        <div class="row cl">
+
+            <div class="col-xs-8 col-sm-9 col-xs-offset-8 col-sm-offset-3">
+                <button onClick="product_list_child_add();" class="btn btn-primary radius" type="button"><i
+                        class="Hui-iconfont">&#xe632;</i> 添加</button>
+                <button onClick="layer_close();" class="btn btn-default radius"
+                    type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+            </div>
+        </div>
 
 
-</form>
+    </form>
 </body>
 <!--请在下方写此页面业务相关的脚本-->
 
@@ -106,19 +119,19 @@
 <script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script>
-    function product_list_child_add(){
-        var good_sku_rom=$('#good_sku_rom').val();
-        var good_sku_ram=$('#good_sku_ram').val();
-        var good_sku_color=$('#good_sku_color').val();
-        var pic=$('#good_pic').val();
-        var stock_num=$('#stock_num').val();
-        var good_price=$('#good_price').val();
-        if($('#good_color_select').val()!=-1){
-            pic=1;
+    function product_list_child_add() {
+        var good_sku_rom = $('#good_sku_rom').val();
+        var good_sku_ram = $('#good_sku_ram').val();
+        var good_sku_color = $('#good_sku_color').val();
+        var pic = $('#good_pic').val();
+        var stock_num = $('#stock_num').val();
+        var good_price = $('#good_price').val();
+        if ($('#good_color_select').val() != -1) {
+            pic = 1;
         }
-        if(good_sku_rom==""||good_sku_ram==""||good_sku_color==""||pic==""||stock_num==""||good_price==""){
-            layer.msg('请填满写空值',{icon:1,time:1111});
-        }else {
+        if (good_sku_rom == "" || good_sku_ram == "" || good_sku_color == "" || pic == "" || stock_num == "" || good_price == "") {
+            layer.msg('请填满写空值', { icon: 1, time: 1111 });
+        } else {
             var formData = new FormData($('#form')[0]);
             $.ajax(
                 {
@@ -130,11 +143,11 @@
                     contentType: false,
                     success: function (result) {
                         if (result == 1) {
-                            layer.msg('商品规格添加成功',{icon:1,time:1111});
-                        } else if(result==-1){
-                            layer.msg('该颜色已经存在！请选择',{icon:1,time:1111});
-                        }else{
-                            layer.msg('商品规格添加失败',{icon:1,time:1111});
+                            layer.msg('商品规格添加成功', { icon: 1, time: 1111 });
+                        } else if (result == -1) {
+                            layer.msg('该颜色已经存在！请选择', { icon: 1, time: 1111 });
+                        } else {
+                            layer.msg('商品规格添加失败', { icon: 1, time: 1111 });
 
                         }
                         parent.location.reload();
@@ -142,7 +155,7 @@
                         layer_close();
                     },
                     error: function (result) {
-                        layer.msg('服务出现问题，请稍后再试',{icon:1,time:1111});
+                        layer.msg('服务出现问题，请稍后再试', { icon: 1, time: 1111 });
 
                     }
                 }
@@ -150,16 +163,16 @@
         }
     }
     $(document).ready(function () {
-        $('#good_pic').change(function(){
+        $('#good_pic').change(function () {
             var f = document.getElementById('good_pic').files[0];
             src = window.URL.createObjectURL(f);
             document.getElementById('small_pic').src = src;
-            $(".small_pic").css('display','block');
+            $(".small_pic").css('display', 'block');
         });
         $('#good_sku_color').click(function () {
             $('#good_color_select option:first').prop('selected', 'selected');
-            $(".good_pic").css('display','block');
-            $('.small_pic').css('display','none');
+            $(".good_pic").css('display', 'block');
+            $('.small_pic').css('display', 'none');
             $('#good_pic').val(null);
             $('#good_pic1').val(null);
             $('#good_sku_color').val(null);
@@ -168,12 +181,12 @@
             $('#good_pic_select option:first').prop('selected', 'selected');
         });
         $('#good_color_select').change(function () {
-            $(".good_pic").css('display','none');
-            $('.small_pic').css('display','block');
-            document.getElementById('small_pic').src =$('#good_color_select').val();
+            $(".good_pic").css('display', 'none');
+            $('.small_pic').css('display', 'block');
+            document.getElementById('small_pic').src = $('#good_color_select').val();
             $('#good_sku_color').val($('#good_color_select option:selected').text());
-            if($('#good_color_select').val()==-1){
-                $('.small_pic').css('display','none');
+            if ($('#good_color_select').val() == -1) {
+                $('.small_pic').css('display', 'none');
             }
         });
 

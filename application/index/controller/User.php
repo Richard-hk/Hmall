@@ -218,7 +218,7 @@ class User extends Controller
         $user=new userValidate();
         if($user->check($data)){
             $code = rand(10000, 99999);
-            $res = SendMail($email,'Hmall商城测试找回密码','一分钟内有效  '.$code);
+            $res = SendMail($email,'Hmall商城测试找回密*码','一分钟内有效  '.$code);
             Cache::store('redisread')->set('Code'.$email,$code,60);
             if(!$res){
                 return 0;
