@@ -66,7 +66,7 @@ function SendMail($address,$title,$message){
     // 设置邮件正文
     $mail->Body=$message;
     //设置发件人邮箱地址 这里填入上述提到的“发件人邮箱”
-    $mail->From='kehui@hhwwgc3.onexmail.com';
+    $mail->From='kehui@hhwwgc4.onexmail.com';
     //设置发件人姓名（昵称） 任意内容，显示在收件人邮件的发件人邮箱地址前的发件人姓名
     $mail->FromName='Hmall在线商城';
     // 设置邮件标题
@@ -76,9 +76,9 @@ function SendMail($address,$title,$message){
     // 设置为"需要验证"
     $mail->SMTPAuth=true;
     //smtp登录的账号 这里填入字符串格式的qq号即可
-    $mail->Username='kehui@hhwwgc3.onexmail.com';
+    $mail->Username='kehui@hhwwgc4.onexmail.com';
     //smtp登录的密码 使用生成的授权码 你的最新的授权码
-    $mail->Password='hwKbDKifs7pVhekN';
+    $mail->Password='LVSAF3GAumHkipGa';
     // 发送邮件。    成功返回true或false
    return($mail->Send());
 }

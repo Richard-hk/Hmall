@@ -11,6 +11,8 @@ use app\index\model\alipay\SkuOrder;
 use app\index\validate\alipay\Alipay as alipayValidate;
 use buildermodel\AlipayTradePagePayContentBuilder;
 use think\facade\Session;
+use Pheanstalk\Pheanstalk;
+
 
 class Alipay extends Controller
 {
@@ -86,6 +88,9 @@ class Alipay extends Controller
                     $total_amount = $money;
                 }
             }
+            $pheanstalk = Pheanstalk::create('127.0.0.1', 11300, 10);
+            $id=$pheanstalk->useTube('pay')->put($out_trade_no,0,60,0);
+
             $subject = 'Hmall在线商城支付';
             $body = "123";
             $payRequestBuilder = new AlipayTradePagePayContentBuilder();

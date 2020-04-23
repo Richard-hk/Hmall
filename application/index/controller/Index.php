@@ -26,6 +26,8 @@ class Index extends Controller
 
     public function index()
     {
+        // SendMail('1636847365@qq.com','Hmall商城测试订单取消通知','你的订单超时被取消');
+
         // $phone_hot=new PhoneHot();
         // $phone_hot->getGoodSpu();
         // var_dump($phone_hot);
