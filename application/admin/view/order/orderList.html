@@ -22,7 +22,7 @@
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
 			<span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i
 						class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
-			</span> <span class="r">共有数据：<strong>{}</strong> 条&emsp;&emsp;共有：<strong>{}</strong>页 </span> </div>
+			</span> <span class="r">共有数据：<strong>{$total}</strong> 条&emsp;&emsp;</span> </div>
 		<div class="mt-20">
 			<table class="table table-border table-bordered table-hover table-bg table-sort">
 				<thead>
@@ -57,7 +57,7 @@
 									{case 2}<span class="label  radius" style="background-color: #742F9B " 74309C
 										onclick="return_money(this)">在退款中</span>{/case}
 									{case 3}<span class="label  radius"
-										style="background-color: #1A86DB ">交易成功</span>{/case}
+										style="background-color: #1A86DB ">超时被取消</span>{/case}
 									{case 4}<span class="label  radius"
 										style="background-color: #1A86DB ">交易失败</span>{/case}
 									{default /}<span class="label radius">未支付</span>
@@ -78,7 +78,6 @@
 		</div>
 	</div>
 
-	<!--请在下方写此页面业务相关的脚本-->
 	<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 	<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
@@ -116,8 +115,6 @@
 			})
 		}
 		$(function () {
-
-
 			$('.table-sort').dataTable({
 				"aaSorting": [[1, "desc"]],//默认第几个排序
 				"bStateSave": true,//状态保存
@@ -136,7 +133,6 @@
 					var num = $('.select').val();
 					window.location.href = 'customerList?page_num=' + num + '&&current=' + current;
 				}
-
 			});
 			$('#DataTables_Table_0_next').click(function () {
 				var current = parseInt($('.current').html()) + 1;
@@ -146,13 +142,11 @@
 
 				}
 			});
-
 		});
 		$(document).ready(function () {
 			if (getQueryString('current')) {
 				$('.current').html(getQueryString('current'));
 			}
-
 		});
 		function datadel() {
 
@@ -187,7 +181,6 @@
 				});
 			});
 		}
-
 		/*用户-添加*/
 		function member_add(title, url, w, h) {
 			layer_show(title, url, w, h);

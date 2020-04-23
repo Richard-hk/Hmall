@@ -20,8 +20,8 @@ class PayMethod extends Controller
         }
     }
 
-    public function payMethod(){
-        $out_trade_no=date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+    public function payMethod(){//下单界面
+        $out_trade_no=date('Y') . date('m') . date('d') . substr(time(), -4) . substr(microtime(), 2, 7);//每秒最多一百万级别订单号
         $address=new Address();
         $addressObj=$address->getAllAddress(Session::get('customer_name'));
         $addressList=$addressObj->select();
@@ -33,12 +33,12 @@ class PayMethod extends Controller
         ]);
         return $this->fetch('payMethod');
     }
-    public function PayDetail(){
+    public function PayDetail(){//支付详情
         $good_sku_id=$_POST['good_sku_id'];
         $good=new goodskuModel();
         return json($good->getDetail($good_sku_id));
     }
-    public function addAddress(){
+    public function addAddress(){//下单界面新用户添加地址
         $address=new UserAddress();
         $customer_name=Session::get('customer_name');
         return $address->saveAddress($customer_name,$_POST['address_name'],$_POST['address_phone'],$_POST['province'],$_POST['city'],$_POST['area'],$_POST['address_detail'],1,1);

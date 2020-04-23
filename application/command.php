@@ -9,4 +9,6 @@
 // | Author: yunwuxin <448901948@qq.com>
 // +----------------------------------------------------------------------
 
-return [];
+return [
+    'app\index\base\ReceivePay'//自定义ReceivePay命令所在位置
+];

@@ -39,7 +39,8 @@
             "buildermodel\\": "vendor/alipay/pagepay/buildermodel",
             "service\\": "vendor/alipay/pagepay/service",
             "alipay\\": "vendor/alipay",
-            "phpmailer\\":"vendor/phpmailer"
+            "phpmailer\\":"vendor/phpmailer",
+            "Pheanstalk\\":"vendor/Pheanstalk"
         }
     },
     "extra": {

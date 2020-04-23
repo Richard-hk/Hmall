@@ -15,7 +15,10 @@ class Order extends Controller
     {
         $orderinfo = new orderinfoModel();
         $list = $orderinfo->select();
-        $this->assign('list', $list);
+        $this->assign([
+            'list'=>$list,
+            'total'=>$list->count()
+            ]);
         return $this->fetch('orderList');
     }
 
