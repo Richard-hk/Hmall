@@ -211,7 +211,7 @@ class User extends Controller
     public function resetPsw(){//重置密码页面
         return $this->fetch('resetPsw');
     }
-    public function sentEmail()//发送邮件
+    public function sentEmail()//重置密码发送邮件
     {
         $email=$_POST['email'];
         $data=['email'=>$email];
@@ -273,7 +273,7 @@ class User extends Controller
         return $this->fetch('userInfo');
 
     }
-    public function saveAddress(){
+    public function saveAddress(){//保存地址
         $address=new addressModel();
         $customer_name=Session::get('customer_name');
         if(isset($_POST['is_default'])){
@@ -304,17 +304,17 @@ class User extends Controller
         }
     }
 
-    public function province()
+    public function province()//省
     {
         return province();
     }
 
-    public function city($provinceid)
+    public function city($provinceid)//市
     {
         return city($provinceid);
     }
 
-    public function area($cityid)
+    public function area($cityid)//地区
     {
         return area($cityid);
     }

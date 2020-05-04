@@ -97,6 +97,7 @@
 					dataType: 'json',
 					data: { 'alipay_id': alipay_id, 'order_id': order_id, 'out': '' },
 					success: function (data) {
+						
 						if (data == 1) {
 							layer.msg('退款成功!', { icon: 1, time: 1111 });
 							setTimeout("window.location.reload()", 1111);
