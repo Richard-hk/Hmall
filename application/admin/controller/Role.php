@@ -92,8 +92,8 @@ class Role extends Controller
 
     public function roleAuthorUpdate()//管理员角色权限修改
     {
-        // $status=$_POST['status'];
-        $status=1;
+        $status=$_POST['status'];
+        // $status=1;
         if($status==1){
             $list=Db::name('role_author')->where([
                 // ['role_id','=',$_POST['role_id']],

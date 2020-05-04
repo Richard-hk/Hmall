@@ -22,7 +22,7 @@ class Alipay extends Controller
             $this->redirect('/');
         }
     }
-    public function alipay($order_id=null,$address_id=null){
+    public function alipay($order_id=null,$address_id=null){//用户支付
         $config=config_str();
         $validate=new alipayValidate();
         $data=['order_id'=>$order_id];
@@ -89,7 +89,7 @@ class Alipay extends Controller
                 }
             }
             $pheanstalk = Pheanstalk::create('127.0.0.1', 11300, 10);
-            $id=$pheanstalk->useTube('pay')->put($out_trade_no,0,60,0);
+            $id=$pheanstalk->useTube('pay')->put($out_trade_no,0,70,0);
 
             $subject = 'Hmall在线商城支付';
             $body = "123";
@@ -118,13 +118,14 @@ class Alipay extends Controller
         }
     }
    
-    public function judgePay(){
+    public function judgePay(){//判断支付
         $config=config_str();
         $arr=$_GET;
         $alipaySevice = new AlipayTradeService($config);
         $result = $alipaySevice->check($arr);
         if($result) {//验证成功
             $out_trade_no = htmlspecialchars($_GET['out_trade_no']);
+            // return $out_trade_no;
             $trade_no = htmlspecialchars($_GET['trade_no']);
             $order_info=Db::name('order_info');
             $list=$order_info->where('order_id',$out_trade_no)->data(['order_status'=>'1','alipay_id'=>$trade_no])->update();
@@ -137,7 +138,7 @@ class Alipay extends Controller
 
     }
 
-    public function deleteCar($order_id){
+    public function deleteCar($order_id){//删除购物车
         $customer_name=Session::get('customer_name');
         $order=Db::name('SkuOrder');
         $skuOrder=$order->where('order_id',$order_id)->select();
